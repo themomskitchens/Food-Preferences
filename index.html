@@ -1,167 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Food Corner</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: black;
-    }
-
-    .video-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    .video-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: -0.5;
-    }
-
-    .hero {
-      position: relative;
-      text-align: center;
-      color: white;
-      padding: 50px 20px;
-    }
-
-    .logo {
-      width: 200px;
-      margin: 0.5px auto;
-      display: block;
-    }
-
-    .hero h1 {
-      font-size: 5em;
-      margin: 0;
-    }
-
-    .hero p {
-      font-size: 1.5em;
-      margin: 10px 0;
-    }
-
-    .cta button {
-      background: white;
-      color: black;
-      padding: 10px 20px;
-      font-size: 1.3em;
-      border: none;
-      border-radius: 90px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .cta button:hover {
-      background: #1500ff;
-      color: white;
-    }
-
-    .popup,
-    .overlay {
-      display: none;
-      position: fixed;
-      z-index: 999;
-    }
-
-    .overlay {
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-    }
-
-    .popup {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      max-width: 600px;
-      width: 90%;
-      border-radius: 10px;
-    }
-
-    .popup-header {
-      font-size: 2em;
-      margin-bottom: 20px;
-      text-align: center;
-      color: black;
-    }
-
-    .popup form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .popup input,
-    .popup select,
-    .popup button {
-      font-size: 1em;
-      padding: 10px;
-      border-radius: 4px;
-    }
-
-    .popup input,
-    .popup select {
-      border: 1px solid #ccc;
-    }
-
-    .popup button {
-      background: #6200ea;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    .popup button:hover {
-      background: #4500b5;
-    }
-
-    @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 2.5em;
-      }
-
-      .hero p {
-        font-size: 1em;
-      }
-
-      .popup {
-        width: 95%;
-        padding: 15px;
-      }
-
-      .popup-header {
-        font-size: 1.5em;
-      }
-
-      .cta button {
-        font-size: 1em;
-      }
-    }
+    body { margin: 0; font-family: Arial, sans-serif; color: black; }
+    .video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+    .video-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: -0.5; }
+    .hero { position: relative; text-align: center; color: white; padding: 50px 20px; }
+    .logo { width: 200px; margin: 0.5px auto; display: block; }
+    .hero h1 { font-size: 5em; margin: 0; }
+    .hero p { font-size: 1.5em; margin: 10px 0; }
+    .cta button { background: white; color: black; padding: 10px 20px; font-size: 1.3em; border: none; border-radius: 90px; cursor: pointer; margin-top: 20px; }
+    .cta button:hover { background: #1500ff; color: white; }
+    .popup, .overlay { display: none; position: fixed; z-index: 999; }
+    .overlay { top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+    .popup { top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; max-width: 600px; width: 90%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .popup-header { font-size: 2em; margin-bottom: 20px; text-align: center; color: black; }
+    .popup form { display: flex; flex-direction: column; gap: 15px; }
+    .popup input, .popup select, .popup button { font-size: 1em; padding: 10px; border-radius: 4px; }
+    .popup input, .popup select { border: 1px solid #ccc; }
+    .popup button { background: #6200ea; color: white; border: none; cursor: pointer; }
+    .popup button:hover { background: #4500b5; }
   </style>
 </head>
 <body>
 
 <video class="video-bg" autoplay muted loop>
   <source src="2894881-uhd_3840_2160_24fps.mp4" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
 <div class="video-overlay"></div>
 
@@ -178,9 +45,10 @@
 <div class="popup" id="popup">
   <div class="popup-header">Enter Your Contact Details</div>
   <form id="contactForm">
-    <input type="text" name="name" placeholder="Full Name" required />
-    <input type="tel" name="phone" placeholder="Phone Number" required />
-    <input type="text" name="address" placeholder="Address" required />
+    <input type="text" name="name" placeholder="Full Name" required pattern="[A-Za-z ]+" title="Please enter only letters and spaces" />
+    <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit phone number" />
+    <input type="text" name="building" placeholder="Address" required />
+    
     <select name="cuisine" required>
       <option value="" disabled selected>Favourite Cuisine</option>
       <option value="Indian">Indian</option>
@@ -189,14 +57,18 @@
       <option value="South Indian">South Indian</option>
       <option value="Continental">Continental</option>
     </select>
+
     <input type="text" name="dish" placeholder="Favourite Dish/Beverage" required />
+
     <select name="spice" required>
       <option value="" disabled selected>Spice Level</option>
       <option value="Mild">Mild</option>
       <option value="Medium">Medium</option>
       <option value="Spicy">Spicy</option>
     </select>
+
     <input type="text" name="allergies" placeholder="Allergies (if any)" />
+
     <button type="submit">Submit</button>
   </form>
 </div>
@@ -214,6 +86,7 @@
 
   document.getElementById("contactForm").addEventListener("submit", function(e) {
     e.preventDefault();
+
     const formData = new FormData(this);
     const scriptURL = "https://script.google.com/macros/s/AKfycbzfkIqJ75kTsSbhvEGm5PfjVVoFW0RW238aVbWMDBlS7pr9X0sC5N21AV2C-q_xTCI/exec";
 
@@ -223,6 +96,7 @@
       mode: "no-cors"
     })
     .then(() => {
+      // Redirect to Thank You page
       window.location.href = "thankyou.html";
     })
     .catch(() => {
@@ -230,6 +104,5 @@
     });
   });
 </script>
-
 </body>
 </html>
