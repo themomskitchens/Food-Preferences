@@ -5,102 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout - The Food Corner</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #fff8f0;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    h1 {
-      color: #ff5722;
-      font-size: 2.5em;
-      margin-bottom: 30px;
-    }
-
-    .product-selection,
-    .quantity-selection,
-    .payment-methods {
-      margin: 20px 0;
-    }
-
-    select,
-    input {
-      padding: 10px;
-      font-size: 1em;
-      margin: 10px;
-      border-radius: 4px;
-      width: 200px;
-    }
-
-    .cta-button {
-      background-color: #ff5722;
-      color: white;
-      padding: 12px 30px;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 40px;
-      cursor: pointer;
-      margin-top: 30px;
-      text-decoration: none;
-    }
-
-    .cta-button:hover {
-      background-color: #e64a19;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #fff8f0; }
+    h1 { text-align: center; color: #ff5722; }
+    .order-summary { margin-top: 20px; }
+    .order-summary div { margin: 10px 0; font-size: 1.2em; }
+    .payment-button { padding: 15px 30px; background-color: #ff5722; color: white; border: none; cursor: pointer; width: 100%; font-size: 1.2em; margin-top: 20px; }
   </style>
 </head>
 <body>
 
-  <h1>Checkout</h1>
+<h1>Checkout</h1>
 
-  <!-- Product Selection -->
-  <div class="product-selection">
-    <h2>Select Product</h2>
-    <select id="product" name="product">
-      <option value="Pizza">Pizza</option>
-      <option value="Burger">Burger</option>
-      <option value="Pasta">Pasta</option>
-      <option value="Salad">Salad</option>
-    </select>
-  </div>
+<div class="order-summary">
+  <h2>Order Details</h2>
+  <div id="orderDetails"></div>
+  <div id="totalAmount"></div>
+</div>
 
-  <!-- Quantity Selection -->
-  <div class="quantity-selection">
-    <h2>Select Quantity</h2>
-    <input type="number" id="quantity" name="quantity" min="1" value="1">
-  </div>
+<h2>Select Payment Mode</h2>
+<button class="payment-button" onclick="payOnline()">Pay Online</button>
+<button class="payment-button" onclick="payCOD()">Cash On Delivery</button>
 
-  <!-- Payment Mode Selection -->
-  <div class="payment-methods">
-    <h2>Select Payment Method</h2>
-    <input type="radio" id="online" name="payment" value="Online" checked> <label for="online">Online Payment</label><br>
-    <input type="radio" id="cod" name="payment" value="COD"> <label for="cod">Cash on Delivery</label>
-  </div>
+<script>
+  // Fetch cart data from localStorage
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  let totalAmount = 0;
+  let orderDetails = '';
+  cart.forEach(item => {
+    totalAmount += item.price * item.quantity;
+    orderDetails += `<div>${item.quantity} x ${item.item} - $${item.price * item.quantity}</div>`;
+  });
+  
+  document.getElementById('orderDetails').innerHTML = orderDetails;
+  document.getElementById('totalAmount').innerHTML = `<div>Total: $${totalAmount}</div>`;
 
-  <!-- Confirm Order Button -->
-  <button class="cta-button" id="confirm-order">Confirm Order</button>
+  function payOnline() {
+    window.location.href = 'payment.html'; // Redirect to payment page or QR code generation
+  }
 
-  <script>
-    // Confirm Order button functionality
-    document.getElementById('confirm-order').addEventListener('click', function(e) {
-      // Prevent form submission if any
-      e.preventDefault();
-
-      // Get the selected product, quantity, and payment method
-      const product = document.getElementById('product').value;
-      const quantity = document.getElementById('quantity').value;
-      const payment = document.querySelector('input[name="payment"]:checked').value;
-
-      // Store the order data in localStorage to persist it across pages
-      localStorage.setItem('product', product);
-      localStorage.setItem('quantity', quantity);
-      localStorage.setItem('payment', payment);
-
-      // Redirect to the thank you page
-      window.location.href = 'thankyou.html';
-    });
-  </script>
+  function payCOD() {
+    alert('Order placed. Cash on delivery selected.');
+  }
+</script>
 
 </body>
 </html>
