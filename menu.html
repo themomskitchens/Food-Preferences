@@ -9,97 +9,28 @@
       font-family: Arial, sans-serif;
       background-color: #fff8f0;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    h1 {
       text-align: center;
-      color: #ff5722;
-      font-size: 2.5em;
-      margin-bottom: 30px;
     }
-    
-    .menu-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      width: 80%;
-      margin: 0 auto;
-    }
-
     .menu-item {
-      background-color: #ffffff;
+      border: 1px solid #ccc;
       border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-      text-align: center;
+      padding: 15px;
+      margin: 20px;
+      display: inline-block;
+      width: 250px;
+      background: #fff;
     }
-
-    .menu-item:hover {
-      transform: scale(1.05);
-    }
-
-    .menu-item img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-
-    .menu-item h2 {
-      color: #333;
-      margin: 15px 0;
-      font-size: 1.5em;
-    }
-
-    .menu-item p {
-      color: #777;
-      margin-bottom: 15px;
-    }
-
-    .quantity-container {
-      margin-bottom: 15px;
-    }
-
-    .quantity-container input {
+    input[type="number"] {
       width: 50px;
-      padding: 5px;
-      font-size: 1em;
-      text-align: center;
     }
-
-    .add-to-cart {
-      background-color: #ff5722;
+    .add-to-cart, .checkout-button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background: #ff5722;
       color: white;
-      padding: 12px 24px;
-      font-size: 1.1em;
       border: none;
-      border-radius: 30px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .add-to-cart:hover {
-      background-color: #e64a19;
-    }
-
-    .checkout-button {
-      margin-top: 30px;
-      padding: 15px 30px;
-      background-color: #ff5722;
-      color: white;
-      font-size: 1.5em;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      width: 100%;
-    }
-
-    .checkout-button:hover {
-      background-color: #e64a19;
     }
   </style>
 </head>
@@ -107,56 +38,43 @@
 
 <h1>Menu - The Food Corner</h1>
 
-<!-- Menu Items Grid -->
-<div class="menu-container">
-  <!-- Item 1 -->
-  <div class="menu-item">
-    <img src="pizza.jpg" alt="Pizza" />
-    <h2>Pizza</h2>
-    <p>Deliciously cheesy pizza with a crispy crust.</p>
-    <div class="quantity-container">
-      <input type="number" id="pizza-quantity" value="1" min="1" />
-    </div>
-    <button class="add-to-cart" onclick="addToCart('Pizza', 10, document.getElementById('pizza-quantity').value)">Add to Cart</button>
-  </div>
-
-  <!-- Item 2 -->
-  <div class="menu-item">
-    <img src="burger.jpg" alt="Burger" />
-    <h2>Burger</h2>
-    <p>Juicy beef burger with fresh vegetables and sauce.</p>
-    <div class="quantity-container">
-      <input type="number" id="burger-quantity" value="1" min="1" />
-    </div>
-    <button class="add-to-cart" onclick="addToCart('Burger', 5, document.getElementById('burger-quantity').value)">Add to Cart</button>
-  </div>
-
-  <!-- More items can be added here in a similar format -->
+<div class="menu-item">
+  <h3>Pizza</h3>
+  <p>Rs. 150</p>
+  <input type="number" id="pizzaQty" min="1" value="1">
+  <button class="add-to-cart" onclick="addToCart('Pizza', 150, 'pizzaQty')">Add to Cart</button>
 </div>
 
-<!-- Checkout Button -->
-<button class="checkout-button" onclick="checkout()">Proceed to Checkout</button>
+<div class="menu-item">
+  <h3>Burger</h3>
+  <p>Rs. 80</p>
+  <input type="number" id="burgerQty" min="1" value="1">
+  <button class="add-to-cart" onclick="addToCart('Burger', 80, 'burgerQty')">Add to Cart</button>
+</div>
+
+<!-- Add more items as needed -->
+
+<br><br>
+<button class="checkout-button" onclick="goToCheckout()">Checkout</button>
 
 <script>
-  let cart = [];
+  const cart = [];
 
-  // Function to add items to the cart
-  function addToCart(item, price, quantity) {
-    // Add item to the cart with quantity
-    cart.push({ item, price, quantity });
-    alert(`${quantity} x ${item} added to cart.`);
+  function addToCart(name, price, qtyId) {
+    const quantity = parseInt(document.getElementById(qtyId).value);
+    if (quantity > 0) {
+      cart.push({ name, price, quantity });
+      alert(`${quantity} ${name}(s) added to cart`);
+    }
   }
 
-  // Checkout function to proceed to the checkout page
-  function checkout() {
+  function goToCheckout() {
     if (cart.length === 0) {
-      alert('Your cart is empty. Please add items to your cart.');
-    } else {
-      // Store cart data in local storage for checkout
-      localStorage.setItem('cart', JSON.stringify(cart));
-      // Redirect to the checkout page
-      window.location.href = 'checkout.html';
+      alert("Cart is empty");
+      return;
     }
+    localStorage.setItem("cartData", JSON.stringify(cart));
+    window.location.href = "checkout.html";
   }
 </script>
 
