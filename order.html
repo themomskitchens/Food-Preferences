@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order - The Food Corner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #fff8f0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff5722;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label, select, input[type="number"] {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .submit-btn {
+      background-color: #ff5722;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #e64a19;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Place Your Order</h1>
+  <div class="form-container">
+    <form action="checkout.html" method="GET">
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+      <label for="payment">Mode of Payment:</label>
+      <select id="payment" name="payment" required>
+        <option value="">--Select--</option>
+        <option value="online">Online</option>
+        <option value="cod">Cash on Delivery</option>
+      </select>
+
+      <button type="submit" class="submit-btn">Proceed to Checkout</button>
+    </form>
+  </div>
+
+</body>
+</html>
