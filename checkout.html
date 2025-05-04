@@ -1,52 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout - The Food Corner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background-color: #fff8f0; }
-    h1 { text-align: center; color: #ff5722; }
-    .order-summary { margin-top: 20px; }
-    .order-summary div { margin: 10px 0; font-size: 1.2em; }
-    .payment-button { padding: 15px 30px; background-color: #ff5722; color: white; border: none; cursor: pointer; width: 100%; font-size: 1.2em; margin-top: 20px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .payment {
+      margin-bottom: 20px;
+    }
+    .confirm-button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #qr {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-<h1>Checkout</h1>
+<h2>Order Summary</h2>
+<table id="orderTable">
+  <tr><th>Item</th><th>Qty</th><th>Price</th></tr>
+</table>
+<h3 id="total"></h3>
 
-<div class="order-summary">
-  <h2>Order Details</h2>
-  <div id="orderDetails"></div>
-  <div id="totalAmount"></div>
+<div class="payment">
+  <label>Select Payment Mode:</label><br>
+  <input type="radio" name="payment" value="Online" onchange="toggleQR()"> Online<br>
+  <input type="radio" name="payment" value="COD" onchange="toggleQR()"> Cash on Delivery
 </div>
 
-<h2>Select Payment Mode</h2>
-<button class="payment-button" onclick="payOnline()">Pay Online</button>
-<button class="payment-button" onclick="payCOD()">Cash On Delivery</button>
+<img id="qr" src="your-qr-code.png" alt="Scan to Pay" width="200"/>
+
+<button class="confirm-button" onclick="confirmOrder()">Confirm Your Order</button>
 
 <script>
-  // Fetch cart data from localStorage
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-  let totalAmount = 0;
-  let orderDetails = '';
-  cart.forEach(item => {
-    totalAmount += item.price * item.quantity;
-    orderDetails += `<div>${item.quantity} x ${item.item} - $${item.price * item.quantity}</div>`;
-  });
-  
-  document.getElementById('orderDetails').innerHTML = orderDetails;
-  document.getElementById('totalAmount').innerHTML = `<div>Total: $${totalAmount}</div>`;
+  const cart = JSON.parse(localStorage.getItem("cartData")) || [];
+  const table = document.getElementById("orderTable");
+  let total = 0;
 
-  function payOnline() {
-    // Implement QR code page redirection or payment logic
-    window.location.href = 'payment.html'; // Redirect to payment page or QR code generation
+  cart.forEach(item => {
+    const row = table.insertRow();
+    row.innerHTML = `<td>${item.name}</td><td>${item.quantity}</td><td>Rs. ${item.price * item.quantity}</td>`;
+    total += item.price * item.quantity;
+  });
+
+  document.getElementById("total").innerText = "Total: Rs. " + total;
+
+  function toggleQR() {
+    const payment = document.querySelector('input[name="payment"]:checked').value;
+    document.getElementById("qr").style.display = payment === "Online" ? "block" : "none";
   }
 
-  function payCOD() {
-    alert('Order placed. Cash on delivery selected.');
+  function confirmOrder() {
+    alert("Order confirmed! Thank you for ordering.");
+    localStorage.removeItem("cartData");
+    window.location.href = "thank-you.html";
   }
 </script>
 
