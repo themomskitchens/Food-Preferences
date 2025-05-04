@@ -5,36 +5,136 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Menu - The Food Corner</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #fff8f0; padding: 20px; }
-    h1 { text-align: center; color: #ff5722; font-size: 2.5em; }
-    .menu-item { margin: 20px 0; padding: 20px; background-color: #f9f9f9; border-radius: 5px; }
-    .menu-item h2 { color: #333; }
-    .menu-item .quantity { width: 50px; padding: 5px; }
-    .menu-item .add-to-cart { padding: 10px 20px; background-color: #ff5722; color: white; border: none; cursor: pointer; border-radius: 5px; }
-    .menu-item .add-to-cart:hover { background-color: #e64a19; }
-    .checkout-button { padding: 15px 30px; background-color: #ff5722; color: white; border: none; cursor: pointer; text-align: center; margin-top: 20px; display: block; width: 100%; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #ff5722;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+    }
+    
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .menu-item {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .menu-item:hover {
+      transform: scale(1.05);
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .menu-item h2 {
+      color: #333;
+      margin: 15px 0;
+      font-size: 1.5em;
+    }
+
+    .menu-item p {
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    .quantity-container {
+      margin-bottom: 15px;
+    }
+
+    .quantity-container input {
+      width: 50px;
+      padding: 5px;
+      font-size: 1em;
+      text-align: center;
+    }
+
+    .add-to-cart {
+      background-color: #ff5722;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .add-to-cart:hover {
+      background-color: #e64a19;
+    }
+
+    .checkout-button {
+      margin-top: 30px;
+      padding: 15px 30px;
+      background-color: #ff5722;
+      color: white;
+      font-size: 1.5em;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    .checkout-button:hover {
+      background-color: #e64a19;
+    }
   </style>
 </head>
 <body>
 
-<h1>Menu</h1>
+<h1>Menu - The Food Corner</h1>
 
-<!-- Item 1 -->
-<div class="menu-item">
-  <h2>Pizza</h2>
-  <input type="number" id="pizza-quantity" class="quantity" value="1" min="1" />
-  <button class="add-to-cart" onclick="addToCart('Pizza', 10, document.getElementById('pizza-quantity').value)">Add to Cart</button>
+<!-- Menu Items Grid -->
+<div class="menu-container">
+  <!-- Item 1 -->
+  <div class="menu-item">
+    <img src="pizza.jpg" alt="Pizza" />
+    <h2>Pizza</h2>
+    <p>Deliciously cheesy pizza with a crispy crust.</p>
+    <div class="quantity-container">
+      <input type="number" id="pizza-quantity" value="1" min="1" />
+    </div>
+    <button class="add-to-cart" onclick="addToCart('Pizza', 10, document.getElementById('pizza-quantity').value)">Add to Cart</button>
+  </div>
+
+  <!-- Item 2 -->
+  <div class="menu-item">
+    <img src="burger.jpg" alt="Burger" />
+    <h2>Burger</h2>
+    <p>Juicy beef burger with fresh vegetables and sauce.</p>
+    <div class="quantity-container">
+      <input type="number" id="burger-quantity" value="1" min="1" />
+    </div>
+    <button class="add-to-cart" onclick="addToCart('Burger', 5, document.getElementById('burger-quantity').value)">Add to Cart</button>
+  </div>
+
+  <!-- More items can be added here in a similar format -->
 </div>
 
-<!-- Item 2 -->
-<div class="menu-item">
-  <h2>Burger</h2>
-  <input type="number" id="burger-quantity" class="quantity" value="1" min="1" />
-  <button class="add-to-cart" onclick="addToCart('Burger', 5, document.getElementById('burger-quantity').value)">Add to Cart</button>
-</div>
-
-<!-- More items here -->
-
+<!-- Checkout Button -->
 <button class="checkout-button" onclick="checkout()">Proceed to Checkout</button>
 
 <script>
@@ -42,7 +142,7 @@
 
   // Function to add items to the cart
   function addToCart(item, price, quantity) {
-    // Add item and quantity to the cart
+    // Add item to the cart with quantity
     cart.push({ item, price, quantity });
     alert(`${quantity} x ${item} added to cart.`);
   }
@@ -50,9 +150,9 @@
   // Checkout function to proceed to the checkout page
   function checkout() {
     if (cart.length === 0) {
-      alert('Your cart is empty.');
+      alert('Your cart is empty. Please add items to your cart.');
     } else {
-      // Store cart data in local storage
+      // Store cart data in local storage for checkout
       localStorage.setItem('cart', JSON.stringify(cart));
       // Redirect to the checkout page
       window.location.href = 'checkout.html';
