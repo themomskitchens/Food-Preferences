@@ -6,55 +6,100 @@
   <title>Checkout - The Food Corner</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
+      font-family: 'Arial', sans-serif;
       background-color: #fff8f0;
+      padding: 60px 20px;
       text-align: center;
     }
 
     h1 {
       color: #ff5722;
+      font-size: 2.5em;
       margin-bottom: 30px;
     }
 
-    .summary {
-      font-size: 1.2em;
-      margin-bottom: 30px;
+    .product-selection,
+    .quantity-selection,
+    .payment-methods {
+      margin: 20px 0;
     }
 
-    .confirm-btn {
+    select,
+    input {
+      padding: 10px;
+      font-size: 1em;
+      margin: 10px;
+      border-radius: 4px;
+      width: 200px;
+    }
+
+    .cta-button {
       background-color: #ff5722;
       color: white;
       padding: 12px 30px;
-      font-size: 18px;
+      font-size: 1.2em;
       border: none;
-      border-radius: 8px;
+      border-radius: 40px;
       cursor: pointer;
+      margin-top: 30px;
       text-decoration: none;
     }
 
-    .confirm-btn:hover {
+    .cta-button:hover {
       background-color: #e64a19;
     }
   </style>
 </head>
 <body>
 
-  <h1>Order Summary</h1>
-  <div class="summary">
-    <p><strong>Quantity:</strong> <span id="orderQuantity"></span></p>
-    <p><strong>Payment Mode:</strong> <span id="paymentMode"></span></p>
+  <h1>Checkout</h1>
+
+  <!-- Product Selection -->
+  <div class="product-selection">
+    <h2>Select Product</h2>
+    <select id="product" name="product">
+      <option value="Pizza">Pizza</option>
+      <option value="Burger">Burger</option>
+      <option value="Pasta">Pasta</option>
+      <option value="Salad">Salad</option>
+    </select>
   </div>
 
-  <a href="final.html" class="confirm-btn">Confirm Order</a>
+  <!-- Quantity Selection -->
+  <div class="quantity-selection">
+    <h2>Select Quantity</h2>
+    <input type="number" id="quantity" name="quantity" min="1" value="1">
+  </div>
+
+  <!-- Payment Mode Selection -->
+  <div class="payment-methods">
+    <h2>Select Payment Method</h2>
+    <input type="radio" id="online" name="payment" value="Online" checked> <label for="online">Online Payment</label><br>
+    <input type="radio" id="cod" name="payment" value="COD"> <label for="cod">Cash on Delivery</label>
+  </div>
+
+  <!-- Confirm Order Button -->
+  <button class="cta-button" id="confirm-order">Confirm Order</button>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const quantity = urlParams.get('quantity');
-    const payment = urlParams.get('payment');
+    // Confirm Order button functionality
+    document.getElementById('confirm-order').addEventListener('click', function(e) {
+      // Prevent form submission if any
+      e.preventDefault();
 
-    document.getElementById('orderQuantity').textContent = quantity;
-    document.getElementById('paymentMode').textContent = payment === 'cod' ? 'Cash on Delivery' : 'Online';
+      // Get the selected product, quantity, and payment method
+      const product = document.getElementById('product').value;
+      const quantity = document.getElementById('quantity').value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
+
+      // Store the order data in localStorage to persist it across pages
+      localStorage.setItem('product', product);
+      localStorage.setItem('quantity', quantity);
+      localStorage.setItem('payment', payment);
+
+      // Redirect to the thank you page
+      window.location.href = 'thankyou.html';
+    });
   </script>
 
 </body>
