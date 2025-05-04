@@ -1,80 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
-    .payment {
-      margin-bottom: 20px;
-    }
-    .confirm-button {
-      padding: 10px 20px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    #qr {
-      display: none;
-    }
-  </style>
 </head>
-<body>
+<body style="font-family: sans-serif; padding: 20px; text-align: center;">
+  <h2>Order Summary</h2>
+  <div id="orderList"></div>
+  <h3 id="total"></h3>
 
-<h2>Order Summary</h2>
-<table id="orderTable">
-  <tr><th>Item</th><th>Qty</th><th>Price</th></tr>
-</table>
-<h3 id="total"></h3>
+  <div>
+    <h4>Choose Payment Mode:</h4>
+    <input type="radio" name="payment" value="Online" onchange="toggleQR()"> Online<br>
+    <input type="radio" name="payment" value="COD" onchange="toggleQR()"> Cash on Delivery
+  </div>
 
-<div class="payment">
-  <label>Select Payment Mode:</label><br>
-  <input type="radio" name="payment" value="Online" onchange="toggleQR()"> Online<br>
-  <input type="radio" name="payment" value="COD" onchange="toggleQR()"> Cash on Delivery
-</div>
+  <div id="qrCode" style="display:none; margin-top: 10px;">
+    <p>Scan to Pay:</p>
+    <img src="your-qr.png" alt="QR Code" width="200">
+  </div>
 
-<img id="qr" src="your-qr-code.png" alt="Scan to Pay" width="200"/>
+  <br>
+  <button onclick="confirmOrder()">Confirm Order</button>
 
-<button class="confirm-button" onclick="confirmOrder()">Confirm Your Order</button>
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cartData") || "[]");
+    let total = 0;
+    const list = document.getElementById("orderList");
 
-<script>
-  const cart = JSON.parse(localStorage.getItem("cartData")) || [];
-  const table = document.getElementById("orderTable");
-  let total = 0;
+    cart.forEach(item => {
+      const line = `${item.name} x ${item.quantity} = Rs.${item.price * item.quantity}`;
+      list.innerHTML += `<p>${line}</p>`;
+      total += item.price * item.quantity;
+    });
 
-  cart.forEach(item => {
-    const row = table.insertRow();
-    row.innerHTML = `<td>${item.name}</td><td>${item.quantity}</td><td>Rs. ${item.price * item.quantity}</td>`;
-    total += item.price * item.quantity;
-  });
+    document.getElementById("total").innerText = "Total: Rs. " + total;
 
-  document.getElementById("total").innerText = "Total: Rs. " + total;
+    function toggleQR() {
+      const selected = document.querySelector('input[name="payment"]:checked').value;
+      document.getElementById("qrCode").style.display = selected === "Online" ? "block" : "none";
+    }
 
-  function toggleQR() {
-    const payment = document.querySelector('input[name="payment"]:checked').value;
-    document.getElementById("qr").style.display = payment === "Online" ? "block" : "none";
-  }
-
-  function confirmOrder() {
-    alert("Order confirmed! Thank you for ordering.");
-    localStorage.removeItem("cartData");
-    window.location.href = "thank-you.html";
-  }
-</script>
-
+    function confirmOrder() {
+      alert("Order confirmed! Thank you.");
+      localStorage.removeItem("cartData");
+      window.location.href = "thankyou.html";
+    }
+  </script>
 </body>
 </html>
