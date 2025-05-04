@@ -3,80 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menu - The Food Corner</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #fff8f0;
-      padding: 20px;
-      text-align: center;
-    }
-    .menu-item {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 20px;
-      display: inline-block;
-      width: 250px;
-      background: #fff;
-    }
-    input[type="number"] {
-      width: 50px;
-    }
-    .add-to-cart, .checkout-button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      background: #ff5722;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+  <title>Menu</title>
 </head>
-<body>
+<body style="font-family: sans-serif; text-align: center; padding: 20px;">
+  <h1>Menu</h1>
 
-<h1>Menu - The Food Corner</h1>
+  <div>
+    <h3>Pizza - Rs.150</h3>
+    Qty: <input type="number" id="pizzaQty" min="1" value="1">
+    <button onclick="addToCart('Pizza', 150, 'pizzaQty')">Add to Cart</button>
+  </div>
 
-<div class="menu-item">
-  <h3>Pizza</h3>
-  <p>Rs. 150</p>
-  <input type="number" id="pizzaQty" min="1" value="1">
-  <button class="add-to-cart" onclick="addToCart('Pizza', 150, 'pizzaQty')">Add to Cart</button>
-</div>
+  <div>
+    <h3>Burger - Rs.80</h3>
+    Qty: <input type="number" id="burgerQty" min="1" value="1">
+    <button onclick="addToCart('Burger', 80, 'burgerQty')">Add to Cart</button>
+  </div>
 
-<div class="menu-item">
-  <h3>Burger</h3>
-  <p>Rs. 80</p>
-  <input type="number" id="burgerQty" min="1" value="1">
-  <button class="add-to-cart" onclick="addToCart('Burger', 80, 'burgerQty')">Add to Cart</button>
-</div>
+  <br><br>
+  <button onclick="goToCheckout()">Checkout</button>
 
-<!-- Add more items as needed -->
+  <script>
+    let cart = [];
 
-<br><br>
-<button class="checkout-button" onclick="goToCheckout()">Checkout</button>
-
-<script>
-  const cart = [];
-
-  function addToCart(name, price, qtyId) {
-    const quantity = parseInt(document.getElementById(qtyId).value);
-    if (quantity > 0) {
-      cart.push({ name, price, quantity });
-      alert(`${quantity} ${name}(s) added to cart`);
+    function addToCart(name, price, qtyId) {
+      const qty = parseInt(document.getElementById(qtyId).value);
+      if (qty > 0) {
+        cart.push({ name, price, quantity: qty });
+        alert(`${qty} ${name}(s) added to cart.`);
+      }
     }
-  }
 
-  function goToCheckout() {
-    if (cart.length === 0) {
-      alert("Cart is empty");
-      return;
+    function goToCheckout() {
+      if (cart.length === 0) {
+        alert("Cart is empty!");
+        return;
+      }
+      localStorage.setItem("cartData", JSON.stringify(cart));
+      window.location.href = "checkout.html";
     }
-    localStorage.setItem("cartData", JSON.stringify(cart));
-    window.location.href = "checkout.html";
-  }
-</script>
-
+  </script>
 </body>
 </html>
