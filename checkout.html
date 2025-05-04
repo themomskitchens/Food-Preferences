@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout - The Food Corner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #fff8f0;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff5722;
+      margin-bottom: 30px;
+    }
+
+    .summary {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .confirm-btn {
+      background-color: #ff5722;
+      color: white;
+      padding: 12px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .confirm-btn:hover {
+      background-color: #e64a19;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Order Summary</h1>
+  <div class="summary">
+    <p><strong>Quantity:</strong> <span id="orderQuantity"></span></p>
+    <p><strong>Payment Mode:</strong> <span id="paymentMode"></span></p>
+  </div>
+
+  <a href="final.html" class="confirm-btn">Confirm Order</a>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const quantity = urlParams.get('quantity');
+    const payment = urlParams.get('payment');
+
+    document.getElementById('orderQuantity').textContent = quantity;
+    document.getElementById('paymentMode').textContent = payment === 'cod' ? 'Cash on Delivery' : 'Online';
+  </script>
+
+</body>
+</html>
