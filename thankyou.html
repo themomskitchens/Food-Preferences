@@ -5,108 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thank You - The Food Corner</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #fff8f0;
-      padding: 60px 20px;
-    }
-
-    h1 {
-      color: #ff5722;
-      font-size: 3em;
-    }
-
-    p {
-      font-size: 1.3em;
-      margin: 20px 0;
-    }
-
-    .order-summary {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      margin-top: 30px;
-    }
-
-    .order-summary h2 {
-      color: #ff5722;
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-
-    .order-summary p {
-      font-size: 1.1em;
-      margin: 10px 0;
-    }
-
-    .cta-button {
-      padding: 15px 30px;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 40px;
-      background-color: #ff5722;
-      color: white;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s;
-      margin-top: 30px;
-    }
-
-    .cta-button:hover {
-      background-color: #e64a19;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; background-color: #fff8f0; padding: 60px 20px; }
+    h1 { color: #ff5722; font-size: 3em; }
+    p { font-size: 1.3em; margin: 20px 0; }
+    .order-button { padding: 15px 30px; font-size: 1.2em; border: none; border-radius: 40px; background-color: #ff5722; color: white; cursor: pointer; text-decoration: none; transition: background-color 0.3s; }
+    .order-button:hover { background-color: #e64a19; }
   </style>
 </head>
 <body>
 
-  <h1>Thank You for Your Order!</h1>
-  <p>Your order has been successfully placed. Below are the details:</p>
-
-  <!-- Order Summary Section -->
-  <div class="order-summary">
-    <h2>Order Summary</h2>
-
-    <p><strong>Product:</strong> <span id="product-display"></span></p>
-    <p><strong>Quantity:</strong> <span id="quantity-display"></span></p>
-    <p><strong>Payment Method:</strong> <span id="payment-display"></span></p>
-
-    <p><strong>Total Amount:</strong> <span id="total-display"></span></p>
-  </div>
-
-  <!-- Back to Home Button -->
-  <a href="home.html" class="cta-button">Back to Home</a>
-
-  <script>
-    // Retrieve order data from localStorage
-    const product = localStorage.getItem('product');
-    const quantity = localStorage.getItem('quantity');
-    const payment = localStorage.getItem('payment');
-
-    // Example price, can be dynamically calculated based on product and quantity
-    const productPrices = {
-      'Pizza': 10,
-      'Burger': 5,
-      'Pasta': 7,
-      'Salad': 4
-    };
-
-    // Calculate total price (for demonstration purposes)
-    const totalAmount = productPrices[product] * quantity;
-
-    // Check if order data exists
-    if (product && quantity && payment) {
-      // Display the order details
-      document.getElementById('product-display').textContent = product;
-      document.getElementById('quantity-display').textContent = quantity;
-      document.getElementById('payment-display').textContent = payment;
-      document.getElementById('total-display').textContent = `$${totalAmount}`;
-    } else {
-      // If no order data exists, redirect to checkout
-      window.location.href = 'checkout.html';
-    }
-  </script>
+  <h1>Thank You!</h1>
+  <p>Your details have been submitted successfully.</p>
+  <p>Ready to place your order?</p>
+  <a href="menu.html" class="order-button">Place an Order</a>
 
 </body>
 </html>
