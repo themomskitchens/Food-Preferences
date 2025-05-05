@@ -135,5 +135,22 @@
       <button class="add-btn"><i class="fas fa-plus"></i> Add to Cart</button>
     </div>
   </div>
+
+  <!-- JavaScript for Add to Cart -->
+  <script>
+    const cart = [];
+
+    document.querySelectorAll('.add-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.card');
+        const name = card.querySelector('h3').childNodes[0].nodeValue.trim();
+        const price = card.querySelector('.price').textContent.trim();
+
+        cart.push({ name, price });
+        alert(`${name} added to cart!\nTotal Items: ${cart.length}`);
+        console.log(cart);
+      });
+    });
+  </script>
 </body>
 </html>
