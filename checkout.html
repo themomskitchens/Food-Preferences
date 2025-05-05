@@ -1,140 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout - The Food Corner</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff3e0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #ff5722;
-    }
-    .cart-summary {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .total {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-top: 20px;
-    }
-    .payment-options {
-      margin-top: 30px;
-    }
-    .qr-code {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
-    }
-    .qr-code img {
-      width: 200px;
-      height: auto;
-    }
-    .btn {
-      display: block;
-      margin: 30px auto;
-      padding: 12px 25px;
-      background: #ff5722;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background: #e64a19;
-    }
+    body { font-family: Arial, sans-serif; background-color: #fff8f0; padding: 20px; }
+    h1 { color: #d94f30; }
+    .cart, .summary { margin-top: 20px; }
+    .item { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding: 10px 0; }
+    .payment-options { margin: 20px 0; }
+    .qr, .confirmation, .whatsapp { display: none; margin-top: 20px; }
+    button { padding: 10px 15px; background: #d94f30; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #a3361e; }
+    .order-id { font-weight: bold; font-size: 1.2em; color: #444; }
   </style>
 </head>
 <body>
+
   <h1>Checkout</h1>
-  <div class="cart-summary" id="cartSummary"></div>
 
-  <div class="payment-options">
-    <h3>Select Payment Method:</h3>
-    <label><input type="radio" name="payment" value="online" /> Online</label><br/>
-    <label><input type="radio" name="payment" value="cod" /> Cash on Delivery</label>
+  <div class="cart" id="cart"></div>
+
+  <div class="summary">
+    <p class="order-id">Your Order ID is: <span id="orderId"></span></p>
+
+    <div class="payment-options">
+      <p><strong>Select Payment Mode:</strong></p>
+      <input type="radio" id="online" name="payment" value="Online"> <label for="online">Online</label><br>
+      <input type="radio" id="cod" name="payment" value="COD"> <label for="cod">Cash on Delivery</label>
+    </div>
+
+    <button onclick="handlePayment()">Confirm Order</button>
   </div>
 
-  <div class="qr-code" id="qrCodeSection">
-    <p>Scan this QR code to pay:</p>
-    <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=your_upi_id@upi&pn=TheFoodCorner&am=0&cu=INR" alt="QR Code" id="qrCodeImage"/>
+  <div class="qr" id="qr">
+    <h3>Scan QR to Pay:</h3>
+    <img src="https://via.placeholder.com/200x200.png?text=Scan+to+Pay" alt="QR Code">
   </div>
 
-  <button class="btn" onclick="confirmOrder()">Confirm Order</button>
+  <div class="confirmation" id="confirmation">
+    <h3>Order Confirmed! Thank you!</h3>
+  </div>
+
+  <div class="whatsapp" id="whatsapp">
+    <button onclick="sendWhatsApp()">Notify via WhatsApp</button>
+  </div>
 
   <script>
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartSummary = document.getElementById("cartSummary");
-    const qrSection = document.getElementById("qrCodeSection");
-    const qrImage = document.getElementById("qrCodeImage");
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    let totalAmount = 0;
+    const cartContainer = document.getElementById("cart");
     if (cart.length === 0) {
-      cartSummary.innerHTML = "<p>Your cart is empty.</p>";
+      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
     } else {
       cart.forEach(item => {
-        const subtotal = item.price * item.quantity;
-        totalAmount += subtotal;
-        const itemDiv = document.createElement("div");
-        itemDiv.className = "cart-item";
-        itemDiv.innerHTML = `
-          <div>${item.name} x${item.quantity}</div>
-          <div>₹${subtotal}</div>
-        `;
-        cartSummary.appendChild(itemDiv);
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<span>${item.name} x${item.quantity}</span><span>₹${item.price * item.quantity}</span>`;
+        cartContainer.appendChild(div);
       });
-
-      const totalDiv = document.createElement("div");
-      totalDiv.className = "total";
-      totalDiv.innerHTML = `Total: ₹${totalAmount}`;
-      cartSummary.appendChild(totalDiv);
-
-      // Update QR with correct amount
-      qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=your_upi_id@upi&pn=TheFoodCorner&am=${totalAmount}&cu=INR`;
     }
 
-    // Show QR when Online payment is selected
-    document.querySelectorAll("input[name='payment']").forEach((radio) => {
-      radio.addEventListener("change", function () {
-        if (this.value === "online") {
-          qrSection.style.display = "block";
-        } else {
-          qrSection.style.display = "none";
-        }
-      });
-    });
+    // Generate a dummy order ID
+    const orderId = "ORD" + Math.floor(Math.random() * 1000000);
+    document.getElementById("orderId").innerText = orderId;
 
-    function confirmOrder() {
-      const selectedPayment = document.querySelector("input[name='payment']:checked");
-      if (!selectedPayment) {
+    function handlePayment() {
+      const paymentMethod = document.querySelector('input[name="payment"]:checked');
+      if (!paymentMethod) {
         alert("Please select a payment method.");
         return;
       }
 
-      if (selectedPayment.value === "online") {
-        alert("Please complete the payment by scanning the QR. Thank you!");
+      if (paymentMethod.value === "Online") {
+        document.getElementById("qr").style.display = "block";
+        document.getElementById("confirmation").style.display = "none";
       } else {
-        alert("Order placed with Cash on Delivery. Thank you!");
+        document.getElementById("confirmation").style.display = "block";
+        document.getElementById("qr").style.display = "none";
       }
 
-      localStorage.removeItem("cart");
-      window.location.href = "thankyou.html"; // Optional: redirect or show message
+      document.getElementById("whatsapp").style.display = "block";
+    }
+
+    function sendWhatsApp() {
+      const message = `🛒 Thank you for your order!\nYour Order ID is: ${orderId}`;
+      const phoneNumber = "919876543210"; // Replace with your WhatsApp number
+      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, "_blank");
     }
   </script>
+
 </body>
 </html>
