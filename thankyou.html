@@ -1,93 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Menu - The Food Corner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - The Food Corner</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       background-color: #fff8f0;
-      padding: 30px;
+      padding: 60px 20px;
     }
-
-    .menu-item {
-      border: 1px solid #ddd;
-      padding: 20px;
-      margin: 20px auto;
-      width: 300px;
-      background-color: white;
-      border-radius: 10px;
+    h1 {
+      color: #ff5722;
+      font-size: 3em;
     }
-
-    button {
-      padding: 10px 20px;
-      background-color: #ff5722;
+    p {
+      font-size: 1.3em;
+      margin: 20px 0;
+    }
+    .order-button {
+      padding: 15px 30px;
+      font-size: 1.2em;
       border: none;
+      border-radius: 40px;
+      background-color: #ff5722;
       color: white;
       cursor: pointer;
-      margin-top: 10px;
-      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
     }
-
-    button:hover {
+    .order-button:hover {
       background-color: #e64a19;
-    }
-
-    input[type="number"] {
-      width: 60px;
-      padding: 5px;
-      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-
-  <h1>Choose Your Items</h1>
-
-  <div class="menu-item">
-    <h3>Pizza - ₹150</h3>
-    <input type="number" id="pizzaQty" min="1" value="1" />
-    <button onclick="addToCart('Pizza', 150, 'pizzaQty')">Add to Cart</button>
-  </div>
-
-  <div class="menu-item">
-    <h3>Burger - ₹80</h3>
-    <input type="number" id="burgerQty" min="1" value="1" />
-    <button onclick="addToCart('Burger', 80, 'burgerQty')">Add to Cart</button>
-  </div>
-
-  <div class="menu-item">
-    <h3>Fries - ₹50</h3>
-    <input type="number" id="friesQty" min="1" value="1" />
-    <button onclick="addToCart('Fries', 50, 'friesQty')">Add to Cart</button>
-  </div>
-
-  <br><br>
-  <button onclick="goToCheckout()">Checkout</button>
-
-  <script>
-    let cart = [];
-
-    function addToCart(name, price, qtyId) {
-      const qty = parseInt(document.getElementById(qtyId).value);
-      if (!qty || qty < 1) {
-        alert("Please enter a valid quantity.");
-        return;
-      }
-      cart.push({ name, price, quantity: qty });
-      alert(`${qty} ${name}(s) added to cart.`);
-    }
-
-    function goToCheckout() {
-      if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-      localStorage.setItem("cartData", JSON.stringify(cart));
-      window.location.href = "checkout.html";
-    }
-  </script>
-
+  <h1>Thank You!</h1>
+  <p>Your details have been successfully submitted.</p>
+  <p>Ready to place your order?</p>
+  <!-- Link to menu page -->
+  <a href="menu.html" class="order-button">Place an Order</a>
 </body>
 </html>
