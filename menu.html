@@ -2,127 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menu - The Food Corner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Food Corner - Menu</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff8f0;
-      color: #333;
-    }
-    header {
-      background: #ff5722;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    .menu-container {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .item-card {
-      background: white;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .item-card h3 {
-      margin: 10px 0;
-    }
-    .item-card p {
-      margin: 5px 0;
-    }
-    .item-card input {
-      width: 50px;
-      padding: 5px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .btn {
-      background: #ff5722;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background: #e64a19;
-    }
-    .checkout {
-      text-align: center;
-      margin: 30px;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f4; color: black; }
+    .container { width: 80%; margin: 20px auto; }
+    h1 { text-align: center; color: #333; }
+    .menu { display: flex; flex-wrap: wrap; justify-content: space-around; }
+    .menu-item { background-color: #fff; border-radius: 8px; padding: 20px; margin: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 250px; text-align: center; }
+    .menu-item img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
+    .menu-item h3 { margin: 10px 0; }
+    .menu-item p { margin: 10px 0; color: #777; }
+    .menu-item button { background-color: #6200ea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    .menu-item button:hover { background-color: #4500b5; }
+    .cart { position: fixed; top: 20px; right: 20px; background-color: #6200ea; color: white; padding: 10px 20px; border-radius: 30px; cursor: pointer; }
+    .cart:hover { background-color: #4500b5; }
+    .cart span { font-weight: bold; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>The Food Corner - Menu</h1>
-    <p>Select your delicious choices</p>
-  </header>
 
-  <div class="menu-container" id="menu">
-    <!-- Sample menu items -->
-    <div class="item-card" data-name="Masala Dosa" data-price="80">
-      <h3>Masala Dosa</h3>
-      <p>₹80</p>
-      <input type="number" min="1" value="1" />
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-    <div class="item-card" data-name="Veg Burger" data-price="120">
-      <h3>Veg Burger</h3>
-      <p>₹120</p>
-      <input type="number" min="1" value="1" />
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-    <div class="item-card" data-name="Paneer Pizza" data-price="200">
-      <h3>Paneer Pizza</h3>
-      <p>₹200</p>
-      <input type="number" min="1" value="1" />
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-    <div class="item-card" data-name="Cold Coffee" data-price="60">
-      <h3>Cold Coffee</h3>
-      <p>₹60</p>
-      <input type="number" min="1" value="1" />
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-  </div>
+  <div class="container">
+    <h1>Menu</h1>
+    <div class="menu">
+      <!-- Menu Items -->
+      <div class="menu-item" id="item1">
+        <img src="https://via.placeholder.com/250" alt="Paneer Pizza">
+        <h3>Paneer Pizza</h3>
+        <p>₹250</p>
+        <input type="number" id="item1-quantity" value="1" min="1" />
+        <button onclick="addToCart('Paneer Pizza', 250, 'item1')">Add to Cart</button>
+      </div>
 
-  <div class="checkout">
-    <button class="btn" onclick="goToCheckout()">Checkout</button>
+      <div class="menu-item" id="item2">
+        <img src="https://via.placeholder.com/250" alt="Cheese Burger">
+        <h3>Cheese Burger</h3>
+        <p>₹150</p>
+        <input type="number" id="item2-quantity" value="1" min="1" />
+        <button onclick="addToCart('Cheese Burger', 150, 'item2')">Add to Cart</button>
+      </div>
+
+      <div class="menu-item" id="item3">
+        <img src="https://via.placeholder.com/250" alt="French Fries">
+        <h3>French Fries</h3>
+        <p>₹120</p>
+        <input type="number" id="item3-quantity" value="1" min="1" />
+        <button onclick="addToCart('French Fries', 120, 'item3')">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Checkout Button -->
+    <button class="cart" onclick="goToCheckout()">Go to Checkout</button>
   </div>
 
   <script>
-    const cart = [];
+    // Cart array to store selected items
+    let cart = [];
 
-    document.querySelectorAll('.add-to-cart').forEach((button, index) => {
-      button.addEventListener('click', () => {
-        const itemCard = button.closest('.item-card');
-        const name = itemCard.dataset.name;
-        const price = parseFloat(itemCard.dataset.price);
-        const qtyInput = itemCard.querySelector('input');
-        const quantity = parseInt(qtyInput.value);
+    // Function to add items to the cart
+    function addToCart(itemName, itemPrice, itemId) {
+      const quantity = document.getElementById(`${itemId}-quantity`).value;
+      const itemTotal = itemPrice * quantity;
 
-        if (quantity > 0) {
-          cart.push({ name, price, quantity });
-          alert(`${name} x${quantity} added to cart!`);
-        }
+      cart.push({
+        name: itemName,
+        price: itemPrice,
+        quantity: quantity,
+        total: itemTotal,
       });
-    });
 
+      // Show success message
+      alert(`${itemName} x${quantity} added to cart!`);
+    }
+
+    // Function to navigate to checkout page with cart details
     function goToCheckout() {
       if (cart.length === 0) {
-        alert("Please add at least one item to your cart.");
+        alert("Your cart is empty. Please add items to cart before proceeding.");
         return;
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+
+      // Passing cart data to checkout page using localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      // Redirect to checkout page
       window.location.href = "checkout.html";
     }
   </script>
+
 </body>
 </html>
