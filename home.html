@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      color: white;
+      color: rgb(0, 0, 0);
       height: 100%;
       overflow: hidden;
     }
@@ -28,7 +28,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
+      padding: 5px;
       background: rgba(255, 255, 255, 0.6);
       z-index: 1;
       position: relative;
@@ -41,31 +41,41 @@
 
     .nav-links {
       display: flex;
-      gap: 20px;
+      gap: 40px;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: white;
+      color: rgb(0, 0, 0);
       font-weight: bold;
     }
 
+    .nav-links img {
+      vertical-align: middle;
+    }
+
     .message {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
-  backdrop-filter: blur(8px);
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 30px;
-  border-radius: 15px;
-  width: 80%;
-  margin: auto;
-  font-size: 24px;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-50%);
+      backdrop-filter: blur(28px);
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 5px;
+      border-radius: 15px;
+      width: 80%;
+      margin: auto;
+      font-size: 24px;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(-50%); }
+    }
   </style>
 </head>
 <body>
@@ -83,9 +93,10 @@
       <a href="menu.html">Menu</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact Us</a>
-      <a href="#"><img src="icons/search.svg" alt="Search" width="20"></a>
-      <a href="login.html"><img src="icons/user.svg" alt="Login" width="20"></a>
-      <a href="cart.html"><img src="icons/cart.svg" alt="Cart" width="20"></a>
+      <a href="#"><img src="C:\Users\LENOVO\Desktop\Manish\The FoodCorner\Landing Page\Live Page\Assets\find_11916806.png" alt="Search" width="20"></a>
+      <a href="cart.html"><img src="C:\Users\LENOVO\Desktop\Manish\The FoodCorner\Landing Page\Live Page\Assets\shopping-bag_18556618.png" alt="Cart" width="20"></a>
+      <a href="login.html"><img src="C:\Users\LENOVO\Desktop\Manish\The FoodCorner\Landing Page\Live Page\Assets\user-profile_5645052.png" alt="Login" width="20"></a>
+
     </div>
   </div>
 
