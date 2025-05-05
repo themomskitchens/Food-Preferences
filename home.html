@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Food Corner - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+      position: relative;
+    }
+
+    .navbar .brand {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    .message {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  width: 80%;
+  margin: auto;
+  font-size: 24px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop class="video-bg">
+    <source src="C:\Users\LENOVO\Desktop\Manish\The FoodCorner\Landing Page\Live Page\Assets\3298718-uhd_4096_2160_25fps.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="brand">The Food Corner</div>
+    <div class="nav-links">
+      <a href="menu.html">Menu</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="#"><img src="icons/search.svg" alt="Search" width="20"></a>
+      <a href="login.html"><img src="icons/user.svg" alt="Login" width="20"></a>
+      <a href="cart.html"><img src="icons/cart.svg" alt="Cart" width="20"></a>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <div class="message">
+    <p>“At The Food Corner, we prioritize freshness, hygiene, and your health. Every meal is crafted with safety and love.”</p>
+  </div>
+
+</body>
+</html>
