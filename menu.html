@@ -5,88 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Food Corner - Menu</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f4; color: black; }
-    .container { width: 80%; margin: 20px auto; }
-    h1 { text-align: center; color: #333; }
-    .menu { display: flex; flex-wrap: wrap; justify-content: space-around; }
-    .menu-item { background-color: #fff; border-radius: 8px; padding: 20px; margin: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 250px; text-align: center; }
-    .menu-item img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
-    .menu-item h3 { margin: 10px 0; }
-    .menu-item p { margin: 10px 0; color: #777; }
-    .menu-item button { background-color: #6200ea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-    .menu-item button:hover { background-color: #4500b5; }
-    .cart { position: fixed; top: 20px; right: 20px; background-color: #6200ea; color: white; padding: 10px 20px; border-radius: 30px; cursor: pointer; }
-    .cart:hover { background-color: #4500b5; }
-    .cart span { font-weight: bold; }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+    .menu { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .menu-item { background-color: white; border-radius: 5px; padding: 15px; width: 200px; }
+    .menu-item img { width: 100%; height: auto; border-radius: 5px; }
+    .item-name { font-weight: bold; margin-top: 10px; }
+    .item-price { margin: 10px 0; color: #6200ea; }
+    button { background-color: #6200ea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #4500b5; }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Menu</h1>
-    <div class="menu">
-      <!-- Menu Items -->
-      <div class="menu-item" id="item1">
-        <img src="https://via.placeholder.com/250" alt="Paneer Pizza">
-        <h3>Paneer Pizza</h3>
-        <p>₹250</p>
-        <input type="number" id="item1-quantity" value="1" min="1" />
-        <button onclick="addToCart('Paneer Pizza', 250, 'item1')">Add to Cart</button>
-      </div>
-
-      <div class="menu-item" id="item2">
-        <img src="https://via.placeholder.com/250" alt="Cheese Burger">
-        <h3>Cheese Burger</h3>
-        <p>₹150</p>
-        <input type="number" id="item2-quantity" value="1" min="1" />
-        <button onclick="addToCart('Cheese Burger', 150, 'item2')">Add to Cart</button>
-      </div>
-
-      <div class="menu-item" id="item3">
-        <img src="https://via.placeholder.com/250" alt="French Fries">
-        <h3>French Fries</h3>
-        <p>₹120</p>
-        <input type="number" id="item3-quantity" value="1" min="1" />
-        <button onclick="addToCart('French Fries', 120, 'item3')">Add to Cart</button>
-      </div>
+  <h1>Menu</h1>
+  <div class="menu">
+    <!-- Example Menu Items -->
+    <div class="menu-item">
+      <img src="images/pizza.jpg" alt="Pizza" />
+      <div class="item-name">Paneer Pizza</div>
+      <div class="item-price">₹300</div>
+      <input type="number" id="paneerPizzaQty" value="1" min="1" />
+      <button onclick="addToCart('Paneer Pizza', 300, document.getElementById('paneerPizzaQty').value)">Add to Cart</button>
     </div>
-
-    <!-- Checkout Button -->
-    <button class="cart" onclick="goToCheckout()">Go to Checkout</button>
+    <!-- Add more items as needed -->
   </div>
 
+  <button onclick="window.location.href='checkout.html'">Checkout</button>
+
   <script>
-    // Cart array to store selected items
-    let cart = [];
-
-    // Function to add items to the cart
-    function addToCart(itemName, itemPrice, itemId) {
-      const quantity = document.getElementById(`${itemId}-quantity`).value;
-      const itemTotal = itemPrice * quantity;
-
-      cart.push({
-        name: itemName,
-        price: itemPrice,
-        quantity: quantity,
-        total: itemTotal,
-      });
-
-      // Show success message
-      alert(`${itemName} x${quantity} added to cart!`);
-    }
-
-    // Function to navigate to checkout page with cart details
-    function goToCheckout() {
-      if (cart.length === 0) {
-        alert("Your cart is empty. Please add items to cart before proceeding.");
-        return;
-      }
-
-      // Passing cart data to checkout page using localStorage
+    function addToCart(name, price, qty) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const total = price * qty;
+      cart.push({ name, price, quantity: qty, total });
       localStorage.setItem('cart', JSON.stringify(cart));
-
-      // Redirect to checkout page
-      window.location.href = "checkout.html";
+      alert(`${name} x${qty} added to cart!`);
     }
   </script>
 
