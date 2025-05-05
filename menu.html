@@ -1,111 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Menu - The Food Corner</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #fff8f4;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #ff5722;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-    }
-    .menu-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 30px;
-    }
-    .menu-item {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-    .menu-item:hover {
-      transform: scale(1.03);
-    }
-    .menu-item img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-    .item-details {
-      padding: 15px;
-    }
-    .item-details h3 {
-      margin: 0;
-      font-size: 20px;
-      color: #333;
-    }
-    .item-details p {
-      margin: 5px 0;
-      color: #777;
-      font-size: 14px;
-    }
-    .price {
-      color: #ff5722;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    .add-btn {
-      background-color: #ff5722;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 10px;
-    }
-    .add-btn:hover {
-      background-color: #e64a19;
-    }
-  </style>
-</head>
-<body>
-  <header>Our Delicious Menu</header>
-
-  <div class="menu-container">
-    <div class="menu-item">
-      <img src="images/paneer-tikka.jpeg" alt="Paneer Tikka">
-      <div class="item-details">
-        <h3>Paneer Tikka</h3>
-        <p>Spicy grilled paneer with herbs</p>
-        <div class="price">₹120</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/images.jpeg" alt="Maggi">
-      <div class="item-details">
-        <h3>Masala Maggi</h3>
-        <p>Classic masala Maggi noodles</p>
-        <div class="price">₹40</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-    
+<!-- Add inside .menu-container -->
 <div class="menu-item">
-      <img src="images/images.jpeg" alt="Fatafat">
-      <div class="item-details">
-        <h3>Fatafat Bhel</h3>
-        <p>Classic Fatafat Bhel</p>
-        <div class="price">₹20</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-    <!-- Add more items here -->
+  <img src="images/amul-kesar.jpg" alt="Amul Kesar Milk">
+  <div class="item-details">
+    <h3>Amul Kesar Milk</h3>
+    <p>Refreshing flavored milk</p>
+    <div class="price">₹25</div>
+    <button class="add-btn">Add to Cart</button>
   </div>
-</body>
-</html>
+</div>
+
+<div class="menu-item">
+  <img src="images/coconut-water.jpg" alt="Coconut Water">
+  <div class="item-details">
+    <h3>Coconut Water</h3>
+    <p>Natural and hydrating</p>
+    <div class="price">₹50</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/diet-coke.jpg" alt="Diet Coke">
+  <div class="item-details">
+    <h3>Diet Coke</h3>
+    <p>Zero calorie soft drink</p>
+    <div class="price">₹25</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/banana-shake.jpg" alt="Banana Shake">
+  <div class="item-details">
+    <h3>Banana Shake</h3>
+    <p>Thick banana milkshake</p>
+    <div class="price">₹30</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/watermelon-juice.jpg" alt="Watermelon Juice">
+  <div class="item-details">
+    <h3>Watermelon Juice</h3>
+    <p>Fresh summer drink</p>
+    <div class="price">₹30</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/sattu-drink.jpg" alt="Sattu Drink">
+  <div class="item-details">
+    <h3>Sattu Drink</h3>
+    <p>Healthy protein-rich drink</p>
+    <div class="price">₹25</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/aloo-patties.jpg" alt="Aloo Patties">
+  <div class="item-details">
+    <h3>Aloo Patties</h3>
+    <p>Crispy potato-filled snack</p>
+    <div class="price">₹20</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/sandwich.jpg" alt="Sandwich">
+  <div class="item-details">
+    <h3>Sandwich</h3>
+    <p>Stuffed fresh sandwich</p>
+    <div class="price">₹25</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/bread-butter.jpg" alt="Bread with Butter">
+  <div class="item-details">
+    <h3>Bread with Butter (2 slices)</h3>
+    <p>Simple & tasty breakfast</p>
+    <div class="price">₹15</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/bhelpuri.jpg" alt="Bhel Puri">
+  <div class="item-details">
+    <h3>Bhel Puri</h3>
+    <p>Spicy puffed rice snack</p>
+    <div class="price">₹20</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/kurkure-chat.jpg" alt="Kurkure Chat">
+  <div class="item-details">
+    <h3>Kurkure Chat</h3>
+    <p>Crunchy kurkure with masala</p>
+    <div class="price">₹30</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/veg-masala-maggi.jpg" alt="Vegetable Masala Maggi">
+  <div class="item-details">
+    <h3>Vegetable Masala Maggi</h3>
+    <p>Maggi with fresh veggies</p>
+    <div class="price">₹40</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
+
+<div class="menu-item">
+  <img src="images/chinese-noodles.jpg" alt="Chinese Noodles">
+  <div class="item-details">
+    <h3>Chinese Noodles</h3>
+    <p>Delicious street-style noodles</p>
+    <div class="price">₹50</div>
+    <button class="add-btn">Add to Cart</button>
+  </div>
+</div>
