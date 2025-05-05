@@ -92,18 +92,18 @@
 
     fetch(scriptURL, {
       method: "POST",
-      body: formData,
-      mode: "no-cors"
+      body: formData
     })
-    .then(() => {
-      // Redirect to Thank You page after successful form submission
-      window.location.href = "thankyou.html";  // Ensure thankyou.html is created in your project
+    .then(response => {
+      // Delay a moment before redirect for better UX
+      setTimeout(() => {
+        window.location.href = "thankyou.html";
+      }, 500);
     })
     .catch(() => {
       alert("There was a problem submitting your data. Please try again.");
     });
   });
 </script>
-
 </body>
 </html>
