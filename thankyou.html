@@ -6,54 +6,63 @@
   <title>Thank You - The Food Corner</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      color: white;
-      background: linear-gradient(to right, #ff4e50, #f9d423);
+      background: #fff3e0;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
-      text-align: center;
+      margin: 0;
     }
-    .container {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 40px;
+    .thankyou-box {
+      background: white;
+      padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-      max-width: 500px;
-      width: 90%;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     h1 {
-      font-size: 3em;
+      color: #ff5722;
       margin-bottom: 10px;
     }
     p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    .order-id {
+      font-weight: bold;
+      color: #4caf50;
+      margin: 15px 0;
     }
     .btn {
-      background: white;
-      color: #333;
-      padding: 15px 30px;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #ff5722;
+      color: white;
       border: none;
-      border-radius: 30px;
-      font-size: 1em;
+      border-radius: 20px;
       cursor: pointer;
-      transition: background 0.3s;
+      font-size: 16px;
     }
     .btn:hover {
-      background: #333;
-      color: white;
+      background: #e64a19;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Thank You!</h1>
-    <p>Your preferences have been received.<br>We're excited to serve you soon 🍽️</p>
-    <button class="btn" onclick="window.location.href='menu.html'">Place Your Order</button>
+  <div class="thankyou-box">
+    <h1>🎉 Thank You!</h1>
+    <p>Your order has been placed successfully.</p>
+    <div class="order-id" id="orderId">Order ID: #TFC<span id="randomId"></span></div>
+    <p>We'll get started on your food right away!</p>
+    <button class="btn" onclick="window.location.href='index.html'">Go to Home</button>
   </div>
+
+  <script>
+    // Random order ID generation
+    const randomNum = Math.floor(100000 + Math.random() * 900000);
+    document.getElementById("randomId").textContent = randomNum;
+  </script>
 </body>
 </html>
