@@ -6,80 +6,129 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       background-color: #fff8f0;
-      padding: 30px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff5722;
+      margin-bottom: 30px;
+    }
+
+    .menu-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
     }
 
     .menu-item {
-      border: 1px solid #ddd;
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 260px;
       padding: 20px;
-      margin: 20px auto;
-      width: 300px;
-      background-color: white;
-      border-radius: 10px;
+      text-align: center;
     }
 
-    button {
-      padding: 10px 20px;
-      background-color: #ff5722;
-      border: none;
-      color: white;
-      cursor: pointer;
-      margin-top: 10px;
-      border-radius: 5px;
+    .menu-item h3 {
+      margin: 10px 0;
+      color: #333;
     }
 
-    button:hover {
-      background-color: #e64a19;
+    .menu-item p {
+      margin: 5px 0;
+      color: #777;
     }
 
     input[type="number"] {
       width: 60px;
       padding: 5px;
       margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .add-btn {
+      display: block;
+      margin: 15px auto 0;
+      padding: 10px 20px;
+      background-color: #ff5722;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-btn:hover {
+      background-color: #e64a19;
+    }
+
+    .checkout-btn {
+      margin-top: 40px;
+      padding: 15px 30px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+
+    .checkout-btn:hover {
+      background-color: #388e3c;
     }
   </style>
 </head>
 <body>
 
-  <h1>Choose Your Items</h1>
+  <h1>Our Menu</h1>
 
-  <div class="menu-item">
-    <h3>Pizza - ₹150</h3>
-    <input type="number" id="pizzaQty" min="1" value="1" />
-    <button onclick="addToCart('Pizza', 150, 'pizzaQty')">Add to Cart</button>
+  <div class="menu-container">
+    <div class="menu-item">
+      <h3>Pizza</h3>
+      <p>₹150</p>
+      <input type="number" id="pizzaQty" value="1" min="1" />
+      <button class="add-btn" onclick="addToCart('Pizza', 150, 'pizzaQty')">Add to Cart</button>
+    </div>
+
+    <div class="menu-item">
+      <h3>Burger</h3>
+      <p>₹80</p>
+      <input type="number" id="burgerQty" value="1" min="1" />
+      <button class="add-btn" onclick="addToCart('Burger', 80, 'burgerQty')">Add to Cart</button>
+    </div>
+
+    <div class="menu-item">
+      <h3>Fries</h3>
+      <p>₹50</p>
+      <input type="number" id="friesQty" value="1" min="1" />
+      <button class="add-btn" onclick="addToCart('Fries', 50, 'friesQty')">Add to Cart</button>
+    </div>
+
+    <div class="menu-item">
+      <h3>Cold Coffee</h3>
+      <p>₹60</p>
+      <input type="number" id="coffeeQty" value="1" min="1" />
+      <button class="add-btn" onclick="addToCart('Cold Coffee', 60, 'coffeeQty')">Add to Cart</button>
+    </div>
   </div>
 
-  <div class="menu-item">
-    <h3>Burger - ₹80</h3>
-    <input type="number" id="burgerQty" min="1" value="1" />
-    <button onclick="addToCart('Burger', 80, 'burgerQty')">Add to Cart</button>
-  </div>
-
-  <div class="menu-item">
-    <h3>Fries - ₹50</h3>
-    <input type="number" id="friesQty" min="1" value="1" />
-    <button onclick="addToCart('Fries', 50, 'friesQty')">Add to Cart</button>
-  </div>
-
-  <br><br>
-  <button onclick="goToCheckout()">Checkout</button>
+  <button class="checkout-btn" onclick="goToCheckout()">Checkout</button>
 
   <script>
     let cart = [];
 
     function addToCart(name, price, qtyId) {
-      const qtyInput = document.getElementById(qtyId);
-      const qty = parseInt(qtyInput.value);
-
+      const qty = parseInt(document.getElementById(qtyId).value);
       if (!qty || qty < 1) {
         alert("Please enter a valid quantity.");
         return;
       }
-
-      const item = { name: name, price: price, quantity: qty };
-      cart.push(item);
+      cart.push({ name, price, quantity: qty });
       alert(`${qty} ${name}(s) added to cart.`);
     }
 
