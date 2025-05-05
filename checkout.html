@@ -1,49 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Checkout</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout - The Food Corner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff3e0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ff5722;
+    }
+    .cart-summary {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    .payment-options {
+      margin-top: 30px;
+    }
+    .qr-code {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .qr-code img {
+      width: 200px;
+      height: auto;
+    }
+    .btn {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 25px;
+      background: #ff5722;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #e64a19;
+    }
+  </style>
 </head>
-<body style="font-family: sans-serif; padding: 20px; text-align: center;">
-  <h2>Order Summary</h2>
-  <div id="orderList"></div>
-  <h3 id="total"></h3>
+<body>
+  <h1>Checkout</h1>
+  <div class="cart-summary" id="cartSummary"></div>
 
-  <div>
-    <h4>Choose Payment Mode:</h4>
-    <input type="radio" name="payment" value="Online" onchange="toggleQR()"> Online<br>
-    <input type="radio" name="payment" value="COD" onchange="toggleQR()"> Cash on Delivery
+  <div class="payment-options">
+    <h3>Select Payment Method:</h3>
+    <label><input type="radio" name="payment" value="online" /> Online</label><br/>
+    <label><input type="radio" name="payment" value="cod" /> Cash on Delivery</label>
   </div>
 
-  <div id="qrCode" style="display:none; margin-top: 10px;">
-    <p>Scan to Pay:</p>
-    <img src="your-qr.png" alt="QR Code" width="200">
+  <div class="qr-code" id="qrCodeSection">
+    <p>Scan this QR code to pay:</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=your_upi_id@upi&pn=TheFoodCorner&am=0&cu=INR" alt="QR Code" id="qrCodeImage"/>
   </div>
 
-  <br>
-  <button onclick="confirmOrder()">Confirm Order</button>
+  <button class="btn" onclick="confirmOrder()">Confirm Order</button>
 
   <script>
-    const cart = JSON.parse(localStorage.getItem("cartData") || "[]");
-    let total = 0;
-    const list = document.getElementById("orderList");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartSummary = document.getElementById("cartSummary");
+    const qrSection = document.getElementById("qrCodeSection");
+    const qrImage = document.getElementById("qrCodeImage");
 
-    cart.forEach(item => {
-      const line = `${item.name} x ${item.quantity} = Rs.${item.price * item.quantity}`;
-      list.innerHTML += `<p>${line}</p>`;
-      total += item.price * item.quantity;
-    });
+    let totalAmount = 0;
+    if (cart.length === 0) {
+      cartSummary.innerHTML = "<p>Your cart is empty.</p>";
+    } else {
+      cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        totalAmount += subtotal;
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.innerHTML = `
+          <div>${item.name} x${item.quantity}</div>
+          <div>₹${subtotal}</div>
+        `;
+        cartSummary.appendChild(itemDiv);
+      });
 
-    document.getElementById("total").innerText = "Total: Rs. " + total;
+      const totalDiv = document.createElement("div");
+      totalDiv.className = "total";
+      totalDiv.innerHTML = `Total: ₹${totalAmount}`;
+      cartSummary.appendChild(totalDiv);
 
-    function toggleQR() {
-      const selected = document.querySelector('input[name="payment"]:checked').value;
-      document.getElementById("qrCode").style.display = selected === "Online" ? "block" : "none";
+      // Update QR with correct amount
+      qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=your_upi_id@upi&pn=TheFoodCorner&am=${totalAmount}&cu=INR`;
     }
 
+    // Show QR when Online payment is selected
+    document.querySelectorAll("input[name='payment']").forEach((radio) => {
+      radio.addEventListener("change", function () {
+        if (this.value === "online") {
+          qrSection.style.display = "block";
+        } else {
+          qrSection.style.display = "none";
+        }
+      });
+    });
+
     function confirmOrder() {
-      alert("Order confirmed! Thank you.");
-      localStorage.removeItem("cartData");
-      window.location.href = "thankyou.html";
+      const selectedPayment = document.querySelector("input[name='payment']:checked");
+      if (!selectedPayment) {
+        alert("Please select a payment method.");
+        return;
+      }
+
+      if (selectedPayment.value === "online") {
+        alert("Please complete the payment by scanning the QR. Thank you!");
+      } else {
+        alert("Order placed with Cash on Delivery. Thank you!");
+      }
+
+      localStorage.removeItem("cart");
+      window.location.href = "thankyou.html"; // Optional: redirect or show message
     }
   </script>
 </body>
