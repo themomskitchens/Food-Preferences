@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thank You - The Food Corner</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
+      color: white;
+      background: linear-gradient(to right, #ff4e50, #f9d423);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      background-color: #fff8f0;
-      padding: 60px 20px;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 90%;
     }
     h1 {
-      color: #ff5722;
       font-size: 3em;
+      margin-bottom: 10px;
     }
     p {
-      font-size: 1.3em;
-      margin: 20px 0;
-    }
-    .order-button {
-      padding: 15px 30px;
       font-size: 1.2em;
-      border: none;
-      border-radius: 40px;
-      background-color: #ff5722;
-      color: white;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s;
+      margin-bottom: 30px;
     }
-    .order-button:hover {
-      background-color: #e64a19;
+    .btn {
+      background: white;
+      color: #333;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #333;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <h1>Thank You!</h1>
-  <p>Your details have been successfully submitted.</p>
-  <p>Ready to place your order?</p>
-  <!-- Link to menu page -->
-  <a href="menu.html" class="order-button">Place an Order</a>
+  <div class="container">
+    <h1>Thank You!</h1>
+    <p>Your preferences have been received.<br>We're excited to serve you soon 🍽️</p>
+    <button class="btn" onclick="window.location.href='menu.html'">Place Your Order</button>
+  </div>
 </body>
 </html>
