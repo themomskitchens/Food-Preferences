@@ -2,94 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout - The Food Corner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Food Corner - Checkout</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #fff8f0; padding: 20px; }
-    h1 { color: #d94f30; }
-    .cart, .summary { margin-top: 20px; }
-    .item { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding: 10px 0; }
-    .payment-options { margin: 20px 0; }
-    .qr, .confirmation, .whatsapp { display: none; margin-top: 20px; }
-    button { padding: 10px 15px; background: #d94f30; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #a3361e; }
-    .order-id { font-weight: bold; font-size: 1.2em; color: #444; }
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f4; color: black; }
+    .container { width: 80%; margin: 20px auto; }
+    h1 { text-align: center; color: #333; }
+    .cart-summary { margin: 20px 0; }
+    .cart-summary table { width: 100%; border-collapse: collapse; }
+    .cart-summary th, .cart-summary td { padding: 10px; border: 1px solid #ddd; }
+    .cart-summary th { background-color: #f2f2f2; }
+    .cart-summary tr:nth-child(even) { background-color: #f9f9f9; }
+    .total { font-size: 1.5em; font-weight: bold; text-align: right; margin: 20px 0; }
+    .checkout-btn { background-color: #6200ea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    .checkout-btn:hover { background-color: #4500b5; }
   </style>
 </head>
 <body>
 
-  <h1>Checkout</h1>
-
-  <div class="cart" id="cart"></div>
-
-  <div class="summary">
-    <p class="order-id">Your Order ID is: <span id="orderId"></span></p>
-
-    <div class="payment-options">
-      <p><strong>Select Payment Mode:</strong></p>
-      <input type="radio" id="online" name="payment" value="Online"> <label for="online">Online</label><br>
-      <input type="radio" id="cod" name="payment" value="COD"> <label for="cod">Cash on Delivery</label>
+  <div class="container">
+    <h1>Checkout</h1>
+    
+    <div class="cart-summary">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="cartItems"></tbody>
+      </table>
     </div>
 
-    <button onclick="handlePayment()">Confirm Order</button>
-  </div>
+    <div class="total">
+      Total: ₹<span id="totalAmount">0</span>
+    </div>
 
-  <div class="qr" id="qr">
-    <h3>Scan QR to Pay:</h3>
-    <img src="https://via.placeholder.com/200x200.png?text=Scan+to+Pay" alt="QR Code">
-  </div>
-
-  <div class="confirmation" id="confirmation">
-    <h3>Order Confirmed! Thank you!</h3>
-  </div>
-
-  <div class="whatsapp" id="whatsapp">
-    <button onclick="sendWhatsApp()">Notify via WhatsApp</button>
+    <button class="checkout-btn" onclick="confirmOrder()">Confirm Order</button>
   </div>
 
   <script>
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    // Fetch cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    const cartContainer = document.getElementById("cart");
-    if (cart.length === 0) {
-      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-    } else {
+    // Calculate total amount
+    let totalAmount = 0;
+
+    // Function to display cart items
+    function displayCartItems() {
+      const cartItemsContainer = document.getElementById('cartItems');
+      cartItemsContainer.innerHTML = '';
       cart.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `<span>${item.name} x${item.quantity}</span><span>₹${item.price * item.quantity}</span>`;
-        cartContainer.appendChild(div);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.quantity}</td>
+          <td>₹${item.price}</td>
+          <td>₹${item.total}</td>
+        `;
+        cartItemsContainer.appendChild(row);
+        totalAmount += item.total;
       });
+      document.getElementById('totalAmount').textContent = totalAmount;
     }
 
-    // Generate a dummy order ID
-    const orderId = "ORD" + Math.floor(Math.random() * 1000000);
-    document.getElementById("orderId").innerText = orderId;
+    // Function to confirm the order
+    function confirmOrder() {
+      const orderId = generateOrderId();  // Generate a unique Order ID
+      localStorage.setItem('orderId', orderId);
 
-    function handlePayment() {
-      const paymentMethod = document.querySelector('input[name="payment"]:checked');
-      if (!paymentMethod) {
-        alert("Please select a payment method.");
-        return;
-      }
-
-      if (paymentMethod.value === "Online") {
-        document.getElementById("qr").style.display = "block";
-        document.getElementById("confirmation").style.display = "none";
-      } else {
-        document.getElementById("confirmation").style.display = "block";
-        document.getElementById("qr").style.display = "none";
-      }
-
-      document.getElementById("whatsapp").style.display = "block";
+      // Redirect to Thank You page after confirmation
+      window.location.href = 'thankyou.html';
     }
 
-    function sendWhatsApp() {
-      const message = `🛒 Thank you for your order!\nYour Order ID is: ${orderId}`;
-      const phoneNumber = "919876543210"; // Replace with your WhatsApp number
-      const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-      window.open(whatsappURL, "_blank");
+    // Function to generate a random Order ID
+    function generateOrderId() {
+      const randomNum = Math.floor(Math.random() * 1000000);
+      return `TFC${randomNum}`;
     }
+
+    // Display cart items when the page loads
+    window.onload = displayCartItems;
   </script>
 
 </body>
