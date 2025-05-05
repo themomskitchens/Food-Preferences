@@ -5,56 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Food Corner - Checkout</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f4; color: black; }
-    .container { width: 80%; margin: 20px auto; }
-    h1 { text-align: center; color: #333; }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+    .container { width: 80%; margin: 20px auto; padding: 20px; background-color: white; border-radius: 5px; }
+    h1 { text-align: center; color: #6200ea; }
     .cart-summary { margin: 20px 0; }
     .cart-summary table { width: 100%; border-collapse: collapse; }
     .cart-summary th, .cart-summary td { padding: 10px; border: 1px solid #ddd; }
     .cart-summary th { background-color: #f2f2f2; }
-    .cart-summary tr:nth-child(even) { background-color: #f9f9f9; }
     .total { font-size: 1.5em; font-weight: bold; text-align: right; margin: 20px 0; }
-    .checkout-btn { background-color: #6200ea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-    .checkout-btn:hover { background-color: #4500b5; }
+    .payment-options { margin: 20px 0; }
+    button { background-color: #6200ea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #4500b5; }
   </style>
 </head>
 <body>
 
   <div class="container">
     <h1>Checkout</h1>
-    
     <div class="cart-summary">
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody id="cartItems"></tbody>
-      </table>
+      <table id="cartItems"></table>
     </div>
-
     <div class="total">
       Total: ₹<span id="totalAmount">0</span>
     </div>
 
-    <button class="checkout-btn" onclick="confirmOrder()">Confirm Order</button>
+    <div class="payment-options">
+      <h3>Select Payment Method</h3>
+      <select id="paymentMethod">
+        <option value="cod">Cash on Delivery (COD)</option>
+        <option value="online">Online Payment</option>
+      </select>
+    </div>
+
+    <div id="qrCode"></div>
+
+    <button onclick="confirmOrder()">Confirm Order</button>
   </div>
 
   <script>
-    // Fetch cart data from localStorage
+    // Load cart items from localStorage
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    // Calculate total amount
     let totalAmount = 0;
 
-    // Function to display cart items
     function displayCartItems() {
       const cartItemsContainer = document.getElementById('cartItems');
-      cartItemsContainer.innerHTML = '';
+      cartItemsContainer.innerHTML = `<tr><th>Item</th><th>Quantity</th><th>Price</th><th>Total</th></tr>`;
       cart.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -69,22 +64,19 @@
       document.getElementById('totalAmount').textContent = totalAmount;
     }
 
-    // Function to confirm the order
     function confirmOrder() {
-      const orderId = generateOrderId();  // Generate a unique Order ID
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const orderId = 'TFC' + Math.floor(Math.random() * 1000000);
       localStorage.setItem('orderId', orderId);
 
-      // Redirect to Thank You page after confirmation
+      if (paymentMethod === 'online') {
+        document.getElementById('qrCode').innerHTML = `<img src="https://example.com/qr-code?order=${orderId}" alt="QR Code for payment" />`;
+      }
+
+      // Redirect to confirmation page
       window.location.href = 'thankyou.html';
     }
 
-    // Function to generate a random Order ID
-    function generateOrderId() {
-      const randomNum = Math.floor(Math.random() * 1000000);
-      return `TFC${randomNum}`;
-    }
-
-    // Display cart items when the page loads
     window.onload = displayCartItems;
   </script>
 
