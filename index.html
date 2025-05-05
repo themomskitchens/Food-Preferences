@@ -96,13 +96,14 @@
       mode: "no-cors"
     })
     .then(() => {
-      // Redirect to Thank You page
-      window.location.href = "thankyou.html";
+      // Redirect to Thank You page after successful form submission
+      window.location.href = "thankyou.html";  // Ensure thankyou.html is created in your project
     })
     .catch(() => {
       alert("There was a problem submitting your data. Please try again.");
     });
   });
 </script>
+
 </body>
 </html>
