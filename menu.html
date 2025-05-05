@@ -1,211 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Menu - The Food Corner</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Food Corner - Menu</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #fff8f4;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff9f6;
       margin: 0;
       padding: 0;
     }
+
     header {
-      background-color: #ff5722;
+      background-color: #ff4400;
       color: white;
       padding: 20px;
       text-align: center;
-      font-size: 24px;
+      font-size: 2rem;
+      font-weight: bold;
     }
-    .category {
-      padding: 20px;
-      background-color: #ff5722;
+
+    .menu-section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .category-title {
+      font-size: 1.8rem;
       color: white;
-      text-align: center;
-      font-size: 22px;
-      margin-top: 20px;
-      border-radius: 8px;
+      background: #ff4400;
+      padding: 10px 20px;
+      border-radius: 10px;
+      margin: 40px 0 20px;
+      display: inline-block;
     }
-    .menu-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    .menu-grid {
+      display: flex;
+      flex-wrap: wrap;
       gap: 20px;
-      padding: 30px;
+      justify-content: center;
     }
-    .menu-item {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s ease;
+
+    .menu-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      width: 280px;
+      padding: 20px;
+      position: relative;
+      transition: transform 0.3s ease;
     }
-    .menu-item:hover {
+
+    .menu-card:hover {
       transform: scale(1.03);
     }
-    .menu-item img {
+
+    .menu-image {
       width: 100%;
       height: 180px;
+      border-radius: 15px;
       object-fit: cover;
     }
-    .item-details {
-      padding: 15px;
-    }
-    .item-details h3 {
-      margin: 0;
-      font-size: 20px;
+
+    .menu-title {
+      font-size: 1.2rem;
+      font-weight: 600;
       color: #333;
+      margin: 15px 0 5px;
     }
-    .item-details p {
-      margin: 5px 0;
+
+    .menu-desc {
+      font-size: 0.9rem;
       color: #777;
-      font-size: 14px;
+      margin-bottom: 10px;
     }
-    .price {
-      color: #ff5722;
+
+    .menu-price {
+      color: #e53935;
+      font-size: 1rem;
       font-weight: bold;
-      margin-top: 10px;
     }
+
     .add-btn {
-      background-color: #ff5722;
+      margin-top: 15px;
+      background-color: #ff4400;
       color: white;
+      padding: 10px 15px;
       border: none;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
       width: 100%;
-      margin-top: 10px;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
+
     .add-btn:hover {
-      background-color: #e64a19;
+      background-color: #e63600;
+    }
+
+    @media screen and (max-width: 768px) {
+      .menu-card {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <header>Our Delicious Menu</header>
 
-  <!-- Essentials Section -->
-  <div class="category">Essentials</div>
-  <div class="menu-container">
-    <div class="menu-item">
-      <img src="images/bread-butter.jpg" alt="Bread with Butter">
-      <div class="item-details">
-        <h3>Bread with Butter (2 slices)</h3>
-        <p>Simple & tasty breakfast</p>
-        <div class="price">₹15</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
+<header>The Food Corner - Delicious Menu</header>
+
+<div class="menu-section">
+
+  <!-- Essentials -->
+  <div class="category-title">🍞 Essentials</div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?bread" alt="Bread with Butter" class="menu-image" />
+      <div class="menu-title">Bread with Butter (2 slices)</div>
+      <div class="menu-desc">Simple & tasty breakfast</div>
+      <div class="menu-price">₹15</div>
+      <button class="add-btn">Add to Cart</button>
     </div>
 
-    <div class="menu-item">
-      <img src="images/sandwich.jpg" alt="Sandwich">
-      <div class="item-details">
-        <h3>Sandwich</h3>
-        <p>Stuffed fresh sandwich</p>
-        <div class="price">₹25</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Snacks Section -->
-  <div class="category">Snacks</div>
-  <div class="menu-container">
-    <div class="menu-item">
-      <img src="images/paneer-tikka.jpeg" alt="Paneer Tikka">
-      <div class="item-details">
-        <h3>Paneer Tikka</h3>
-        <p>Spicy grilled paneer with herbs</p>
-        <div class="price">₹120</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/images.jpeg" alt="Masala Maggi">
-      <div class="item-details">
-        <h3>Masala Maggi</h3>
-        <p>Classic masala Maggi noodles</p>
-        <div class="price">₹40</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/images.jpeg" alt="Fatafat">
-      <div class="item-details">
-        <h3>Fatafat Bhel</h3>
-        <p>Classic Fatafat Bhel</p>
-        <div class="price">₹20</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?sandwich" alt="Sandwich" class="menu-image" />
+      <div class="menu-title">Sandwich</div>
+      <div class="menu-desc">Stuffed fresh sandwich</div>
+      <div class="menu-price">₹25</div>
+      <button class="add-btn">Add to Cart</button>
     </div>
   </div>
 
-  <!-- Drinks Section -->
-  <div class="category">Drinks</div>
-  <div class="menu-container">
-    <div class="menu-item">
-      <img src="images/amul-kesar.jpg" alt="Amul Kesar Milk">
-      <div class="item-details">
-        <h3>Amul Kesar Milk</h3>
-        <p>Refreshing flavored milk</p>
-        <div class="price">₹25</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
+  <!-- Snacks -->
+  <div class="category-title">🍟 Snacks</div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?samosa" alt="Samosa" class="menu-image" />
+      <div class="menu-title">Samosa</div>
+      <div class="menu-desc">Crispy Indian snack</div>
+      <div class="menu-price">₹10</div>
+      <button class="add-btn">Add to Cart</button>
     </div>
 
-    <div class="menu-item">
-      <img src="images/coconut-water.jpg" alt="Coconut Water">
-      <div class="item-details">
-        <h3>Coconut Water</h3>
-        <p>Natural and hydrating</p>
-        <div class="price">₹50</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/diet-coke.jpg" alt="Diet Coke">
-      <div class="item-details">
-        <h3>Diet Coke</h3>
-        <p>Zero calorie soft drink</p>
-        <div class="price">₹25</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/banana-shake.jpg" alt="Banana Shake">
-      <div class="item-details">
-        <h3>Banana Shake</h3>
-        <p>Thick banana milkshake</p>
-        <div class="price">₹30</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/watermelon-juice.jpg" alt="Watermelon Juice">
-      <div class="item-details">
-        <h3>Watermelon Juice</h3>
-        <p>Fresh summer drink</p>
-        <div class="price">₹30</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/sattu-drink.jpg" alt="Sattu Drink">
-      <div class="item-details">
-        <h3>Sattu Drink</h3>
-        <p>Healthy protein-rich drink</p>
-        <div class="price">₹25</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?pakora" alt="Pakora" class="menu-image" />
+      <div class="menu-title">Pakora</div>
+      <div class="menu-desc">Hot & spicy fritters</div>
+      <div class="menu-price">₹20</div>
+      <button class="add-btn">Add to Cart</button>
     </div>
   </div>
 
-  <!-- Add more categories as needed -->
+  <!-- Indian Cuisine -->
+  <div class="category-title">🍛 Indian Cuisine</div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?poha" alt="Poha" class="menu-image" />
+      <div class="menu-title">Poha</div>
+      <div class="menu-desc">Light & healthy breakfast</div>
+      <div class="menu-price">₹30</div>
+      <button class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?paratha" alt="Aloo Paratha" class="menu-image" />
+      <div class="menu-title">Aloo Paratha</div>
+      <div class="menu-desc">Stuffed potato paratha</div>
+      <div class="menu-price">₹40</div>
+      <button class="add-btn">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- International Cuisine -->
+  <div class="category-title">🍝 International Cuisine</div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?pasta" alt="Pasta" class="menu-image" />
+      <div class="menu-title">Pasta</div>
+      <div class="menu-desc">Cheesy white sauce pasta</div>
+      <div class="menu-price">₹60</div>
+      <button class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?burger" alt="Burger" class="menu-image" />
+      <div class="menu-title">Veg Burger</div>
+      <div class="menu-desc">Crispy veg patty inside</div>
+      <div class="menu-price">₹50</div>
+      <button class="add-btn">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Drinks -->
+  <div class="category-title">🥤 Drinks</div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?tea" alt="Tea" class="menu-image" />
+      <div class="menu-title">Tea</div>
+      <div class="menu-desc">Freshly brewed chai</div>
+      <div class="menu-price">₹10</div>
+      <button class="add-btn">Add to Cart</button>
+    </div>
+
+    <div class="menu-card">
+      <img src="https://source.unsplash.com/featured/?coffee" alt="Coffee" class="menu-image" />
+      <div class="menu-title">Coffee</div>
+      <div class="menu-desc">Hot filter coffee</div>
+      <div class="menu-price">₹15</div>
+      <button class="add-btn">Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
 </body>
 </html>
