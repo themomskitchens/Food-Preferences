@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Order Summary | The Food Corner</title>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -111,6 +112,42 @@
       cursor: pointer;
       z-index: 1000;
     }
+
+    /* Modal Styles */
+    .qr-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .qr-modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .qr-modal button {
+      background: #ff3d00;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .qr-modal button:hover {
+      background: #e65100;
+    }
   </style>
 </head>
 <body>
@@ -143,21 +180,31 @@
 
   <button id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
 
+  <!-- QR Code Modal -->
+  <div class="qr-modal" id="qrModal">
+    <div class="qr-modal-content">
+      <h3>Scan QR Code to Pay</h3>
+      <div id="qrCode"></div>
+      <button onclick="closeQRModal()">Close</button>
+    </div>
+  </div>
+
   <script>
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = cart.filter(item => item && item.name && item.qty && item.price);
 
     function renderOrderItems() {
       const orderItemsContainer = document.getElementById('orderItems');
-      orderItemsContainer.innerHTML = '';
+      orderItemsContainer.innerHTML = ''; // Clear previous content
       let totalPrice = 0;
 
+      // If cart is empty
       if (cart.length === 0) {
         orderItemsContainer.innerHTML = "<p>No items in your order.</p>";
         document.getElementById("totalPrice").innerText = "Total: ₹0";
         return;
       }
 
+      // Loop through cart items and display them
       cart.forEach((item, index) => {
         const itemTotal = item.price * item.qty;
         totalPrice += itemTotal;
@@ -180,15 +227,15 @@
         orderItemsContainer.appendChild(itemDiv);
       });
 
+      // Update the total price
       document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
     }
 
     function removeItem(index) {
-      if (confirm(`Remove "${cart[index].name}" from your order?`)) {
-        cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        renderOrderItems();
-      }
+      // Remove item from cart array
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));  // Update cart in localStorage
+      renderOrderItems();  // Re-render the items
     }
 
     function confirmOrder() {
@@ -210,6 +257,41 @@
         return;
       }
 
+      if (paymentMethod === "Online Payment") {
+        // Generate QR code for payment
+        generateQRCode();
+      } else {
+        proceedWithOrder(paymentMethod, address);
+      }
+    }
+
+    function generateQRCode() {
+      const totalAmount = document.getElementById('totalPrice').innerText.split('₹')[1];
+      const qrContent = `Payment for Order - ₹${totalAmount} at The Food Corner. Please scan to pay.`;
+      const qrCodeElement = document.getElementById('qrCode');
+
+      // Clear existing QR code if any
+      qrCodeElement.innerHTML = '';
+
+      // Create new QR code
+      const qrCode = new QRCode(qrCodeElement, {
+        text: qrContent,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      // Show the modal
+      document.getElementById('qrModal').style.display = 'flex';
+    }
+
+    function closeQRModal() {
+      document.getElementById('qrModal').style.display = 'none';
+    }
+
+    function proceedWithOrder(paymentMethod, address) {
       const userName = localStorage.getItem('userName') || 'Guest';
       const userMobile = localStorage.getItem('userMobile') || 'N/A';
       const orderTime = new Date().toLocaleString();
@@ -223,7 +305,7 @@
         orderTime: orderTime
       };
 
-      fetch(https://script.google.com/macros/s/AKfycbxYyc_8N4nCyXX6rmA8BqNeg4KFFIi8tumi5ltIDt4U56VDmrXY8yby-ZSe3qn-LI6X/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbxYyc_8N4nCyXX6rmA8BqNeg4KFFIi8tumi5ltIDt4U56VDmrXY8yby-ZSe3qn-LI6X/exec', {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
