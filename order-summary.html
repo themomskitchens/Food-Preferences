@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding-bottom: 80px;
+      padding-bottom: 100px;
       background: #fff5f0;
     }
 
@@ -33,7 +33,7 @@
       margin-bottom: 20px;
     }
 
-    .item-list .item {
+    .item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -41,22 +41,36 @@
       border-bottom: 1px solid #ddd;
     }
 
-    .item-list .item img {
+    .item-details {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .item img {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 8px;
-      margin-right: 10px;
     }
 
-    .item-details {
-      flex: 1;
-      display: flex;
-      align-items: center;
-    }
-
-    .item-details span {
+    .item span {
       font-weight: bold;
+    }
+
+    .remove-btn {
+      background: #ff5252;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .remove-btn:hover {
+      background: #c62828;
     }
 
     .total {
@@ -124,22 +138,24 @@
   <button id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
 
   <script>
-    // Get and clean the cart data
-    let rawCart = JSON.parse(localStorage.getItem('cart')) || [];
-    let cart = rawCart.filter(item => item && item.name && item.qty && item.price);
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = cart.filter(item => item && item.name && item.qty && item.price);
 
     let paymentMethod = null;
 
     function renderOrderItems() {
       const orderItemsContainer = document.getElementById('orderItems');
       orderItemsContainer.innerHTML = '';
-
       let totalPrice = 0;
 
-      cart.forEach(item => {
-        const qty = item.qty;
-        const price = item.price;
-        const itemTotal = price * qty;
+      if (cart.length === 0) {
+        orderItemsContainer.innerHTML = "<p>No items in your order.</p>";
+        document.getElementById("totalPrice").innerText = "Total: ₹0";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
         totalPrice += itemTotal;
 
         const itemDiv = document.createElement('div');
@@ -147,14 +163,25 @@
         itemDiv.innerHTML = `
           <div class="item-details">
             <img src="assets/${item.name.replace(/\s+/g, '_')}.png" alt="${item.name}" />
-            <span>${item.name} x${qty}</span>
+            <span>${item.name} x${item.qty}</span>
           </div>
-          <span>₹${itemTotal}</span>
+          <div>
+            <span>₹${itemTotal}</span><br/>
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          </div>
         `;
         orderItemsContainer.appendChild(itemDiv);
       });
 
-      document.getElementById('totalPrice').innerText = `Total: ₹${totalPrice}`;
+      document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
+    }
+
+    function removeItem(index) {
+      if (confirm(`Remove "${cart[index].name}" from your order?`)) {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderOrderItems();
+      }
     }
 
     function selectPayment(method) {
@@ -168,12 +195,16 @@
         return;
       }
 
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+
       alert(`Order confirmed! Payment method: ${paymentMethod}`);
       localStorage.removeItem('cart');
       window.location.href = 'thank-you.html';
     }
 
-    // Initial render
     renderOrderItems();
   </script>
 
