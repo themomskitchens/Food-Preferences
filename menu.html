@@ -1,184 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Menu - The Food Corner</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu | The Food Corner</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #fff8f4;
+      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      padding-bottom: 80px;
+      background: #fff5f0;
     }
-
-    /* Navigation Header */
-    nav {
-      background-color: #ff5722;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-    }
-
-    .nav-logo {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .nav-links a {
-      color: white;
+    h2 {
       margin-left: 20px;
-      text-decoration: none;
+      color: #e65100;
+    }
+    .category {
+      margin-bottom: 30px;
+    }
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 0 20px;
+    }
+    .item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      padding: 12px;
+      width: 180px;
+      text-align: center;
+    }
+    .item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .item h3 {
+      margin: 10px 0 5px;
       font-size: 16px;
     }
-
-    .nav-links a:hover {
-      text-decoration: underline;
-    }
-
-    .menu-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 30px;
-    }
-
-    .menu-item {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-
-    .menu-item:hover {
-      transform: scale(1.03);
-    }
-
-    .menu-item img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .item-details {
-      padding: 15px;
-    }
-
-    .item-details h3 {
+    .item p {
       margin: 0;
-      font-size: 20px;
-      color: #333;
-    }
-
-    .item-details p {
-      margin: 5px 0;
-      color: #777;
-      font-size: 14px;
-    }
-
-    .price {
-      color: #ff5722;
       font-weight: bold;
-      margin-top: 10px;
     }
-
-    .add-btn {
-      background-color: #ff5722;
+    .item button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: #e65100;
       color: white;
       border: none;
-      padding: 10px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      width: 100%;
+    }
+    .qty-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
       margin-top: 10px;
     }
-
-    .add-btn:hover {
-      background-color: #e64a19;
-    }
-
-    /* Checkout Button */
-    .checkout-container {
-      text-align: center;
-      margin: 30px 0;
-      display: none;
-    }
-
-    .checkout-btn {
-      background-color: #ff5722;
-      color: white;
-      padding: 12px 30px;
+    .qty-control button {
+      width: 30px;
+      height: 30px;
       font-size: 18px;
+      background: #ff7043;
       border: none;
-      border-radius: 10px;
+      color: white;
+      border-radius: 6px;
       cursor: pointer;
     }
-
-    .checkout-btn:hover {
-      background-color: #e64a19;
+    #checkoutBtn {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ff3d00;
+      color: white;
+      font-size: 18px;
+      padding: 15px;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
+  <div id="menuContainer"></div>
 
-  <!-- Navigation Header -->
-  <nav>
-    <div class="nav-logo">The Food Corner</div>
-    <div class="nav-links">
-      <a href="home.html">Home</a>
-      <a href="menu.html">Place Order</a>
-      <a href="orders.html">My Orders</a>
-      <a href="index.html">Logout</a>
-    </div>
-  </nav>
-
-  <div class="menu-container">
-    <div class="menu-item">
-      <img src="images/paneer-tikka.jpg" alt="Paneer Tikka">
-      <div class="item-details">
-        <h3>Paneer Tikka</h3>
-        <p>Spicy grilled paneer with herbs</p>
-        <div class="price">₹120</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="menu-item">
-      <img src="images/maggi.jpg" alt="Masala Maggi">
-      <div class="item-details">
-        <h3>Masala Maggi</h3>
-        <p>Classic masala Maggi noodles</p>
-        <div class="price">₹40</div>
-        <button class="add-btn">Add to Cart</button>
-      </div>
-    </div>
-
-    <!-- Add more items as needed -->
-  </div>
-
-  <!-- Checkout Button (Hidden initially) -->
-  <div class="checkout-container" id="checkoutContainer">
-    <button class="checkout-btn" onclick="goToCheckout()">Go to Checkout</button>
-  </div>
+  <button id="checkoutBtn" onclick="goToCheckout()">Go to Checkout (0 items)</button>
 
   <script>
-    const addButtons = document.querySelectorAll('.add-btn');
-    const checkoutContainer = document.getElementById('checkoutContainer');
+    const menuData = {
+      "Drinks": [
+        { name: "Lahori Jeera 160 ML", price: 10, image: "assets/Lahori_Zeera_160ml.png" },
+        { name: "Cold Water Bottle", price: 20, image: "assets/Bislerijpeg.jpeg" },
+        { name: "Soft Drinks (Coke/Sprite/Thums Up)", price: 20, image: "assets/Soft Drink 200 ML.png" },
+        { name: "Sting Energy", price: 20, image: "assets/Sting Energy.jpeg" }
+        { name: "Diet Coke", price: 25, image: "assets/Diet Coke.png" }
+        { name: "Amul Kesar Milk", price: 25, image: "assets/Amul kesar.png" }
+        { name: "Coconut Water", price: 50, image: "assets/Coconut Water.png" }
+      ],
+      "Shakes": [
+        { name: "Chocolate Shake", price: 60, image: "https://source.unsplash.com/200x200/?chocolate-shake" },
+        { name: "Strawberry Shake", price: 60, image: "https://source.unsplash.com/200x200/?strawberry-shake" },
+        { name: "Mango Shake", price: 60, image: "https://source.unsplash.com/200x200/?mango-shake" },
+        { name: "Oreo Shake", price: 70, image: "https://source.unsplash.com/200x200/?oreo-shake" }
+      ],
+      "Tea & Coffee": [
+        { name: "Masala Tea", price: 15, image: "https://source.unsplash.com/200x200/?masala-tea" },
+        { name: "Lemon Tea", price: 20, image: "https://source.unsplash.com/200x200/?lemon-tea" },
+        { name: "Green Tea", price: 25, image: "https://source.unsplash.com/200x200/?green-tea" },
+        { name: "Hot Coffee", price: 30, image: "https://source.unsplash.com/200x200/?hot-coffee" },
+        { name: "Cold Coffee", price: 40, image: "https://source.unsplash.com/200x200/?cold-coffee" }
+      ],
+      "Classic Snacks": [
+        { name: "Veg Sandwich", price: 30, image: "https://source.unsplash.com/200x200/?sandwich" },
+        { name: "Grilled Cheese Sandwich", price: 40, image: "https://source.unsplash.com/200x200/?grilled-sandwich" },
+        { name: "Paneer Roll", price: 60, image: "https://source.unsplash.com/200x200/?paneer-roll" },
+        { name: "Aloo Tikki Burger", price: 50, image: "https://source.unsplash.com/200x200/?burger" },
+        { name: "Fries", price: 30, image: "https://source.unsplash.com/200x200/?fries" },
+        { name: "Noodles", price: 50, image: "https://source.unsplash.com/200x200/?noodles" }
+      ]
+    };
 
-    addButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Show checkout button on first add
-        checkoutContainer.style.display = 'block';
-      });
-    });
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartStorage() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function updateCheckoutText() {
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('checkoutBtn').innerText = `Go to Checkout (${totalQty} item${totalQty !== 1 ? 's' : ''})`;
+    }
+
+    function renderMenu() {
+      const container = document.getElementById('menuContainer');
+      container.innerHTML = '';
+
+      for (let category in menuData) {
+        const section = document.createElement('div');
+        section.className = 'category';
+
+        const title = document.createElement('h2');
+        title.innerText = category;
+        section.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'menu';
+
+        menuData[category].forEach(item => {
+          const cartItem = cart.find(i => i.name === item.name);
+          const div = document.createElement('div');
+          div.className = 'item';
+
+          div.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" />
+            <h3>${item.name}</h3>
+            <p>₹${item.price}</p>
+          `;
+
+          if (cartItem) {
+            const qtyControl = document.createElement('div');
+            qtyControl.className = 'qty-control';
+
+            const dec = document.createElement('button');
+            dec.innerText = '-';
+            dec.onclick = () => {
+              if (cartItem.qty > 1) {
+                cartItem.qty--;
+              } else {
+                cart = cart.filter(i => i.name !== item.name);
+              }
+              updateCartStorage();
+              renderMenu();
+            };
+
+            const qtyText = document.createElement('span');
+            qtyText.innerText = cartItem.qty;
+
+            const inc = document.createElement('button');
+            inc.innerText = '+';
+            inc.onclick = () => {
+              cartItem.qty++;
+              updateCartStorage();
+              renderMenu();
+            };
+
+            qtyControl.append(dec, qtyText, inc);
+            div.appendChild(qtyControl);
+          } else {
+            const addBtn = document.createElement('button');
+            addBtn.innerText = 'Add to Cart';
+            addBtn.onclick = () => {
+              cart.push({ name: item.name, price: item.price, qty: 1 });
+              updateCartStorage();
+              renderMenu();
+            };
+            div.appendChild(addBtn);
+          }
+
+          grid.appendChild(div);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
+      }
+
+      updateCheckoutText();
+    }
 
     function goToCheckout() {
-      window.location.href = 'checkout.html';
+      window.location.href = 'order-summary.html';
     }
-  </script>
 
+    renderMenu();
+  </script>
 </body>
 </html>
