@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Summary | The Food Corner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-bottom: 80px;
+      background: #fff5f0;
+    }
+
+    header {
+      background: #ff3d00;
+      color: white;
+      padding: 15px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .order-summary {
+      padding: 20px;
+    }
+
+    .order-summary h2 {
+      color: #e65100;
+    }
+
+    .item-list {
+      margin-bottom: 20px;
+    }
+
+    .item-list .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .item-list .item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .item-list .item span {
+      font-weight: bold;
+    }
+
+    .total {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .payment-options {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .payment-options button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #ff7043;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .payment-options button:hover {
+      background: #e65100;
+    }
+
+    #confirmOrderBtn {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ff3d00;
+      color: white;
+      font-size: 18px;
+      padding: 15px;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    The Food Corner
+  </header>
+
+  <div class="order-summary">
+    <h2>Order Summary</h2>
+
+    <div class="item-list" id="orderItems"></div>
+
+    <div class="total" id="totalPrice">Total: ₹0</div>
+
+    <div class="payment-options">
+      <button onclick="selectPayment('COD')">Cash on Delivery (COD)</button>
+      <button onclick="selectPayment('Online')">Online Payment</button>
+    </div>
+  </div>
+
+  <button id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function renderOrderItems() {
+      const orderItemsContainer = document.getElementById('orderItems');
+      orderItemsContainer.innerHTML = '';
+
+      let totalPrice = 0;
+
+      cart.forEach(item => {
+        totalPrice += item.price * item.qty;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'item';
+        itemDiv.innerHTML = `
+          <img src="assets/${item.name.replace(/\s+/g, '_')}.png" alt="${item.name}" />
+          <span>${item.name} x${item.qty}</span>
+          <span>₹${item.price * item.qty}</span>
+        `;
+        orderItemsContainer.appendChild(itemDiv);
+      });
+
+      document.getElementById('totalPrice').innerText = `Total: ₹${totalPrice}`;
+    }
+
+    let paymentMethod = null;
+
+    function selectPayment(method) {
+      paymentMethod = method;
+    }
+
+    function confirmOrder() {
+      if (!paymentMethod) {
+        alert('Please select a payment method.');
+        return;
+      }
+
+      alert(`Order confirmed! Payment method: ${paymentMethod}`);
+      localStorage.removeItem('cart');
+      window.location.href = 'thank-you.html';  // Redirect to a thank you page
+    }
+
+    renderOrderItems();
+  </script>
+
+</body>
+</html>
