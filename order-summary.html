@@ -36,6 +36,7 @@
     .item-list .item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 10px;
       border-bottom: 1px solid #ddd;
     }
@@ -45,9 +46,16 @@
       height: 50px;
       object-fit: cover;
       border-radius: 8px;
+      margin-right: 10px;
     }
 
-    .item-list .item span {
+    .item-details {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .item-details span {
       font-weight: bold;
     }
 
@@ -116,7 +124,11 @@
   <button id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
 
   <script>
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // Get and clean the cart data
+    let rawCart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cart = rawCart.filter(item => item && item.name && item.qty && item.price);
+
+    let paymentMethod = null;
 
     function renderOrderItems() {
       const orderItemsContainer = document.getElementById('orderItems');
@@ -125,14 +137,19 @@
       let totalPrice = 0;
 
       cart.forEach(item => {
-        totalPrice += item.price * item.qty;
+        const qty = item.qty;
+        const price = item.price;
+        const itemTotal = price * qty;
+        totalPrice += itemTotal;
 
         const itemDiv = document.createElement('div');
         itemDiv.className = 'item';
         itemDiv.innerHTML = `
-          <img src="assets/${item.name.replace(/\s+/g, '_')}.png" alt="${item.name}" />
-          <span>${item.name} x${item.qty}</span>
-          <span>₹${item.price * item.qty}</span>
+          <div class="item-details">
+            <img src="assets/${item.name.replace(/\s+/g, '_')}.png" alt="${item.name}" />
+            <span>${item.name} x${qty}</span>
+          </div>
+          <span>₹${itemTotal}</span>
         `;
         orderItemsContainer.appendChild(itemDiv);
       });
@@ -140,10 +157,9 @@
       document.getElementById('totalPrice').innerText = `Total: ₹${totalPrice}`;
     }
 
-    let paymentMethod = null;
-
     function selectPayment(method) {
       paymentMethod = method;
+      alert(`Selected Payment Method: ${method}`);
     }
 
     function confirmOrder() {
@@ -154,9 +170,10 @@
 
       alert(`Order confirmed! Payment method: ${paymentMethod}`);
       localStorage.removeItem('cart');
-      window.location.href = 'thank-you.html';  // Redirect to a thank you page
+      window.location.href = 'thank-you.html';
     }
 
+    // Initial render
     renderOrderItems();
   </script>
 
