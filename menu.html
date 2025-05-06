@@ -13,7 +13,7 @@
     }
 
     header {
-      background: #ff3d00;
+      background: #6f68d8af;
       color: white;
       padding: 15px 20px;
       font-size: 20px;
@@ -28,7 +28,8 @@
 
     .cart-icon {
       position: relative;
-      margin-right: 10px;
+      margin-right: 30px;
+      top: 3px;
       cursor: pointer;
     }
 
@@ -48,7 +49,7 @@
     }
 
     h2 {
-      margin-left: 20px;
+      margin-left: 30px;
       color: #e65100;
     }
 
@@ -92,7 +93,7 @@
     .item button {
       margin-top: 10px;
       padding: 6px 12px;
-      background: #e65100;
+      background: red;
       color: white;
       border: none;
       border-radius: 6px;
@@ -111,7 +112,7 @@
       width: 30px;
       height: 30px;
       font-size: 18px;
-      background: #ff7043;
+      background: red;
       border: none;
       color: white;
       border-radius: 6px;
@@ -120,17 +121,18 @@
 
     #checkoutBtn {
       position: fixed;
-      bottom: 0;
+      bottom:0;
       left: 10;
       right: 0;
-      background: #ff3d00;
+      background: red;
       color: white;
       font-size: 18px;
       padding: 15px;
+      margin: 15px;
       text-align: center;
-      border: none;
+      border-radius: 15px;
       cursor: pointer;
-      z-index: 1000;
+      z-index: 1;
     }
   </style>
 </head>
@@ -146,7 +148,7 @@
 
   <div id="menuContainer"></div>
 
-  <button id="checkoutBtn" onclick="goToCheckout()">Go to Checkout (0 items)</button>
+  <button id="checkoutBtn" onclick="goToCheckout()"> Checkout (0 items)</button>
 
   <script>
     const menuData = {
