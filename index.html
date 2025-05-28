@@ -47,25 +47,22 @@
   <form id="contactForm">
     <input type="text" name="name" placeholder="Full Name" required pattern="[A-Za-z ]+" title="Please enter only letters and spaces" />
     <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit phone number" />
-    <input type="text" name="building" placeholder="Address" required />
+    <input type="text" name="building" placeholder="e.g. A50, 1st Floor" required />
     
-    <select name="cuisine" required>
-      <option value="" disabled selected>Favourite Cuisine</option>
-      <option value="Indian">Indian</option>
-      <option value="Chinese">Chinese</option>
-      <option value="Italian">Italian</option>
-      <option value="South Indian">South Indian</option>
-      <option value="Continental">Continental</option>
-    </select>
+    <label>1. Do you want to order food from The Food Corner?</label><br>
+  <select name="InterestedInFood">
+    <option value="Yes, Daily">Yes, Daily</option>
+    <option value="Yes, Sometimes">Yes, Sometimes</option>
+    <option value="No">No</option>
+  </select><br><br>
 
     <input type="text" name="dish" placeholder="Favourite Dish/Beverage" required />
-
-    <select name="spice" required>
-      <option value="" disabled selected>Spice Level</option>
-      <option value="Mild">Mild</option>
-      <option value="Medium">Medium</option>
-      <option value="Spicy">Spicy</option>
-    </select>
+<label>1. Do you want to order food from The Food Corner?</label><br>
+  <select name="InterestedInFood">
+    <option value="Yes, Daily">Yes, Daily</option>
+    <option value="Yes, Sometimes">Yes, Sometimes</option>
+    <option value="No">No</option>
+  </select><br><br>
 
     <input type="text" name="allergies" placeholder="Allergies (if any)" />
 
