@@ -34,49 +34,40 @@
 
 <div class="hero">
   <img src="assets/file.png" alt="The Food Corner Logo" class="logo">
-  <h1>Help Us Serve You Better</h1>
-  <p>Please take a moment to tell us about your interest in food services at The Food Corner.</p>
+  <h1>THE FOOD CORNER</h1>
+  <p>We're thrilled to have you with us!<br> Kindly provide your contact details to enhance your food experience.</p>
   <div class="cta">
     <button onclick="openPopup()">Contact Us</button>
   </div>
 </div>
 
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
-<form action="https://script.google.com/macros/s/AKfycbzfkIqJ75kTsSbhvEGm5PfjVVoFW0RW238aVbWMDBlS7pr9X0sC5N21AV2C-q_xTCI/exec" method="POST">
-  
-  <label>Your Name:</label><br>
-  <input type="text" name="Name" required><br><br>
+<div class="popup" id="popup">
+  <div class="popup-header">Enter Your Contact Details</div>
+  <form id="contactForm">
+    <input type="text" name="name" placeholder="Full Name" required pattern="[A-Za-z ]+" title="Please enter only letters and spaces" />
+    <input type="tel" name="phone" placeholder="Phone" required pattern="[0-9]{10}" title="Enter a valid 10-digit phone number" />
+    <input type="text" name="building" placeholder="Address" required />
+    
+    <select name="cuisine" required>
+      <option value="" disabled selected>Favourite Cuisine</option>
+      <option value="Indian">Indian</option>
+      <option value="Chinese">Chinese</option>
+      <option value="Italian">Italian</option>
+      <option value="South Indian">South Indian</option>
+      <option value="Continental">Continental</option>
+    </select>
 
-  <label>Mobile Number:</label><br>
-  <input type="tel" name="Mobile" required><br><br>
+    <input type="text" name="dish" placeholder="Favourite Dish/Beverage" required />
 
-  <label>1. Do you want to order food from The Food Corner?</label><br>
-  <select name="InterestedInFood">
-    <option value="Yes, Daily">Yes, Daily</option>
-    <option value="Yes, Sometimes">Yes, Sometimes</option>
-    <option value="No">No</option>
-  </select><br><br>
+    <select name="spice" required>
+      <option value="" disabled selected>Spice Level</option>
+      <option value="Mild">Mild</option>
+      <option value="Medium">Medium</option>
+      <option value="Spicy">Spicy</option>
+    </select>
 
-  <label>2. Which meals are you interested in?</label><br>
-  <input type="checkbox" name="MealType" value="Breakfast"> Breakfast<br>
-  <input type="checkbox" name="MealType" value="Lunch"> Lunch<br>
-  <input type="checkbox" name="MealType" value="Both"> Both<br><br>
-
-  <label>3. What type of food do you prefer?</label><br>
-  <input type="checkbox" name="FoodType" value="Homemade Veg"> Homemade Veg<br>
-  <input type="checkbox" name="FoodType" value="South Indian"> South Indian<br>
-  <input type="checkbox" name="FoodType" value="North Indian"> North Indian<br>
-  <input type="checkbox" name="FoodType" value="Non-Veg (Future)"> Non-Veg (Future)<br><br>
-
-  <label>4. How many times a week would you order?</label><br>
-  <select name="Frequency">
-    <option value="1–2 times">1–2 times</option>
-    <option value="3–5 times">3–5 times</option>
-    <option value="Daily">Daily</option>
-  </select><br><br>
-
-  <label>5. Any suggestions or dishes you'd like us to add?</label><br>
-  <textarea name="Suggestions" rows="3" cols="30" placeholder="Type your suggestion here..."></textarea><br><br>
+    <input type="text" name="allergies" placeholder="Allergies (if any)" />
 
     <button type="submit">Submit</button>
   </form>
