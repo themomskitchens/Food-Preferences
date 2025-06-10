@@ -8,6 +8,7 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
+      padding: 0;
       background: #fff5f0;
       color: #333;
     }
@@ -16,40 +17,38 @@
       background: #ff3d00;
       color: white;
       padding: 20px;
-      font-size: 22px;
       text-align: center;
-      letter-spacing: 1px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .container {
-      max-width: 600px;
+      max-width: 800px;
       margin: 20px auto;
-      background: #fff;
       padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     h2 {
       color: #e65100;
       margin-bottom: 20px;
-    }
-
-    .item-list {
-      margin-bottom: 20px;
+      text-align: center;
     }
 
     .item {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 12px;
-      border-bottom: 1px solid #f0f0f0;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
     }
 
     .item img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       object-fit: cover;
       border-radius: 8px;
       margin-right: 10px;
@@ -62,17 +61,18 @@
     }
 
     .item-details span {
+      font-weight: 500;
       font-size: 16px;
-      font-weight: 600;
     }
 
     .item-actions button {
-      background: #ff5252;
-      color: white;
+      background: #ff3d00;
       border: none;
+      color: white;
       padding: 6px 12px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 14px;
       transition: background 0.3s;
     }
 
@@ -80,86 +80,96 @@
       background: #c62828;
     }
 
+    .removed-items {
+      background: #fff0e0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .removed-items h3 {
+      margin-top: 0;
+      color: #e65100;
+    }
+
     .total {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       text-align: right;
-      margin: 20px 0;
+      margin-top: 20px;
     }
 
     label {
       font-weight: bold;
       display: block;
-      margin-top: 10px;
-      margin-bottom: 5px;
+      margin-top: 20px;
     }
 
     select, textarea {
       width: 100%;
       padding: 10px;
-      font-size: 16px;
-      border-radius: 8px;
       border: 1px solid #ccc;
-      margin-bottom: 15px;
-      box-sizing: border-box;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 5px;
     }
 
-    #addMoreBtn {
+    .add-more-btn {
+      display: block;
+      margin: 20px auto;
       background: #4caf50;
       color: white;
       border: none;
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 12px 24px;
       border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      margin-bottom: 20px;
       transition: background 0.3s;
     }
 
-    #addMoreBtn:hover {
+    .add-more-btn:hover {
       background: #388e3c;
     }
 
     #confirmOrderBtn {
-      background: #ff3d00;
-      color: white;
-      font-size: 18px;
-      padding: 15px;
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+      background: #ff3d00;
+      color: white;
+      font-size: 20px;
+      padding: 15px;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+      z-index: 1000;
     }
 
-    /* Popup QR code style */
+    /* QR Popup */
     .popup-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.6);
+      z-index: 2000;
       justify-content: center;
       align-items: center;
-      z-index: 1000;
     }
 
     .popup-content {
       background: white;
       padding: 20px;
-      border-radius: 12px;
+      border-radius: 10px;
       text-align: center;
-      max-width: 300px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      max-width: 320px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     .popup-content img {
       width: 200px;
-      margin-bottom: 15px;
-      border-radius: 12px;
+      margin-bottom: 10px;
+      border-radius: 10px;
     }
 
     .popup-content button {
@@ -175,27 +185,6 @@
     .popup-content button:hover {
       background: #c62828;
     }
-
-    .removed-items {
-      background: #fff8f0;
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 20px;
-    }
-
-    .removed-items h3 {
-      color: #e65100;
-      margin-top: 0;
-    }
-
-    .item-actions .add-btn {
-      background: #4caf50;
-    }
-
-    .item-actions .add-btn:hover {
-      background: #388e3c;
-    }
-
   </style>
 </head>
 <body>
@@ -206,17 +195,15 @@
 
   <div class="container">
     <h2>Your Order</h2>
-
-    <div id="orderItems" class="item-list"></div>
-
-    <button id="addMoreBtn" onclick="window.location.href='menu.html'">+ Add More Items</button>
-
+    <div id="orderItems"></div>
     <div class="total" id="totalPrice">Total: ₹0</div>
 
     <div class="removed-items" id="removedItemsContainer" style="display: none;">
       <h3>Recently Removed Items</h3>
       <div id="removedItems"></div>
     </div>
+
+    <button class="add-more-btn" onclick="window.location.href='menu.html'">+ Add More Items</button>
 
     <label for="paymentMethod">Mode of Payment:</label>
     <select id="paymentMethod" required>
@@ -241,12 +228,145 @@
     </div>
   </div>
 
-  <!-- Keep your JS as is (no change needed) -->
-
   <script>
-    // Existing JavaScript from your original code...
-    // (You can keep your full JS code here with no changes.)
-  </script>
+    // Reuse your existing JS without changes — no issues here.
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let removedItems = [];
 
+    function renderOrderItems() {
+      const orderItemsContainer = document.getElementById('orderItems');
+      orderItemsContainer.innerHTML = '';
+      let totalPrice = 0;
+
+      if (cart.length === 0) {
+        orderItemsContainer.innerHTML = "<p>No items in your order.</p>";
+        document.getElementById("totalPrice").innerText = "Total: ₹0";
+      } else {
+        cart.forEach((item, index) => {
+          const itemTotal = item.price * item.qty;
+          totalPrice += itemTotal;
+
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'item';
+          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
+
+          itemDiv.innerHTML = `
+            <div class="item-details">
+              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
+              <span>${item.name} x${item.qty}</span>
+            </div>
+            <div class="item-actions">
+              <span>₹${itemTotal}</span><br/>
+              <button onclick="removeItem(${index})">Remove</button>
+            </div>
+          `;
+          orderItemsContainer.appendChild(itemDiv);
+        });
+
+        document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
+      }
+
+      renderRemovedItems();
+    }
+
+    function removeItem(index) {
+      removedItems.push(cart[index]);
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderOrderItems();
+    }
+
+    function renderRemovedItems() {
+      const container = document.getElementById('removedItemsContainer');
+      const list = document.getElementById('removedItems');
+      list.innerHTML = '';
+
+      if (removedItems.length > 0) {
+        container.style.display = 'block';
+        removedItems.forEach((item, index) => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'item';
+          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
+
+          itemDiv.innerHTML = `
+            <div class="item-details">
+              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
+              <span>${item.name} x${item.qty}</span>
+            </div>
+            <div class="item-actions">
+              <button onclick="addItemBack(${index})">+</button>
+            </div>
+          `;
+          list.appendChild(itemDiv);
+        });
+      } else {
+        container.style.display = 'none';
+      }
+    }
+
+    function addItemBack(index) {
+      cart.push(removedItems[index]);
+      removedItems.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderOrderItems();
+    }
+
+    function confirmOrder() {
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const address = document.getElementById('deliveryAddress').value.trim();
+
+      if (!paymentMethod) return alert('Please select a payment method.');
+      if (!address) return alert('Please enter delivery address.');
+      if (cart.length === 0) return alert('Your cart is empty.');
+
+      if (paymentMethod === "Online Payment") {
+        document.getElementById("qrPopup").style.display = "flex";
+      } else {
+        sendOrderData();
+      }
+    }
+
+    function completeOrder() {
+      document.getElementById("qrPopup").style.display = "none";
+      sendOrderData();
+    }
+
+    function sendOrderData() {
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const address = document.getElementById('deliveryAddress').value.trim();
+      const userName = localStorage.getItem('userName') || 'Guest';
+      const userMobile = localStorage.getItem('userMobile') || 'N/A';
+      const orderTime = new Date().toLocaleString();
+
+      const payload = {
+        name: userName,
+        mobile: userMobile,
+        paymentMethod: paymentMethod,
+        address: address,
+        items: cart,
+        orderTime: orderTime
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbw-SkyEUsAYj50xUsYRtOKU8HajfUETiocLQUN1rRYrf4Q-JjgK7jS1QB9DS5Vaf9Uf/exec', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(res => res.text())
+      .then(response => {
+        if (response.includes("Success")) {
+          localStorage.removeItem('cart');
+          window.location.href = 'thank-you.html';
+        } else {
+          alert("Something went wrong: " + response);
+        }
+      })
+      .catch(err => {
+        alert("Error sending order: " + err);
+      });
+    }
+
+    renderOrderItems();
+  </script>
 </body>
 </html>
