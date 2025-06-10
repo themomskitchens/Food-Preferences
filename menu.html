@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding-bottom: 80px;
-      background: #ff6a88);
+      background: linear-gradient(#ff9a8b, #ff6a88, #ff99ac);
     }
 
     header {
@@ -51,7 +51,7 @@
     h2 {
       margin-left: 30px;
       color: white;
-      font-weight: bold
+      font-weight: bold;
     }
 
     .category {
@@ -59,8 +59,8 @@
     }
 
     .menu {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
       padding: 0 20px;
     }
@@ -70,8 +70,10 @@
       border-radius: 12px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
       padding: 12px;
-      width: 180px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .item img {
@@ -122,7 +124,7 @@
 
     #checkoutBtn {
       position: fixed;
-      bottom:0;
+      bottom: 0;
       left: 10;
       right: 0;
       background: red;
@@ -134,6 +136,12 @@
       border-radius: 15px;
       cursor: pointer;
       z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      .menu {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -149,7 +157,7 @@
 
   <div id="menuContainer"></div>
 
-  <button id="checkoutBtn" onclick="goToCheckout()"> Checkout (0 items)</button>
+  <button id="checkoutBtn" onclick="goToCheckout()">Checkout (0 items)</button>
 
   <script>
     const menuData = {
