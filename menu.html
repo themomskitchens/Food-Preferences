@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menu | The Food Corner</title>
+  <title>Menu | The Moms Kitchen</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding-bottom: 80px;
-      background: linear-gradient(#ff9a8b, #ff6a88, #ff99ac);
+      background: #ff6a88;
     }
 
     header {
@@ -51,25 +51,18 @@
     h2 {
       margin-left: 30px;
       color: white;
-      font-weight: bold;
+      font-weight: bold
     }
 
     .category {
       margin-bottom: 30px;
     }
 
-    /* KEY STYLES FOR 2-COLUMN ZIG-ZAG LAYOUT */
     .menu {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       gap: 16px;
       padding: 0 20px;
-    }
-
-    @media (max-width: 600px) {
-      .menu {
-        grid-template-columns: 1fr;
-      }
     }
 
     .item {
@@ -77,10 +70,8 @@
       border-radius: 12px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
       padding: 12px;
+      width: 180px;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     .item img {
@@ -131,13 +122,14 @@
 
     #checkoutBtn {
       position: fixed;
-      bottom: 0;
-      left: 10px;
-      right: 10px;
+      bottom:0;
+      left: 10;
+      right: 0;
       background: red;
       color: white;
       font-size: 18px;
       padding: 15px;
+      margin: 15px;
       text-align: center;
       border-radius: 15px;
       cursor: pointer;
@@ -156,68 +148,130 @@
   </header>
 
   <div id="menuContainer"></div>
-  <button id="checkoutBtn" onclick="goToCheckout()">Checkout (0 items)</button>
+
+  <button id="checkoutBtn" onclick="goToCheckout()"> Checkout (0 items)</button>
 
   <script>
     const menuData = {
-      "Drinks": [ /* same items */ ],
-      "Shakes": [ /* same items */ ],
-      "Tea & Coffee": [ /* same items */ ],
-      "Classic Snacks": [ /* same items */ ]
+      "Drinks": [
+        { name: "Lahori Jeera 160 ML", price: 10, image: "assets/Lahori_Zeera_160ml.png" },
+        { name: "Bisleri Water Bottle", price: 20, image: "assets/Bisleri_Water_Bottle.png" },
+        { name: "Soft Drinks (Coke/Sprite/Thums Up)", price: 20, image: "assets/Soft Drink 200 ML.png" },
+        { name: "Sting Energy", price: 20, image: "assets/Sting Energy.jpeg" },
+        { name: "Diet Coke", price: 25, image: "assets/Diet Coke.png" },
+        { name: "Amul Kesar Milk", price: 25, image: "assets/Amul_kesar.png" },
+        { name: "Coconut Water", price: 50, image: "assets/Coconut_Water.png" }
+      ],
+      "Shakes": [
+        { name: "Chocolate Shake", price: 60, image: "assets/Chocolate Shake.png" },
+        { name: "Strawberry Shake", price: 60, image: "assets/Strawberry-Shake.png" },
+        { name: "Sattu Shake", price: 60, image: "assets/Sattu Shake.jpg" },
+        { name: "Mango Shake", price: 60, image: "assets/MangoMilkshake4.png" },
+        { name: "Banana Shake", price: 60, image: "assets/Banana_shake.png" },  
+        { name: "Watermelon Juice", price: 60, image: "assets/Watermelon Juice.png" }
+      ],
+      "Tea & Coffee": [
+        { name: "Masala Tea", price: 15, image: "assets/Masala Tea.png" },
+        { name: "Black Tea", price: 15, image: "assets/Black_Tea.png" },
+        { name: "Lemon Tea", price: 20, image: "assets/Lemon Tea.jpg" },
+        { name: "Green Tea", price: 20, image: "assets/Green Tea.jpg" },
+        { name: "Hot Coffee", price: 25, image: "assets/Hot Coffee.jpg" },
+        { name: "Cold Coffee", price: 50, image: "assets/Cold Coffee.jpg" }
+      ],
+      "Classic Snacks": [
+        { name: "Veg Sandwich", price: 20, image: "assets/Veg Sandvich.jpeg" },
+        { name: "Grilled Cheese Sandwich", price: 40, image: "assets/Grilled Cheese Sandwich.jpeg" },
+        { name: "Paneer Roll", price: 60, image: "assets/Paneer Roll.jpg" },
+        { name: "Aloo Patties", price: 20, image: "assets/Aloo_Patties.png" },
+        { name: "Masala Maggie", price: 40, image: "assets/Masala Maggie.jpg" },
+      ]
     };
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    const updateCartStorage = () => localStorage.setItem('cart', JSON.stringify(cart));
-    const updateCartBadge = () => {
-      const totalQty = cart.reduce((sum, i) => sum + (i.qty || 0), 0);
+    function updateCartStorage() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function updateCartBadge() {
+      const totalQty = cart.reduce((sum, item) => sum + (parseInt(item.qty) || 0), 0);
       document.getElementById('cartBadge').innerText = totalQty;
       document.getElementById('checkoutBtn').innerText = `Go to Checkout (${totalQty} item${totalQty !== 1 ? 's' : ''})`;
-    };
+    }
 
     function renderMenu() {
       const container = document.getElementById('menuContainer');
       container.innerHTML = '';
-      for (let cat in menuData) {
+
+      for (let category in menuData) {
         const section = document.createElement('div');
         section.className = 'category';
-        section.innerHTML = `<h2>${cat}</h2><div class="menu"></div>`;
-        const grid = section.querySelector('.menu');
 
-        menuData[cat].forEach(item => {
-          const ci = cart.find(x => x.name === item.name);
+        const title = document.createElement('h2');
+        title.innerText = category;
+        section.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'menu';
+
+        menuData[category].forEach(item => {
+          const cartItem = cart.find(i => i.name === item.name);
           const div = document.createElement('div');
           div.className = 'item';
-          div.innerHTML = `<img src="${item.image}" alt=""><h3>${item.name}</h3><p>₹${item.price}</p>`;
 
-          if (ci) {
-            const qc = document.createElement('div');
-            qc.className = 'qty-control';
-            qc.innerHTML = `<button>-</button><span>${ci.qty}</span><button>+</button>`;
-            qc.querySelectorAll('button')[0].onclick = () => {
-              if (ci.qty > 1) ci.qty--;
-              else cart = cart.filter(x => x.name !== item.name);
-              updateCartStorage(); renderMenu();
+          div.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" />
+            <h3>${item.name}</h3>
+            <p>₹${item.price}</p>
+          `;
+
+          if (cartItem) {
+            const qtyControl = document.createElement('div');
+            qtyControl.className = 'qty-control';
+
+            const dec = document.createElement('button');
+            dec.innerText = '-';
+            dec.onclick = () => {
+              if (cartItem.qty > 1) {
+                cartItem.qty--;
+              } else {
+                cart = cart.filter(i => i.name !== item.name);
+              }
+              updateCartStorage();
+              renderMenu();
             };
-            qc.querySelectorAll('button')[1].onclick = () => {
-              ci.qty++; updateCartStorage(); renderMenu();
+
+            const qtyText = document.createElement('span');
+            qtyText.innerText = cartItem.qty;
+
+            const inc = document.createElement('button');
+            inc.innerText = '+';
+            inc.onclick = () => {
+              cartItem.qty++;
+              updateCartStorage();
+              renderMenu();
             };
-            div.appendChild(qc);
+
+            qtyControl.append(dec, qtyText, inc);
+            div.appendChild(qtyControl);
           } else {
-            const btn = document.createElement('button');
-            btn.innerText = 'Add to Cart';
-            btn.onclick = () => {
+            const addBtn = document.createElement('button');
+            addBtn.innerText = 'Add to Cart';
+            addBtn.onclick = () => {
               cart.push({ name: item.name, price: item.price, qty: 1 });
-              updateCartStorage(); renderMenu();
+              updateCartStorage();
+              renderMenu();
             };
-            div.appendChild(btn);
+            div.appendChild(addBtn);
           }
 
           grid.appendChild(div);
         });
 
+        section.appendChild(grid);
         container.appendChild(section);
       }
+
       updateCartBadge();
     }
 
@@ -229,3 +283,8 @@
   </script>
 </body>
 </html>
+
+
+In this code, product showing below another product and I want to 1 product ir right and 2 is on left and 3 is below on 1sr and 4th is below on 2nd
+
+Ki dly update it according and provide the complete code 
