@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding-bottom: 80px;
-      background: #ff6a88;
+      background: linear-gradient(#ff9a8b, #ff6a88, #ff99ac);
     }
 
     header {
@@ -51,32 +51,39 @@
     h2 {
       margin-left: 30px;
       color: white;
-      font-weight: bold
+      font-weight: bold;
     }
 
     .category {
       margin-bottom: 30px;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .menu {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding: 0 20px;
-}
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 0 20px;
+    }
 
     .item {
       background: white;
       border-radius: 12px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
       padding: 12px;
-      width: 180px;
       text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .item:hover {
+      transform: translateY(-4px);
     }
 
     .item img {
       width: 100%;
-      height: 120px;
+      height: 150px;
       object-fit: cover;
       border-radius: 8px;
     }
@@ -122,19 +129,29 @@
 
     #checkoutBtn {
       position: fixed;
-      bottom:0;
-      left: 10;
+      bottom: 0;
+      left: 0;
       right: 0;
       background: red;
       color: white;
       font-size: 18px;
       padding: 15px;
-      margin: 15px;
+      margin: 10px;
       text-align: center;
       border-radius: 15px;
       cursor: pointer;
       z-index: 1;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    @media (max-width: 600px) {
+      .menu {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -149,7 +166,7 @@
 
   <div id="menuContainer"></div>
 
-  <button id="checkoutBtn" onclick="goToCheckout()"> Checkout (0 items)</button>
+  <button id="checkoutBtn" onclick="goToCheckout()">Go to Checkout (0 items)</button>
 
   <script>
     const menuData = {
@@ -183,7 +200,7 @@
         { name: "Grilled Cheese Sandwich", price: 40, image: "assets/Grilled Cheese Sandwich.jpeg" },
         { name: "Paneer Roll", price: 60, image: "assets/Paneer Roll.jpg" },
         { name: "Aloo Patties", price: 20, image: "assets/Aloo_Patties.png" },
-        { name: "Masala Maggie", price: 40, image: "assets/Masala Maggie.jpg" },
+        { name: "Masala Maggie", price: 40, image: "assets/Masala Maggie.jpg" }
       ]
     };
 
