@@ -1,374 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Confirm Order | The Food Corner</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding-bottom: 120px;
-      background: #fff5f0;
-    }
-
-    header {
-      background: #ff3d00;
-      color: white;
-      padding: 15px 20px;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .order-summary {
-      padding: 20px;
-    }
-<button onclick="window.location.href='menu.html'" style="
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 20px auto;
-  display: block;
-">
-  + Add More Items
-</button>
-
-    }
-    .order-summary h2 {
-      color: #e65100;
-    }
-
-    .item-list {
-      margin-bottom: 20px;
-    }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .item-details {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-    }
-
-    .item img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .item span {
-      font-weight: bold;
-    }
-
-    .remove-btn, .add-btn {
-      background: #ff5252;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-
-    .add-btn {
-      background: #4caf50;
-    }
-
-    .remove-btn:hover {
-      background: #c62828;
-    }
-
-    .add-btn:hover {
-      background: #388e3c;
-    }
-
-    .total {
-      font-size: 18px;
-      font-weight: bold;
-      text-align: right;
-      margin-bottom: 20px;
-    }
-
-    .payment-dropdown {
-      margin-bottom: 20px;
-    }
-
-    select, textarea {
-      width: 90%;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 5px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    #confirmOrderBtn {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #ff3d00;
-      color: white;
-      font-size: 18px;
-      padding: 15px;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    /* Popup QR code style */
-    .popup-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .popup-content {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      max-width: 300px;
-    }
-
-    .popup-content img {
-      width: 200px;
-      margin-bottom: 10px;
-    }
-
-    .popup-content button {
-      background: #ff3d00;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .popup-content button:hover {
-      background: #c62828;
-    }
-
-    .removed-items {
-      padding: 10px;
-      background: #fff0e0;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .removed-items h3 {
-      color: #e65100;
-      margin-top: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Order Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: right;
+            color: #333;
+        }
+        button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .removed-items {
+            background: #f9f9f9;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .removed-items h2 {
+            margin-top: 0;
+            color: #666;
+        }
+        .removed-items ul {
+            margin: 0;
+        }
+        .removed-items li button {
+            background: #ff9800;
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        .add-more {
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+        .add-more:hover {
+            background: #45a049;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Order Summary</h1>
+        <ul id="cart"></ul>
+        <div class="total" id="total"></div>
+        <button onclick="confirmOrder()">Confirm Order</button>
 
-  <header>
-    The Food Corner - Confirm Order
-  </header>
+        <div class="removed-items">
+            <h2>Recently Removed Items</h2>
+            <ul id="recentlyRemoved"></ul>
+        </div>
 
-  <div class="order-summary">
-    <h2>Your Order</h2>
-
-    <div class="item-list" id="orderItems"></div>
-
-    <div class="total" id="totalPrice">Total: ₹0</div>
-
-    <div class="removed-items" id="removedItemsContainer" style="display: none;">
-      <h3>Recently Removed Items</h3>
-      <div id="removedItems"></div>
+        <!-- Add More Items Button -->
+        <button class="add-more" onclick="window.location.href='menu.html'">+ Add More Items</button>
     </div>
 
-    <div class="payment-dropdown">
-      <label for="paymentMethod">Mode of Payment:</label>
-      <select id="paymentMethod" required>
-        <option value="">-- Select Payment Method --</option>
-        <option value="Cash on Delivery">Cash on Delivery</option>
-        <option value="Online Payment">Online Payment</option>
-      </select>
-    </div>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let recentlyRemoved = [];
 
-    <div class="address-input">
-      <label for="deliveryAddress">Delivery Address:</label>
-      <textarea id="deliveryAddress" rows="3" placeholder="Enter full address..." required></textarea>
-    </div>
-  </div>
+        function renderCart() {
+            const cartElement = document.getElementById('cart');
+            cartElement.innerHTML = '';
 
-  <button id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
+            let total = 0;
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - ₹${item.price}`;
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.onclick = () => removeItem(index);
+                li.appendChild(removeButton);
+                cartElement.appendChild(li);
+                total += item.price;
+            });
 
-  <!-- QR Code Popup -->
-  <div class="popup-overlay" id="qrPopup">
-    <div class="popup-content">
-      <h3>Scan to Pay</h3>
-      <img src="assets/Payment QR.jpg">
-      <p>After payment, click below to complete the order.</p>
-      <button onclick="completeOrder()">I've Paid</button>
-    </div>
-  </div>
-
-  <script>
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let removedItems = [];
-
-    function renderOrderItems() {
-      const orderItemsContainer = document.getElementById('orderItems');
-      orderItemsContainer.innerHTML = '';
-      let totalPrice = 0;
-
-      if (cart.length === 0) {
-        orderItemsContainer.innerHTML = "<p>No items in your order.</p>";
-        document.getElementById("totalPrice").innerText = "Total: ₹0";
-      } else {
-        cart.forEach((item, index) => {
-          const itemTotal = item.price * item.qty;
-          totalPrice += itemTotal;
-
-          const itemDiv = document.createElement('div');
-          itemDiv.className = 'item';
-
-          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
-
-          itemDiv.innerHTML = `
-            <div class="item-details">
-              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
-              <span>${item.name} x${item.qty}</span>
-            </div>
-            <div>
-              <span>₹${itemTotal}</span><br/>
-              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-            </div>
-          `;
-          orderItemsContainer.appendChild(itemDiv);
-        });
-
-        document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
-      }
-
-      renderRemovedItems();
-    }
-
-    function removeItem(index) {
-      removedItems.push(cart[index]);
-      cart.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderOrderItems();
-    }
-
-    function renderRemovedItems() {
-      const container = document.getElementById('removedItemsContainer');
-      const list = document.getElementById('removedItems');
-      list.innerHTML = '';
-
-      if (removedItems.length > 0) {
-        container.style.display = 'block';
-        removedItems.forEach((item, index) => {
-          const itemDiv = document.createElement('div');
-          itemDiv.className = 'item';
-
-          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
-
-          itemDiv.innerHTML = `
-            <div class="item-details">
-              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
-              <span>${item.name} x${item.qty}</span>
-            </div>
-            <div>
-              <button class="add-btn" onclick="addItemBack(${index})">+</button>
-            </div>
-          `;
-          list.appendChild(itemDiv);
-        });
-      } else {
-        container.style.display = 'none';
-      }
-    }
-
-    function addItemBack(index) {
-      cart.push(removedItems[index]);
-      removedItems.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderOrderItems();
-    }
-
-    function confirmOrder() {
-      const paymentMethod = document.getElementById('paymentMethod').value;
-      const address = document.getElementById('deliveryAddress').value.trim();
-
-      if (!paymentMethod) return alert('Please select a payment method.');
-      if (!address) return alert('Please enter delivery address.');
-      if (cart.length === 0) return alert('Your cart is empty.');
-
-      if (paymentMethod === "Online Payment") {
-        document.getElementById("qrPopup").style.display = "flex";
-      } else {
-        sendOrderData();
-      }
-    }
-
-    function completeOrder() {
-      document.getElementById("qrPopup").style.display = "none";
-      sendOrderData();
-    }
-
-    function sendOrderData() {
-      const paymentMethod = document.getElementById('paymentMethod').value;
-      const address = document.getElementById('deliveryAddress').value.trim();
-      const userName = localStorage.getItem('userName') || 'Guest';
-      const userMobile = localStorage.getItem('userMobile') || 'N/A';
-      const orderTime = new Date().toLocaleString();
-
-      const payload = {
-        name: userName,
-        mobile: userMobile,
-        paymentMethod: paymentMethod,
-        address: address,
-        items: cart,
-        orderTime: orderTime
-      };
-
-      fetch('https://script.google.com/macros/s/AKfycbw-SkyEUsAYj50xUsYRtOKU8HajfUETiocLQUN1rRYrf4Q-JjgK7jS1QB9DS5Vaf9Uf/exec', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then(res => res.text())
-      .then(response => {
-        if (response.includes("Success")) {
-          localStorage.removeItem('cart');
-          window.location.href = 'thank-you.html';
-        } else {
-          alert("Something went wrong: " + response);
+            document.getElementById('total').textContent = `Total: ₹${total}`;
         }
-      })
-      .catch(err => {
-        alert("Error sending order: " + err);
-      });
-    }
 
-    renderOrderItems();
-  </script>
+        function removeItem(index) {
+            recentlyRemoved.push(cart[index]);
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            renderRecentlyRemoved();
+        }
+
+        function renderRecentlyRemoved() {
+            const recentlyRemovedElement = document.getElementById('recentlyRemoved');
+            recentlyRemovedElement.innerHTML = '';
+
+            recentlyRemoved.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - ₹${item.price}`;
+                const addButton = document.createElement('button');
+                addButton.textContent = 'Add Back';
+                addButton.onclick = () => addBackItem(index);
+                li.appendChild(addButton);
+                recentlyRemovedElement.appendChild(li);
+            });
+        }
+
+        function addBackItem(index) {
+            cart.push(recentlyRemoved[index]);
+            recentlyRemoved.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            renderRecentlyRemoved();
+        }
+
+        function confirmOrder() {
+            localStorage.removeItem('cart');
+            alert('Order confirmed!');
+            window.location.href = 'thank-you.html';
+        }
+
+        renderCart();
+        renderRecentlyRemoved();
+    </script>
 </body>
 </html>
