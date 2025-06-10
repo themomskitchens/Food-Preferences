@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Order Confirmation</title>
+  <title>Order Summary</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background-color: #f4f4f4;
       margin: 0;
       padding: 20px;
     }
     .container {
       max-width: 800px;
       margin: auto;
-      background: white;
+      background: #fff;
       border-radius: 8px;
       padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -22,85 +22,77 @@
       text-align: center;
       color: #333;
     }
+    .section-title {
+      margin-top: 20px;
+      font-size: 20px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+      color: #555;
+    }
     .cart-item, .removed-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 0;
-      border-bottom: 1px solid #ddd;
-    }
-    .cart-item:last-child, .removed-item:last-child {
-      border-bottom: none;
+      border-bottom: 1px solid #eee;
     }
     .item-name {
       flex: 1;
     }
     .item-price {
-      width: 80px;
+      width: 100px;
       text-align: right;
     }
-    .remove-btn, .add-btn {
-      background: #f44336;
+    .remove-btn, .restore-btn, .browse-menu-btn, .confirm-btn {
+      background: #007bff;
       color: white;
       border: none;
-      border-radius: 4px;
-      padding: 5px 10px;
+      padding: 8px 12px;
+      border-radius: 5px;
       cursor: pointer;
+      margin-left: 10px;
     }
-    .add-btn {
-      background: #4caf50;
+    .remove-btn {
+      background: #dc3545;
+    }
+    .restore-btn {
+      background: #28a745;
+    }
+    .browse-menu-btn {
+      background: #17a2b8;
+      display: block;
+      margin: 20px auto 0;
+    }
+    .confirm-btn {
+      background: #28a745;
+      display: block;
+      margin: 20px auto;
     }
     .total {
       text-align: right;
-      font-size: 1.2em;
-      margin-top: 20px;
-    }
-    .confirm-btn {
-      background: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      display: block;
-      margin: 20px auto;
-    }
-    .removed-items {
-      background: #ffe0e0;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 20px;
-    }
-    .browse-menu-btn {
-      background: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      margin: 20px auto;
-      display: block;
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Order Summary</h1>
-    <div id="cart"></div>
-    <div class="total" id="total"></div>
-    <button class="confirm-btn">Confirm Order</button>
 
-    <div class="removed-items">
-      <h2>Recently Removed Items</h2>
+    <div id="cart-section">
+      <div class="section-title">Items in Your Cart</div>
+      <div id="cart"></div>
+      <div id="total" class="total"></div>
+    </div>
+
+    <div id="removed-section">
+      <div class="section-title">Recently Removed Items</div>
       <div id="removedItems"></div>
     </div>
 
-    <!-- Browse Menu Button -->
-    <button class="browse-menu-btn" onclick="window.location.href='menu.html'">
-      + Add More Items
-    </button>
+    <button class="browse-menu-btn" onclick="window.location.href='menu.html'">+ Browse Menu</button>
+    <button class="confirm-btn" onclick="confirmOrder()">Confirm Order</button>
   </div>
 
   <script>
@@ -110,54 +102,70 @@
     function renderCart() {
       const cartContainer = document.getElementById('cart');
       cartContainer.innerHTML = '';
-
-      cart.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'cart-item';
-        div.innerHTML = `
-          <span class="item-name">${item.name}</span>
-          <span class="item-price">₹${item.price.toFixed(2)}</span>
-          <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-        `;
-        cartContainer.appendChild(div);
-      });
-
-      const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
-      document.getElementById('total').textContent = `Total: ₹${totalPrice.toFixed(2)}`;
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<p>No items in the cart.</p>';
+      } else {
+        cart.forEach((item, index) => {
+          const div = document.createElement('div');
+          div.className = 'cart-item';
+          div.innerHTML = `
+            <span class="item-name">${item.name}</span>
+            <span class="item-price">₹${item.price.toFixed(2)}</span>
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          `;
+          cartContainer.appendChild(div);
+        });
+      }
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById('total').textContent = `Total: ₹${total.toFixed(2)}`;
     }
 
     function renderRemovedItems() {
-      const removedItemsContainer = document.getElementById('removedItems');
-      removedItemsContainer.innerHTML = '';
-
-      removedItems.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'removed-item';
-        div.innerHTML = `
-          <span class="item-name">${item.name}</span>
-          <span class="item-price">₹${item.price.toFixed(2)}</span>
-          <button class="add-btn" onclick="addItemBack(${index})">+</button>
-        `;
-        removedItemsContainer.appendChild(div);
-      });
+      const removedContainer = document.getElementById('removedItems');
+      removedContainer.innerHTML = '';
+      if (removedItems.length === 0) {
+        removedContainer.innerHTML = '<p>No recently removed items.</p>';
+      } else {
+        removedItems.forEach((item, index) => {
+          const div = document.createElement('div');
+          div.className = 'removed-item';
+          div.innerHTML = `
+            <span class="item-name">${item.name}</span>
+            <span class="item-price">₹${item.price.toFixed(2)}</span>
+            <button class="restore-btn" onclick="restoreItem(${index})">Restore</button>
+          `;
+          removedContainer.appendChild(div);
+        });
+      }
     }
 
     function removeItem(index) {
-      const item = cart.splice(index, 1)[0];
-      removedItems.push(item);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      localStorage.setItem('removedItems', JSON.stringify(removedItems));
+      const removed = cart.splice(index, 1)[0];
+      removedItems.push(removed);
+      updateLocalStorage();
       renderCart();
       renderRemovedItems();
     }
 
-    function addItemBack(index) {
-      const item = removedItems.splice(index, 1)[0];
-      cart.push(item);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      localStorage.setItem('removedItems', JSON.stringify(removedItems));
+    function restoreItem(index) {
+      const restored = removedItems.splice(index, 1)[0];
+      cart.push(restored);
+      updateLocalStorage();
       renderCart();
       renderRemovedItems();
+    }
+
+    function confirmOrder() {
+      alert('Your order has been confirmed!');
+      // You can add logic here to clear cart, redirect, or submit to server.
+      localStorage.removeItem('cart');
+      localStorage.removeItem('removedItems');
+      window.location.href = 'thankyou.html'; // redirect after confirmation
+    }
+
+    function updateLocalStorage() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem('removedItems', JSON.stringify(removedItems));
     }
 
     renderCart();
