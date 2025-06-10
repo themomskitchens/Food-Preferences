@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding-bottom: 80px;
-      background: #ff6a88;
+      background: linear-gradient(#ff9a8b, #ff6a88, #ff99ac);
     }
 
     header {
@@ -28,7 +28,7 @@
 
     .cart-icon {
       position: relative;
-      margin-right: 30px;
+      margin-right: 10px;
       top: 3px;
       cursor: pointer;
     }
@@ -49,28 +49,30 @@
     }
 
     h2 {
-      margin-left: 30px;
+      margin: 20px 16px 10px;
       color: white;
-      font-weight: bold
+      font-weight: bold;
+      font-size: 20px;
     }
 
     .category {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .menu {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  padding: 0 20px;
-}
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 0 16px;
+      justify-content: center;
+    }
 
     .item {
       background: white;
       border-radius: 12px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      padding: 12px;
-      width: 180px;
+      padding: 10px;
+      width: 45%;
       text-align: center;
     }
 
@@ -82,37 +84,39 @@
     }
 
     .item h3 {
-      margin: 10px 0 5px;
-      font-size: 16px;
+      margin: 8px 0 5px;
+      font-size: 14px;
     }
 
     .item p {
       margin: 0;
       font-weight: bold;
+      font-size: 14px;
     }
 
     .item button {
-      margin-top: 10px;
-      padding: 6px 12px;
+      margin-top: 8px;
+      padding: 6px 10px;
       background: red;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 14px;
     }
 
     .qty-control {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .qty-control button {
-      width: 30px;
-      height: 30px;
-      font-size: 18px;
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
       background: red;
       border: none;
       color: white;
@@ -122,18 +126,33 @@
 
     #checkoutBtn {
       position: fixed;
-      bottom:0;
-      left: 10;
-      right: 0;
+      bottom: 15px;
+      left: 10px;
+      right: 10px;
       background: red;
       color: white;
-      font-size: 18px;
-      padding: 15px;
-      margin: 15px;
+      font-size: 16px;
+      padding: 12px;
       text-align: center;
-      border-radius: 15px;
+      border-radius: 12px;
       cursor: pointer;
       z-index: 1;
+    }
+
+    @media (max-width: 480px) {
+      .item {
+        width: 100%;
+      }
+      header {
+        font-size: 18px;
+        padding: 12px 16px;
+      }
+      .cart-icon img {
+        width: 22px;
+      }
+      .item h3 {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -149,7 +168,7 @@
 
   <div id="menuContainer"></div>
 
-  <button id="checkoutBtn" onclick="goToCheckout()"> Checkout (0 items)</button>
+  <button id="checkoutBtn" onclick="goToCheckout()">Go to Checkout (0 items)</button>
 
   <script>
     const menuData = {
@@ -167,7 +186,7 @@
         { name: "Strawberry Shake", price: 60, image: "assets/Strawberry-Shake.png" },
         { name: "Sattu Shake", price: 60, image: "assets/Sattu Shake.jpg" },
         { name: "Mango Shake", price: 60, image: "assets/MangoMilkshake4.png" },
-        { name: "Banana Shake", price: 60, image: "assets/Banana_shake.png" },  
+        { name: "Banana Shake", price: 60, image: "assets/Banana_shake.png" },
         { name: "Watermelon Juice", price: 60, image: "assets/Watermelon Juice.png" }
       ],
       "Tea & Coffee": [
@@ -183,7 +202,7 @@
         { name: "Grilled Cheese Sandwich", price: 40, image: "assets/Grilled Cheese Sandwich.jpeg" },
         { name: "Paneer Roll", price: 60, image: "assets/Paneer Roll.jpg" },
         { name: "Aloo Patties", price: 20, image: "assets/Aloo_Patties.png" },
-        { name: "Masala Maggie", price: 40, image: "assets/Masala Maggie.jpg" },
+        { name: "Masala Maggie", price: 40, image: "assets/Masala Maggie.jpg" }
       ]
     };
 
