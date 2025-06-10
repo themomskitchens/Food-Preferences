@@ -59,7 +59,7 @@
       font-weight: bold;
     }
 
-    .remove-btn {
+    .remove-btn, .add-btn {
       background: #ff5252;
       color: white;
       border: none;
@@ -69,8 +69,16 @@
       font-size: 12px;
     }
 
+    .add-btn {
+      background: #4caf50;
+    }
+
     .remove-btn:hover {
       background: #c62828;
+    }
+
+    .add-btn:hover {
+      background: #388e3c;
     }
 
     .total {
@@ -148,6 +156,18 @@
     .popup-content button:hover {
       background: #c62828;
     }
+
+    .removed-items {
+      padding: 10px;
+      background: #fff0e0;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .removed-items h3 {
+      color: #e65100;
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
@@ -162,6 +182,11 @@
     <div class="item-list" id="orderItems"></div>
 
     <div class="total" id="totalPrice">Total: ₹0</div>
+
+    <div class="removed-items" id="removedItemsContainer" style="display: none;">
+      <h3>Recently Removed Items</h3>
+      <div id="removedItems"></div>
+    </div>
 
     <div class="payment-dropdown">
       <label for="paymentMethod">Mode of Payment:</label>
@@ -192,6 +217,7 @@
 
   <script>
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let removedItems = [];
 
     function renderOrderItems() {
       const orderItemsContainer = document.getElementById('orderItems');
@@ -201,36 +227,74 @@
       if (cart.length === 0) {
         orderItemsContainer.innerHTML = "<p>No items in your order.</p>";
         document.getElementById("totalPrice").innerText = "Total: ₹0";
-        return;
+      } else {
+        cart.forEach((item, index) => {
+          const itemTotal = item.price * item.qty;
+          totalPrice += itemTotal;
+
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'item';
+
+          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
+
+          itemDiv.innerHTML = `
+            <div class="item-details">
+              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
+              <span>${item.name} x${item.qty}</span>
+            </div>
+            <div>
+              <span>₹${itemTotal}</span><br/>
+              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+            </div>
+          `;
+          orderItemsContainer.appendChild(itemDiv);
+        });
+
+        document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
       }
 
-      cart.forEach((item, index) => {
-        const itemTotal = item.price * item.qty;
-        totalPrice += itemTotal;
-
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item';
-
-        const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
-
-        itemDiv.innerHTML = `
-          <div class="item-details">
-            <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
-            <span>${item.name} x${item.qty}</span>
-          </div>
-          <div>
-            <span>₹${itemTotal}</span><br/>
-            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-          </div>
-        `;
-        orderItemsContainer.appendChild(itemDiv);
-      });
-
-      document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
+      renderRemovedItems();
     }
 
     function removeItem(index) {
+      removedItems.push(cart[index]);
       cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderOrderItems();
+    }
+
+    function renderRemovedItems() {
+      const container = document.getElementById('removedItemsContainer');
+      const list = document.getElementById('removedItems');
+      list.innerHTML = '';
+
+      if (removedItems.length > 0) {
+        container.style.display = 'block';
+        removedItems.forEach((item, index) => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'item';
+
+          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
+
+          itemDiv.innerHTML = `
+            <div class="item-details">
+              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
+              <span>${item.name} x${item.qty}</span>
+            </div>
+            <div>
+              <button class="add-btn" onclick="addItemBack(${index})">+</button>
+            </div>
+          `;
+          list.appendChild(itemDiv);
+        });
+      } else {
+        container.style.display = 'none';
+      }
+    }
+
+    function addItemBack(index) {
+      cart.push(removedItems[index]);
+      removedItems.splice(index, 1);
       localStorage.setItem('cart', JSON.stringify(cart));
       renderOrderItems();
     }
@@ -272,13 +336,10 @@
       };
 
       fetch('https://script.google.com/macros/s/AKfycbw-SkyEUsAYj50xUsYRtOKU8HajfUETiocLQUN1rRYrf4Q-JjgK7jS1QB9DS5Vaf9Uf/exec', {
-  method: 'POST',
-  body: JSON.stringify(payload),
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
-
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      })
       .then(res => res.text())
       .then(response => {
         if (response.includes("Success")) {
