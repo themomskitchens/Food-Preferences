@@ -146,6 +146,7 @@
       z-index: 1000;
     }
 
+    /* QR Popup */
     .popup-overlay {
       display: none;
       position: fixed;
@@ -217,16 +218,18 @@
 
   <button id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
 
+  <!-- QR Code Popup -->
   <div class="popup-overlay" id="qrPopup">
     <div class="popup-content">
       <h3>Scan to Pay</h3>
-      <img src="assets/Payment_QR.jpg" alt="QR Code">
+      <img src="assets/Payment QR.jpg" alt="QR Code">
       <p>After payment, click below to complete the order.</p>
       <button onclick="completeOrder()">I've Paid</button>
     </div>
   </div>
 
   <script>
+    // Reuse your existing JS without changes — no issues here.
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let removedItems = [];
 
@@ -259,7 +262,7 @@
           `;
           orderItemsContainer.appendChild(itemDiv);
         });
-
+        
         document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
       }
 
@@ -310,34 +313,57 @@
 
     function confirmOrder() {
       const paymentMethod = document.getElementById('paymentMethod').value;
-      const deliveryAddress = document.getElementById('deliveryAddress').value.trim();
+      const address = document.getElementById('deliveryAddress').value.trim();
 
-      if (!paymentMethod) {
-        alert("Please select a payment method.");
-        return;
-      }
+      if (!paymentMethod) return alert('Please select a payment method.');
+      if (!address) return alert('Please enter delivery address.');
+      if (cart.length === 0) return alert('Your cart is empty.');
 
-      if (!deliveryAddress) {
-        alert("Please enter the delivery address.");
-        return;
-      }
-
-      if (cart.length === 0) {
-        alert("Your cart is empty. Please add items to confirm your order.");
-        return;
-      }
-
-      if (paymentMethod === 'Online Payment') {
-        document.getElementById('qrPopup').style.display = 'flex';
+      if (paymentMethod === "Online Payment") {
+        document.getElementById("qrPopup").style.display = "flex";
       } else {
-        completeOrder();
+        sendOrderData();
       }
     }
 
     function completeOrder() {
-      alert("Order placed successfully! Thank you for ordering with The Food Corner.");
-      localStorage.removeItem('cart');
-      window.location.href = 'thankyou.html'; // redirect to thank you page or home page
+      document.getElementById("qrPopup").style.display = "none";
+      sendOrderData();
+    }
+
+    function sendOrderData() {
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const address = document.getElementById('deliveryAddress').value.trim();
+      const userName = localStorage.getItem('userName') || 'Guest';
+      const userMobile = localStorage.getItem('userMobile') || 'N/A';
+      const orderTime = new Date().toLocaleString();
+
+      const payload = {
+        name: userName,
+        mobile: userMobile,
+        paymentMethod: paymentMethod,
+        address: address,
+        items: cart,
+        orderTime: orderTime
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbw-SkyEUsAYj50xUsYRtOKU8HajfUETiocLQUN1rRYrf4Q-JjgK7jS1QB9DS5Vaf9Uf/exec', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(res => res.text())
+      .then(response => {
+        if (response.includes("Success")) {
+          localStorage.removeItem('cart');
+          window.location.href = 'thank-you.html';
+        } else {
+          alert("Something went wrong: " + response);
+        }
+      })
+      .catch(err => {
+        alert("Error sending order: " + err);
+      });
     }
 
     renderOrderItems();
