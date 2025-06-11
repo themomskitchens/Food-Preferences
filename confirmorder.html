@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Food Corner - Confirm Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .popup {
+            width: 300px;
+            margin: 100px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            padding: 20px;
+        }
+        h2 {
+            color: #e74c3c;
+            margin-top: 0;
+        }
+        img.qr {
+            width: 200px;
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="popup">
+        <h2>Scan to Pay</h2>
+        <img class="qr" src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=upi://pay?pa=7557575736@pthdfc&pn=The%20Food%20Corner" alt="Pay QR">
+        <p>UPI ID: <strong>7557575736@pthdfc</strong></p>
+        <p>After payment, enter the UPI Reference Number below:</p>
+        <input type="text" id="upiReference" placeholder="Enter UPI Reference Number" oninput="checkReference()">
+        <button id="paidButton" disabled onclick="submitPayment()">I've Paid</button>
+    </div>
+
+    <script>
+        function checkReference() {
+            const upiRef = document.getElementById("upiReference").value;
+            const paidButton = document.getElementById("paidButton");
+            paidButton.disabled = upiRef.trim() === "";
+        }
+
+        function submitPayment() {
+            const upiRef = document.getElementById("upiReference").value.trim();
+            if (upiRef !== "") {
+                // Placeholder for further processing (e.g. saving to a sheet)
+                alert("Thank you! We have recorded your payment reference: " + upiRef);
+                // You can redirect or close popup here
+            } else {
+                alert("Please enter a valid UPI Reference Number.");
+            }
+        }
+    </script>
+
+</body>
+</html>
