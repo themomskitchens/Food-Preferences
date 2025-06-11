@@ -1,208 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Payment Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment - The Food Corner</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      padding: 20px;
-    }
-    .container {
-      background: #fff;
-      padding: 20px;
-      max-width: 400px;
-      margin: 0 auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      color: #555;
-    }
-    input[type="radio"] {
-      margin-right: 10px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    button:disabled {
-      background-color: #aaa;
-      cursor: not-allowed;
-    }
-    /* Modal styles */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fff;
-      margin: 15% auto;
-      padding: 20px;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 400px;
-      text-align: center;
-      position: relative;
-    }
-    .close {
-      position: absolute;
-      right: 15px;
-      top: 10px;
-      font-size: 20px;
-      cursor: pointer;
-      color: #aaa;
-    }
-    .close:hover {
-      color: #000;
-    }
-    .upi-id {
-      font-size: 18px;
-      margin: 15px 0;
-      background: #f0f0f0;
-      padding: 8px;
-      border-radius: 4px;
-      word-wrap: break-word;
-    }
-    .copy-button {
-      background-color: #007BFF;
-      color: white;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #fff8f0; }
+    h1 { color: #ff5722; font-size: 2.5em; }
+    .qr-code { margin: 20px auto; max-width: 200px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Select Payment Mode</h2>
-    <label><input type="radio" name="paymentMode" value="UPI"> UPI</label>
-    <label><input type="radio" name="paymentMode" value="COD"> Cash on Delivery</label>
 
-    <div id="upiReferenceDiv" style="display: none;">
-      <label for="upiReference">Enter UPI Reference Number:</label>
-      <input type="text" id="upiReference" name="upiReference" placeholder="e.g. 1234567890ABC">
-    </div>
+<h1>Payment</h1>
+<p>Please scan the QR code below to complete your payment.</p>
 
-    <button id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
-  </div>
+<!-- Example QR Code -->
+<img src="https://www.qr-code-generator.com/wp-content/themes/qr-new/inc/img/qr-code-sample.png" alt="QR Code" class="qr-code">
 
-  <!-- UPI Modal -->
-  <div id="upiModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3>Shop UPI ID</h3>
-      <div class="upi-id" id="shopUpiId">myshop@upi</div>
-      <button class="copy-button" onclick="copyUpiId()">Copy UPI ID</button>
-      <p style="margin-top: 10px;">Use your UPI app to make the payment and note the reference number.</p>
-    </div>
-  </div>
+<p>If you're unable to scan, you can also make the payment manually.</p>
 
-  <script>
-    const paymentModes = document.getElementsByName('paymentMode');
-    const upiReferenceDiv = document.getElementById('upiReferenceDiv');
-    const confirmOrderBtn = document.getElementById('confirmOrderBtn');
-    const upiModal = document.getElementById('upiModal');
-    const shopUpiId = document.getElementById('shopUpiId').innerText;
-
-    // Show/hide UPI reference input based on selection
-    paymentModes.forEach(mode => {
-      mode.addEventListener('change', function() {
-        if (this.value === 'UPI') {
-          upiReferenceDiv.style.display = 'block';
-          openModal();  // Show modal
-        } else {
-          upiReferenceDiv.style.display = 'none';
-          closeModal(); // Close modal
-        }
-      });
-    });
-
-    function openModal() {
-      upiModal.style.display = 'block';
-    }
-
-    function closeModal() {
-      upiModal.style.display = 'none';
-    }
-
-    function copyUpiId() {
-      const tempInput = document.createElement('input');
-      tempInput.value = shopUpiId;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-      alert('UPI ID copied to clipboard!');
-    }
-
-    function confirmOrder() {
-      const selectedMode = [...paymentModes].find(r => r.checked);
-      const upiReference = document.getElementById('upiReference').value.trim();
-
-      if (!selectedMode) {
-        alert('Please select a payment mode.');
-        return;
-      }
-
-      if (selectedMode.value === 'UPI' && upiReference === '') {
-        alert('Please enter your UPI Reference Number.');
-        return;
-      }
-
-      // Save order data to sessionStorage (optional)
-      sessionStorage.setItem('paymentMode', selectedMode.value);
-      if (selectedMode.value === 'UPI') {
-        sessionStorage.setItem('upiReference', upiReference);
-      }
-
-      // Disable button to prevent multiple submissions
-      confirmOrderBtn.disabled = true;
-      confirmOrderBtn.textContent = 'Processing...';
-
-      // Simulate a short delay
-      setTimeout(() => {
-        window.location.href = 'thankyou.html';
-      }, 1000);
-    }
-
-    // Close modal on outside click
-    window.onclick = function(event) {
-      if (event.target === upiModal) {
-        closeModal();
-      }
-    };
-  </script>
 </body>
 </html>
