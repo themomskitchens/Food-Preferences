@@ -1,148 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Mom's Kitchen- Customer Interest Survey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;100&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #ff9a8b, #ff6a88, #ff99ac);
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mom's Kitchen - Customer Interest Survey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;100&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9a8b, #ff6a88, #ff99ac);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-        .container {
-            max-width: 500px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
 
-        .logo {
-            display: block;
-            margin: 0 auto 20px;
-            text-align: center;
-        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-        .logo img {
-            max-width: 100px;
-        }
+        .header img {
+            max-width: 100px;
+            margin-bottom: 0;
+        }
 
-        h1 {
-            text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
+        .header h1 {
+            margin: 5px 0 0 0; /* Remove extra gap */
+            font-size: 1.8rem;
+            color: #333;
+        }
 
-        label {
-            display: block;
-            font-weight: 600;
-            margin-top: 15px;
-            margin-bottom: 5px;
-        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
 
-        input[type="text"], input[type="tel"], textarea, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            background: #f9f9f9;
-            transition: border-color 0.3s;
-        }
+        input[type="text"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            background: #f9f9f9;
+            transition: border-color 0.3s;
+        }
 
-        input[type="text"]:focus,
-        input[type="tel"]:focus,
-        textarea:focus,
-        select:focus {
-            border-color: #ff6a88;
-            outline: none;
-        }
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #ff6a88;
+            outline: none;
+        }
 
-        .submit-btn {
-            width: 100%;
-            background: #ff6a88;
-            color: #fff;
-            border: none;
-            padding: 14px;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
-        }
+        .submit-btn {
+            width: 100%;
+            background: #ff6a88;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
 
-        .submit-btn:hover {
-            background: #ff4f70;
-        }
+        .submit-btn:hover {
+            background: #ff4f70;
+        }
 
-        @media (max-width: 500px) {
-            .container {
-                margin: 20px;
-                padding: 20px;
-            }
-        }
-    </style>
+        @media (max-width: 500px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo">
-            <img src="assets/1000059103-removebg-preview.png" alt="The Food Corner Logo">
-        </div>
-        <h1>The Mom's Kitchen</h1>
-        <form id="survey-form">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required>
+    <div class="container">
+        <div class="header">
+            <img src="assets/1000059103-removebg-preview.png" alt="The Mom's Kitchen Logo">
+            <h1>The Mom's Kitchen</h1>
+        </div>
+        <form id="survey-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
 
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
 
-            <label for="address">Your Address or Building</label>
-            <input type="text" id="address" name="address" placeholder="E.g., A-50, FIEE Complex">
+            <label for="address">Your Address or Building</label>
+            <input type="text" id="address" name="address" placeholder="E.g., A-50, FIEE Complex">
 
-            <label for="breakfast">Would you be interested in our Breakfast service? <span style="color: red;">*</span></label>
-            <select id="breakfast" name="breakfast" required>
-                <option value="">Select an option</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Maybe">Maybe</option>
-            </select>
+            <label for="breakfast">Would you be interested in our Breakfast service? <span style="color: red;">*</span></label>
+            <select id="breakfast" name="breakfast" required>
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+            </select>
 
-            <label for="lunch">Would you be interested in our Lunch service? <span style="color: red;">*</span></label>
-            <select id="lunch" name="lunch" required>
-                <option value="">Select an option</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Maybe">Maybe</option>
-            </select>
+            <label for="lunch">Would you be interested in our Lunch service? <span style="color: red;">*</span></label>
+            <select id="lunch" name="lunch" required>
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+            </select>
 
-            <label for="food-item">Any specific food item you'd love to have?</label>
-            <textarea id="food-item" name="food-item" rows="3" placeholder="Optional"></textarea>
+            <label for="food-item">Any specific food item you'd love to have?</label>
+            <textarea id="food-item" name="food-item" rows="3" placeholder="Optional"></textarea>
 
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
-    </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const form = document.getElementById("survey-form");
-            form.addEventListener("submit", function(e) {
-                e.preventDefault(); // Prevent the default form submission
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("survey-form");
+            form.addEventListener("submit", function(e) {
+                e.preventDefault(); // Prevent the default form submission
 
-                // OPTIONAL: Here you can add code to submit the data to Google Sheets if needed
+                // OPTIONAL: Add code to submit data to Google Sheets here if needed
 
-                // Redirect to the thank you page
-                window.location.href = "thankyou.html";
-            });
-        });
-    </script>
+                // Redirect to the thank you page
+                window.location.href = "thankyou.html";
+            });
+        });
+    </script>
 </body>
 </html>
