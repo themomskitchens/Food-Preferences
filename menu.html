@@ -169,12 +169,15 @@
 
   <!-- Header with cart icon -->
   <header>
-    The Mom's Kitchen 
-    <div class="cart-icon" onclick="goToCheckout()">
-      <img src="assets/1000059103-removebg-preview.png" alt="Cart" />
-      <span class="badge" id="cartBadge">0</span>
-    </div>
-  </header>
+  <div style="display: flex; align-items: center;">
+    <img src="assets/logo.png" alt="Logo" style="height: 40px; margin-left: 40px;">
+    <span>The Mom's Kitchen</span>
+  </div>
+  <div class="cart-icon" onclick="goToCheckout()">
+    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart" />
+    <span class="badge" id="cartBadge">0</span>
+  </div>
+</header>
 
   <!-- Category Tabs -->
   <div class="tabs" id="categoryTabs"></div>
