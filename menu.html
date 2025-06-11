@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menu | The Moms Kitchen</title>
+  <title>Menu | The Food Corner</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -28,8 +28,6 @@
 
     .cart-icon {
       position: relative;
-      margin-right: 30px;
-      top: 3px;
       cursor: pointer;
     }
 
@@ -48,56 +46,87 @@
       padding: 2px 6px;
     }
 
-    h2 {
-      margin-left: 30px;
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      background: white;
+      padding: 10px;
+      gap: 10px;
+      position: sticky;
+      top: 60px;
+      z-index: 1000;
+    }
+
+    .tab {
+      background: white;
+      border: 1px solid red;
+      color: red;
+      border-radius: 20px;
+      padding: 6px 12px;
+      white-space: nowrap;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    .tab.active {
+      background: red;
       color: white;
-      font-weight: bold
     }
 
     .category {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      padding: 10px 15px;
+    }
+
+    h2 {
+      color: white;
+      font-size: 20px;
+      margin-bottom: 10px;
     }
 
     .menu {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      padding: 0 20px;
+      gap: 10px;
+      justify-content: center;
     }
 
     .item {
       background: white;
       border-radius: 12px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      padding: 12px;
-      width: 180px;
+      padding: 10px;
+      width: 140px;
       text-align: center;
     }
 
     .item img {
       width: 100%;
-      height: 120px;
+      height: 100px;
       object-fit: cover;
       border-radius: 8px;
     }
 
     .item h3 {
-      margin: 10px 0 5px;
-      font-size: 16px;
+      margin: 8px 0 4px;
+      font-size: 14px;
     }
 
     .item p {
       margin: 0;
       font-weight: bold;
+      font-size: 14px;
     }
 
     .item button {
-      margin-top: 10px;
-      padding: 6px 12px;
+      margin-top: 6px;
+      padding: 6px 10px;
       background: red;
       color: white;
       border: none;
       border-radius: 6px;
+      font-size: 12px;
       cursor: pointer;
     }
 
@@ -105,14 +134,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 6px;
+      margin-top: 6px;
     }
 
     .qty-control button {
-      width: 30px;
-      height: 30px;
-      font-size: 18px;
+      width: 24px;
+      height: 24px;
+      font-size: 16px;
       background: red;
       border: none;
       color: white;
@@ -122,16 +151,15 @@
 
     #checkoutBtn {
       position: fixed;
-      bottom:0;
-      left: 10;
+      bottom: 0;
+      left: 0;
       right: 0;
       background: red;
       color: white;
-      font-size: 18px;
+      font-size: 16px;
       padding: 15px;
-      margin: 15px;
       text-align: center;
-      border-radius: 15px;
+      border-radius: 0;
       cursor: pointer;
       z-index: 1;
     }
@@ -140,16 +168,16 @@
 <body>
 
   <header>
-    The Mom's Kitchen
+    The Food Corner
     <div class="cart-icon" onclick="goToCheckout()">
       <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart" />
       <span class="badge" id="cartBadge">0</span>
     </div>
   </header>
 
+  <div class="tabs" id="categoryTabs"></div>
   <div id="menuContainer"></div>
-
-  <button id="checkoutBtn" onclick="goToCheckout()"> Checkout (0 items)</button>
+  <button id="checkoutBtn" onclick="goToCheckout()">Checkout (0 items)</button>
 
   <script>
     const menuData = {
@@ -188,6 +216,7 @@
     };
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let selectedCategory = Object.keys(menuData)[0];
 
     function updateCartStorage() {
       localStorage.setItem('cart', JSON.stringify(cart));
@@ -199,78 +228,93 @@
       document.getElementById('checkoutBtn').innerText = `Go to Checkout (${totalQty} item${totalQty !== 1 ? 's' : ''})`;
     }
 
+    function renderTabs() {
+      const tabs = document.getElementById('categoryTabs');
+      tabs.innerHTML = '';
+
+      Object.keys(menuData).forEach(category => {
+        const tab = document.createElement('div');
+        tab.className = 'tab' + (category === selectedCategory ? ' active' : '');
+        tab.innerText = category;
+        tab.onclick = () => {
+          selectedCategory = category;
+          renderTabs();
+          renderMenu();
+        };
+        tabs.appendChild(tab);
+      });
+    }
+
     function renderMenu() {
       const container = document.getElementById('menuContainer');
       container.innerHTML = '';
 
-      for (let category in menuData) {
-        const section = document.createElement('div');
-        section.className = 'category';
+      const section = document.createElement('div');
+      section.className = 'category';
 
-        const title = document.createElement('h2');
-        title.innerText = category;
-        section.appendChild(title);
+      const title = document.createElement('h2');
+      title.innerText = selectedCategory;
+      section.appendChild(title);
 
-        const grid = document.createElement('div');
-        grid.className = 'menu';
+      const grid = document.createElement('div');
+      grid.className = 'menu';
 
-        menuData[category].forEach(item => {
-          const cartItem = cart.find(i => i.name === item.name);
-          const div = document.createElement('div');
-          div.className = 'item';
+      menuData[selectedCategory].forEach(item => {
+        const cartItem = cart.find(i => i.name === item.name);
+        const div = document.createElement('div');
+        div.className = 'item';
 
-          div.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" />
-            <h3>${item.name}</h3>
-            <p>₹${item.price}</p>
-          `;
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" />
+          <h3>${item.name}</h3>
+          <p>₹${item.price}</p>
+        `;
 
-          if (cartItem) {
-            const qtyControl = document.createElement('div');
-            qtyControl.className = 'qty-control';
+        if (cartItem) {
+          const qtyControl = document.createElement('div');
+          qtyControl.className = 'qty-control';
 
-            const dec = document.createElement('button');
-            dec.innerText = '-';
-            dec.onclick = () => {
-              if (cartItem.qty > 1) {
-                cartItem.qty--;
-              } else {
-                cart = cart.filter(i => i.name !== item.name);
-              }
-              updateCartStorage();
-              renderMenu();
-            };
+          const dec = document.createElement('button');
+          dec.innerText = '-';
+          dec.onclick = () => {
+            if (cartItem.qty > 1) {
+              cartItem.qty--;
+            } else {
+              cart = cart.filter(i => i.name !== item.name);
+            }
+            updateCartStorage();
+            renderMenu();
+          };
 
-            const qtyText = document.createElement('span');
-            qtyText.innerText = cartItem.qty;
+          const qtyText = document.createElement('span');
+          qtyText.innerText = cartItem.qty;
 
-            const inc = document.createElement('button');
-            inc.innerText = '+';
-            inc.onclick = () => {
-              cartItem.qty++;
-              updateCartStorage();
-              renderMenu();
-            };
+          const inc = document.createElement('button');
+          inc.innerText = '+';
+          inc.onclick = () => {
+            cartItem.qty++;
+            updateCartStorage();
+            renderMenu();
+          };
 
-            qtyControl.append(dec, qtyText, inc);
-            div.appendChild(qtyControl);
-          } else {
-            const addBtn = document.createElement('button');
-            addBtn.innerText = 'Add to Cart';
-            addBtn.onclick = () => {
-              cart.push({ name: item.name, price: item.price, qty: 1 });
-              updateCartStorage();
-              renderMenu();
-            };
-            div.appendChild(addBtn);
-          }
+          qtyControl.append(dec, qtyText, inc);
+          div.appendChild(qtyControl);
+        } else {
+          const addBtn = document.createElement('button');
+          addBtn.innerText = 'Add to Cart';
+          addBtn.onclick = () => {
+            cart.push({ name: item.name, price: item.price, qty: 1 });
+            updateCartStorage();
+            renderMenu();
+          };
+          div.appendChild(addBtn);
+        }
 
-          grid.appendChild(div);
-        });
+        grid.appendChild(div);
+      });
 
-        section.appendChild(grid);
-        container.appendChild(section);
-      }
+      section.appendChild(grid);
+      container.appendChild(section);
 
       updateCartBadge();
     }
@@ -279,6 +323,7 @@
       window.location.href = 'order-summary.html';
     }
 
+    renderTabs();
     renderMenu();
   </script>
 </body>
