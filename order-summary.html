@@ -161,6 +161,27 @@
     }
     .popup-content button:hover {
       background: #c62828;
+
+       .upi-id {
+      font-size: 18px;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 15px 0;
+      word-wrap: break-word;
+    }
+
+    .copy-button {
+      background-color: #28a745;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .copy-button:hover {
+      background-color: #218838;
     }
   </style>
 </head>
@@ -195,6 +216,16 @@
       <button onclick="completeOrder()">I've Paid</button>
     </div>
   </div>
+  <div id="upiModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Pay via UPI</h2>
+      <img src="shop_qr.png" alt="Shop UPI QR Code" class="qr-code">
+      <div class="upi-id" id="upiId">myshop@upi</div>
+      <button class="copy-button" onclick="copyUpiId()">Copy UPI ID</button>
+      <div class="message" id="copyMessage"></div>
+    </div>
+  </div>
   <script>
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let removedItems = [];
@@ -227,6 +258,14 @@
         document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
       }
       renderRemovedItems();
+    }
+    function copyUpiId() {
+      const upiId = document.getElementById('upiId').innerText;
+      navigator.clipboard.writeText(upiId).then(() => {
+        document.getElementById('copyMessage').innerText = 'UPI ID copied!';
+      }).catch(err => {
+        document.getElementById('copyMessage').innerText = 'Failed to copy.';
+      });
     }
     function removeItem(index) {
       removedItems.push(cart[index]);
