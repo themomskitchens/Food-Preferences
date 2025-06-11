@@ -167,6 +167,7 @@
 </head>
 <body>
 
+  <!-- Header with cart icon -->
   <header>
     The Mom's Kitchen 
     <div class="cart-icon" onclick="goToCheckout()">
@@ -175,11 +176,18 @@
     </div>
   </header>
 
+  <!-- Category Tabs -->
   <div class="tabs" id="categoryTabs"></div>
-  <div id="menuContainer"></div>
-  <button id="checkoutBtn" onclick="goToCheckout()">Checkout (0 items)</button>
 
+  <!-- Menu container -->
+  <div id="menuContainer"></div>
+
+  <!-- Checkout Button -->
+  <button id="checkoutBtn" onclick="goToCheckout()">Go to Checkout (0 items)</button>
+
+  <!-- Scripts -->
   <script>
+    // Menu Data
     const menuData = {
       "Drinks": [
         { name: "Lahori Jeera 160 ML", price: 10, image: "assets/Lahori_Zeera_160ml.png" },
@@ -211,27 +219,32 @@
         { name: "Cheese Sandwich", price: 40, image: "assets/Grilled Cheese Sandwich.jpeg" },
         { name: "Paneer Roll", price: 60, image: "assets/Paneer Roll.jpg" },
         { name: "Aloo Patties", price: 20, image: "assets/Aloo_Patties.png" },
-        { name: "Masala Maggie", price: 40, image: "assets/Masala Maggie.jpg" },
+        { name: "Masala Maggie", price: 40, image: "assets/Masala Maggie.jpg" }
       ]
     };
 
+    // Cart
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Initially selected category
     let selectedCategory = Object.keys(menuData)[0];
 
+    // Save cart to local storage
     function updateCartStorage() {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
 
+    // Update cart badge and checkout button
     function updateCartBadge() {
       const totalQty = cart.reduce((sum, item) => sum + (parseInt(item.qty) || 0), 0);
       document.getElementById('cartBadge').innerText = totalQty;
       document.getElementById('checkoutBtn').innerText = `Go to Checkout (${totalQty} item${totalQty !== 1 ? 's' : ''})`;
     }
 
+    // Render category tabs
     function renderTabs() {
       const tabs = document.getElementById('categoryTabs');
       tabs.innerHTML = '';
-
       Object.keys(menuData).forEach(category => {
         const tab = document.createElement('div');
         tab.className = 'tab' + (category === selectedCategory ? ' active' : '');
@@ -245,6 +258,7 @@
       });
     }
 
+    // Render menu items
     function renderMenu() {
       const container = document.getElementById('menuContainer');
       container.innerHTML = '';
@@ -319,10 +333,12 @@
       updateCartBadge();
     }
 
+    // Redirect to checkout page
     function goToCheckout() {
       window.location.href = 'order-summary.html';
     }
 
+    // Initialize
     renderTabs();
     renderMenu();
   </script>
