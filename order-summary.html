@@ -128,6 +128,29 @@
       cursor: pointer;
       z-index: 1000;
     }
+
+    .upi-id {
+  font-size: 18px;
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 15px 0;
+  word-wrap: break-word;
+}
+
+.copy-button {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.copy-button:hover {
+  background-color: #218838;
+}
     .popup-overlay {
       display: none;
       position: fixed;
@@ -279,6 +302,18 @@
       } else {
         completeOrder();
       }
+    }
+
+    function copyUpiId() {
+  const upiId = document.getElementById('upiId').innerText;
+  navigator.clipboard.writeText(upiId).then(() => {
+    document.getElementById('copyMessage').innerText = 'UPI ID copied!';
+    setTimeout(() => {
+      document.getElementById('copyMessage').innerText = '';
+    }, 2000);
+  }).catch(err => {
+    document.getElementById('copyMessage').innerText = 'Failed to copy.';
+  });
     }
     function completeOrder() {
       alert("Order confirmed! Thank you for ordering from The Mom's Kitchen.");
