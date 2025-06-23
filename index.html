@@ -98,73 +98,69 @@
       <img src="assets/1000059103-removebg-preview.png" alt="The Food Corner Logo"/>
     </div>
     <h1>The Mom's Kitchen</h1>
-    <form id="survey-form">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name" required>
+   <form id="survey-form">
+  <label for="name">Full Name</label>
+  <input type="text" id="name" name="name" required>
 
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+  <label for="phone">Phone Number</label>
+  <input type="tel" id="phone" name="phone" required>
 
-      <label for="address">Your Address or Building</label>
-      <input type="text" id="address" name="address" placeholder="E.g., A-50, FIEE Complex">
+  <label for="address">Your Address or Building</label>
+  <input type="text" id="address" name="address">
 
-      <label for="breakfast">Would you be interested in our Breakfast service? <span style="color: red;">*</span></label>
-      <select id="breakfast" name="breakfast" required>
-        <option value="">Select an option</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-        <option value="Maybe">Maybe</option>
-      </select>
+  <label for="breakfast">Interested in Breakfast?</label>
+  <select id="breakfast" name="breakfast" required>
+    <option value="">Select</option>
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+    <option value="Maybe">Maybe</option>
+  </select>
 
-      <label for="lunch">Would you be interested in our Lunch service? <span style="color: red;">*</span></label>
-      <select id="lunch" name="lunch" required>
-        <option value="">Select an option</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-        <option value="Maybe">Maybe</option>
-      </select>
+  <label for="lunch">Interested in Lunch?</label>
+  <select id="lunch" name="lunch" required>
+    <option value="">Select</option>
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+    <option value="Maybe">Maybe</option>
+  </select>
 
-      <label for="fooditem">Any specific food item you'd love to have?</label>
-      <textarea id="fooditem" name="fooditem" rows="3" placeholder="Optional"></textarea>
+  <label for="fooditem">Favorite Food Item</label>
+  <textarea id="fooditem" name="fooditem" rows="3"></textarea>
 
-      <button type="submit" class="submit-btn">Submit</button>
-    </form>
-  </div>
+  <button type="submit">Submit</button>
+</form>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("survey-form");
+<script>
+document.getElementById("survey-form").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
+  const formData = new URLSearchParams();
+  formData.append("name", document.getElementById("name").value);
+  formData.append("phone", document.getElementById("phone").value);
+  formData.append("address", document.getElementById("address").value);
+  formData.append("breakfast", document.getElementById("breakfast").value);
+  formData.append("lunch", document.getElementById("lunch").value);
+  formData.append("fooditem", document.getElementById("fooditem").value);
 
-        const formData = new URLSearchParams();
-        formData.append("name", document.getElementById("name").value);
-        formData.append("phone", document.getElementById("phone").value);
-        formData.append("address", document.getElementById("address").value);
-        formData.append("breakfast", document.getElementById("breakfast").value);
-        formData.append("lunch", document.getElementById("lunch").value);
-        formData.append("fooditem", document.getElementById("fooditem").value);
-
-        fetch("https://script.google.com/macros/s/AKfycbzfkIqJ75kTsSbhvEGm5PfjVVoFW0RW238aVbWMDBlS7pr9X0sC5N21AV2C-q_xTCI/exec", {
-          method: "POST",
-          body: formData,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
-        })
-        .then(response => {
-          if (response.ok) {
-            window.location.href = "thankyou.html";
-          } else {
-            alert("Submission failed. Please try again.");
-          }
-        })
-        .catch(error => {
-          alert("Error: " + error.message);
-        });
-      });
-    });
-  </script>
+  fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+    method: "POST",
+    body: formData,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("Submitted successfully!");
+      document.getElementById("survey-form").reset();
+    } else {
+      alert("Submission failed.");
+    }
+  })
+  .catch(error => {
+    alert("Error: " + error.message);
+  });
+});
+</script>
 </body>
 </html>
