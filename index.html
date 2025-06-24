@@ -131,38 +131,39 @@
   </div>
 
   <script>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("survey-form");
-      form.addEventListener("submit", function(e) {
-        e.preventDefault();
+        const form = document.getElementById("survey-form");
+        form.addEventListener("submit", function(e) {
+            e.preventDefault(); // Prevent the default form submission
 
-        const data = {
-          name: document.getElementById("name").value.trim(),
-          phone: document.getElementById("phone").value.trim(),
-          address: document.getElementById("address").value.trim(),
-          breakfast: document.getElementById("breakfast").value,
-          lunch: document.getElementById("lunch").value,
-          fooditem: document.getElementById("food-item").value.trim()
-        };
+            const data = {
+                name: document.getElementById("name").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                address: document.getElementById("address").value.trim(),
+                breakfast: document.getElementById("breakfast").value,
+                lunch: document.getElementById("lunch").value,
+                fooditem: document.getElementById("food-item").value.trim()
+            };
 
-        fetch("https://script.google.com/macros/s/AKfycbzlfY4MP_sJ0CdprVxJ0KraIncQayl34j6qP_GzFFkTBoe8oUvMW8aSNhhnlpm0vk-a/exec", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then(response => response.text())
-        .then(result => {
-          console.log("Submitted:", result);
-          window.location.href = "thankyou.html";
-        })
-        .catch(error => {
-          console.error("Submission failed:", error);
-          alert("Oops! Something went wrong. Please try again.");
+            fetch("https://script.google.com/macros/s/AKfycbzlfY4MP_sJ0CdprVxJ0KraIncQayl34j6qP_GzFFkTBoe8oUvMW8aSNhhnlpm0vk-a/exec", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log("Submitted:", result);
+                window.location.href = "thankyou.html";
+            })
+            .catch(error => {
+                console.error("Submission failed:", error);
+                alert("Oops! Something went wrong. Please try again.");
+            });
         });
-      });
     });
-  </script>
+</script>
 </body>
 </html>
