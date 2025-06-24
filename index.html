@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Mom's Kitchen- Customer Interest Survey</title>
+    <title>The Mom's Kitchen - Customer Interest Survey</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;100&display=swap" rel="stylesheet">
     <style>
         body {
@@ -132,40 +132,31 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const form = document.getElementById("survey-form");
-            form.addEventListener("submit", function(e) {
-                e.preventDefault(); // Prevent the default form submission
-<script>
     document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("survey-form");
+
         form.addEventListener("submit", function(e) {
-            e.preventDefault(); // Prevent the default form submission
+            e.preventDefault();
 
-            const data = {
-                name: document.getElementById("name").value.trim(),
-                phone: document.getElementById("phone").value.trim(),
-                address: document.getElementById("address").value.trim(),
-                breakfast: document.getElementById("breakfast").value,
-                lunch: document.getElementById("lunch").value,
-                fooditem: document.getElementById("food-item").value.trim()
-            };
+            const formData = new FormData(form);
+            const data = {};
 
-            fetch("https://script.google.com/macros/s/AKfycbzlfY4MP_sJ0CdprVxJ0KraIncQayl34j6qP_GzFFkTBoe8oUvMW8aSNhhnlpm0vk-a/exec", {
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch("https://script.google.com/macros/s/AKfycbwcf3Kq3quIT8XBlZ6YkyQAqYUpaxPLkWBqKw2WY83WhoMWkzX-whRnaCfwggPbxLSR/exec", {
                 method: "POST",
-                body: JSON.stringify(data),
+                mode: "no-cors",
                 headers: {
                     "Content-Type": "application/json"
-                }
-            });
-            .then(response => response.text())
-            .then(result => {
-                console.log("Submitted:", result);
+                },
+                body: JSON.stringify(data)
+            }).then(() => {
                 window.location.href = "thankyou.html";
-            })
-            .catch(error => {
-                console.error("Submission failed:", error);
-                alert("Oops! Something went wrong. Please try again.");
+            }).catch(error => {
+                console.error("Error!", error.message);
+                alert("Something went wrong!");
             });
         });
     });
