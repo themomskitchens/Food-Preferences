@@ -132,39 +132,17 @@
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("survey-form");
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("survey-form");
+            form.addEventListener("submit", function(e) {
+                e.preventDefault(); // Prevent the default form submission
 
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
+                // OPTIONAL: Here you can add code to submit the data to Google Sheets if needed
 
-            const formData = new FormData(form);
-
-            const data = {
-                name: formData.get("name"),
-                phone: formData.get("phone"),
-                address: formData.get("address"),
-                breakfast: formData.get("breakfast"),
-                lunch: formData.get("lunch"),
-                fooditem: formData.get("food-item")
-            };
-          
-            fetch("https://script.google.com/macros/s/AKfycbzlfY4MP_sJ0CdprVxJ0KraIncQayl34j6qP_GzFFkTBoe8oUvMW8aSNhhnlpm0vk-a/exec", {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            .then(() => {
+                // Redirect to the thank you page
                 window.location.href = "thankyou.html";
             });
-            .catch((error) => {
-                alert("Submission failed: " + error.message);
-            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
