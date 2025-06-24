@@ -89,73 +89,82 @@
                 padding: 20px;
             }
         }
-  </style>
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">
-      <img src="assets/1000059103-removebg-preview.png" alt="The Food Corner Logo">
+
+    <div class="container">
+        <div class="logo">
+            <img src="assets/1000059103-removebg-preview.png" alt="The Food Corner Logo">
+        </div>
+        <h1>The Mom's Kitchen</h1>
+        <form id="survey-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+
+            <label for="address">Your Address or Building</label>
+            <input type="text" id="address" name="address" placeholder="E.g., A-50, FIEE Complex">
+
+            <label for="breakfast">Would you be interested in our Breakfast service? <span style="color: red;">*</span></label>
+            <select id="breakfast" name="breakfast" required>
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+            </select>
+
+            <label for="lunch">Would you be interested in our Lunch service? <span style="color: red;">*</span></label>
+            <select id="lunch" name="lunch" required>
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Maybe">Maybe</option>
+            </select>
+
+            <label for="food-item">Any specific food item you'd love to have?</label>
+            <textarea id="food-item" name="food-item" rows="3" placeholder="Optional"></textarea>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
     </div>
-    <h1>The Mom's Kitchen</h1>
-    <form id="survey-form">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" required>
 
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" required>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("survey-form");
 
-      <label for="address">Your Address or Building</label>
-      <input type="text" id="address">
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-      <label for="breakfast">Interested in Breakfast?</label>
-      <select id="breakfast" required>
-        <option value="">Select an option</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-        <option value="Maybe">Maybe</option>
-      </select>
+            const formData = new FormData(form);
 
-      <label for="lunch">Interested in Lunch?</label>
-      <select id="lunch" required>
-        <option value="">Select an option</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-        <option value="Maybe">Maybe</option>
-      </select>
-
-      <label for="food-item">Specific food items you'd love?</label>
-      <textarea id="food-item" rows="3" placeholder="Optional"></textarea>
-
-      <button type="submit" class="submit-btn">Submit</button>
-    </form>
-  </div>
-
-  <script>
-    document.getElementById("survey-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const data = {
-        name: document.getElementById("name").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        address: document.getElementById("address").value.trim(),
-        breakfast: document.getElementById("breakfast").value,
-        lunch: document.getElementById("lunch").value,
-        fooditem: document.getElementById("food-item").value.trim()
-      };
-
-      fetch("https://script.google.com/macros/s/AKfycbym33Tiy9504pPOpcJmw1YZ-UcJPiFKmHXCu91zItqOCmoxbUwqzVYHIBnPe4Hfi7cL/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
-
-      // Redirect to thank you page or show alert
-      alert("Thank you! Your response has been recorded.");
-      document.getElementById("survey-form").reset();
+            const data = {
+                name: formData.get("name"),
+                phone: formData.get("phone"),
+                address: formData.get("address"),
+                breakfast: formData.get("breakfast"),
+                lunch: formData.get("lunch"),
+                fooditem: formData.get("food-item")
+            };
+          
+            fetch("https://script.google.com/macros/s/AKfycbzlfY4MP_sJ0CdprVxJ0KraIncQayl34j6qP_GzFFkTBoe8oUvMW8aSNhhnlpm0vk-a/exec", {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                window.location.href = "thankyou.html";
+            });
+            .catch((error) => {
+                alert("Submission failed: " + error.message);
+            });
+        });
     });
-  </script>
+</script>
 </body>
 </html>
