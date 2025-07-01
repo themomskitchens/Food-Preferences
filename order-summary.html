@@ -317,21 +317,36 @@
   });
     }
     function completeOrder() {
-      alert("Order confirmed! Thank you for ordering from The Mom's Kitchen.");
+  const name = localStorage.getItem("customerName") || prompt("Enter your name:");
+  const mobile = localStorage.getItem("customerMobile") || prompt("Enter your mobile:");
+  const address = document.getElementById('deliveryAddress').value.trim();
+  const paymentMethod = document.getElementById('paymentMethod').value;
+  const notes = document.getElementById('orderNotes')?.value || "";
+  const cart = JSON.parse(localStorage.getItem('cart') || "[]");
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  fetch("YOUR_WEB_APP_URL_HERE", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name, mobile, address, cart, total, paymentMethod, notes
+    })
+  })
+  .then(res => res.json())
+  .then(response => {
+    if (response.success) {
+      alert("✅ Order Placed! Thank you!");
       localStorage.removeItem('cart');
-      window.location.href = 'menu.html';
+      window.location.href = "menu.html";
+    } else {
+      alert("❌ Failed to place order: " + response.error);
     }
-    renderOrderItems();
-
-    fetch("YOUR_WEB_APP_URL_HERE/exec", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ cart: [], name: "Test", mobile: "123", address: "123", paymentMethod: "COD", notes: "" })
-})
-.then(r => r.text())
-.then(console.log)
-.catch(console.error);
-
+  })
+  .catch(err => {
+    alert("⚠️ Network error: " + err.message);
+  });
+}
   </script>
 </body>
 </html>
