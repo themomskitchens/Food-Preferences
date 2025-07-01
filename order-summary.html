@@ -286,13 +286,6 @@
         container.style.display = 'none';
       }
     }
-
-    fetch("https://script.google.com/macros/s/PASTE_YOUR_WEBAPP_URL_HERE/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-      
     function addItemBack(index) {
       cart.push(removedItems[index]);
       removedItems.splice(index, 1);
