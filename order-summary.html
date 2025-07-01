@@ -326,7 +326,7 @@
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  fetch("YOUR_WEB_APP_URL_HERE", {
+  fetch("https://script.google.com/macros/s/AKfycbxwrNU88qM25n4o94nqNIVWZgnuNtemr0ZU6pJcLv467ODCfy3Hd9_H5ytrjsrz91ta/exec", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
