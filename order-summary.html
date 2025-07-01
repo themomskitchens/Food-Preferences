@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -221,160 +222,113 @@
     <div class="message" id="copyMessage"></div>
   </div>
   </div>
-<script>
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  let removedItems = [];
-
-  function renderOrderItems() {
-    const orderItemsContainer = document.getElementById('orderItems');
-    orderItemsContainer.innerHTML = '';
-    let totalPrice = 0;
-    if (cart.length === 0) {
-      orderItemsContainer.innerHTML = "<p>No items in your order.</p>";
-      document.getElementById("totalPrice").innerText = "Total: ₹0";
-    } else {
-      cart.forEach((item, index) => {
-        const itemTotal = item.price * item.qty;
-        totalPrice += itemTotal;
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item';
-        const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
-        itemDiv.innerHTML = `
-          <div class="item-details">
-            <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
-            <span>${item.name} x${item.qty}</span>
-          </div>
-          <div class="item-actions">
-            <span>₹${itemTotal}</span><br/>
-            <button onclick="removeItem(${index})">Remove</button>
-          </div>
-        `;
-        orderItemsContainer.appendChild(itemDiv);
-      });
-      document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let removedItems = [];
+    function renderOrderItems() {
+      const orderItemsContainer = document.getElementById('orderItems');
+      orderItemsContainer.innerHTML = '';
+      let totalPrice = 0;
+      if (cart.length === 0) {
+        orderItemsContainer.innerHTML = "<p>No items in your order.</p>";
+        document.getElementById("totalPrice").innerText = "Total: ₹0";
+      } else {
+        cart.forEach((item, index) => {
+          const itemTotal = item.price * item.qty;
+          totalPrice += itemTotal;
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'item';
+          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
+          itemDiv.innerHTML = `
+            <div class="item-details">
+              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
+              <span>${item.name} x${item.qty}</span>
+            </div>
+            <div class="item-actions">
+              <span>₹${itemTotal}</span><br/>
+              <button onclick="removeItem(${index})">Remove</button>
+            </div>
+          `;
+          orderItemsContainer.appendChild(itemDiv);
+        });
+        document.getElementById("totalPrice").innerText = `Total: ₹${totalPrice}`;
+      }
+      renderRemovedItems();
     }
-    renderRemovedItems();
-  }
-
-  function removeItem(index) {
-    removedItems.push(cart[index]);
-    cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    renderOrderItems();
-  }
-
-  function renderRemovedItems() {
-    const container = document.getElementById('removedItemsContainer');
-    const list = document.getElementById('removedItems');
-    list.innerHTML = '';
-    if (removedItems.length > 0) {
-      container.style.display = 'block';
-      removedItems.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item';
-        const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
-        itemDiv.innerHTML = `
-          <div class="item-details">
-            <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
-            <span>${item.name} x${item.qty}</span>
-          </div>
-          <div class="item-actions">
-            <button onclick="addItemBack(${index})">+</button>
-          </div>
-        `;
-        list.appendChild(itemDiv);
-      });
-    } else {
-      container.style.display = 'none';
+    function removeItem(index) {
+      removedItems.push(cart[index]);
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderOrderItems();
     }
-  }
-
-  function addItemBack(index) {
-    cart.push(removedItems[index]);
-    removedItems.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    renderOrderItems();
-  }
-
-  function confirmOrder() {
-    const paymentMethod = document.getElementById('paymentMethod').value;
-    const address = document.getElementById('deliveryAddress').value.trim();
-    const name = localStorage.getItem("name") || "";
-    const mobile = localStorage.getItem("mobile") || "";
-    const notes = document.getElementById("orderNotes")?.value || "";
-
-    if (!paymentMethod) return alert('Please select a payment method.');
-    if (!address) return alert('Please enter delivery address.');
-    if (cart.length === 0) return alert('Your cart is empty.');
-
-    if (paymentMethod === "Online Payment") {
-      document.getElementById("qrPopup").style.display = "flex";
-    } else {
-      sendOrder(name, mobile, address, paymentMethod, notes);
+    function renderRemovedItems() {
+      const container = document.getElementById('removedItemsContainer');
+      const list = document.getElementById('removedItems');
+      list.innerHTML = '';
+      if (removedItems.length > 0) {
+        container.style.display = 'block';
+        removedItems.forEach((item, index) => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'item';
+          const imagePath = `assets/${item.name.replace(/\s+/g, '_')}.png`;
+          itemDiv.innerHTML = `
+            <div class="item-details">
+              <img src="${imagePath}" alt="${item.name}" onerror="this.onerror=null;this.src='assets/default.png';" />
+              <span>${item.name} x${item.qty}</span>
+            </div>
+            <div class="item-actions">
+              <button onclick="addItemBack(${index})">+</button>
+            </div>
+          `;
+          list.appendChild(itemDiv);
+        });
+      } else {
+        container.style.display = 'none';
+      }
     }
-  }
 
-  function copyUpiId() {
-    const upiId = document.getElementById('upiId').innerText;
-    navigator.clipboard.writeText(upiId).then(() => {
-      document.getElementById('copyMessage').innerText = 'UPI ID copied!';
-      setTimeout(() => {
-        document.getElementById('copyMessage').innerText = '';
-      }, 2000);
-    }).catch(err => {
-      document.getElementById('copyMessage').innerText = 'Failed to copy.';
-    });
-  }
-
-  function completeOrder() {
-    const address = document.getElementById('deliveryAddress').value.trim();
-    const paymentMethod = document.getElementById('paymentMethod').value;
-    const name = localStorage.getItem("name") || "";
-    const mobile = localStorage.getItem("mobile") || "";
-    const notes = document.getElementById("orderNotes")?.value || "";
-
-    sendOrder(name, mobile, address, paymentMethod, notes);
-  }
-
-  function completeOrder() {
-  const name = localStorage.getItem("userName") || "Customer";
-  const mobile = localStorage.getItem("userMobile") || "";
-  const address = document.getElementById("deliveryAddress").value.trim();
-  const paymentMethod = document.getElementById("paymentMethod").value;
-  const notes = document.getElementById("notes") ? document.getElementById("notes").value : "";
-
-  const orderData = {
-    name,
-    mobile,
-    address,
-    paymentMethod,
-    cart,
-    notes
-  };
-
-  fetch("https://script.google.com/macros/s/PASTE_YOUR_WEBAPP_URL_HERE/exec", {
+    fetch("https://script.google.com/macros/s/PASTE_YOUR_WEBAPP_URL_HERE/exec", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(orderData)
-  })
-  .then(res => res.json())
-  .then(res => {
-    if (res.success) {
+      
+    function addItemBack(index) {
+      cart.push(removedItems[index]);
+      removedItems.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderOrderItems();
+    }
+    function confirmOrder() {
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const address = document.getElementById('deliveryAddress').value.trim();
+      if (!paymentMethod) return alert('Please select a payment method.');
+      if (!address) return alert('Please enter delivery address.');
+      if (cart.length === 0) return alert('Your cart is empty.');
+      if (paymentMethod === "Online Payment") {
+        document.getElementById("qrPopup").style.display = "flex";
+      } else {
+        completeOrder();
+      }
+    }
+
+    function copyUpiId() {
+  const upiId = document.getElementById('upiId').innerText;
+  navigator.clipboard.writeText(upiId).then(() => {
+    document.getElementById('copyMessage').innerText = 'UPI ID copied!';
+    setTimeout(() => {
+      document.getElementById('copyMessage').innerText = '';
+    }, 2000);
+  }).catch(err => {
+    document.getElementById('copyMessage').innerText = 'Failed to copy.';
+  });
+    }
+    function completeOrder() {
       alert("Order confirmed! Thank you for ordering from The Mom's Kitchen.");
       localStorage.removeItem('cart');
-      window.location.href = "menu.html";
-    } else {
-      alert("Error saving order: " + res.error);
+      window.location.href = 'menu.html';
     }
-  })
-  .catch(err => {
-    alert("Network or script error: " + err.message);
-  });
-}
-
-  renderOrderItems();
-</script>
+    renderOrderItems();
+  </script>
 </body>
 </html>
