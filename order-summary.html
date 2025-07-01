@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -222,43 +223,6 @@
   </div>
   </div>
   <script>
-
-    function completeOrder() {
-  const paymentMethod = document.getElementById('paymentMethod').value;
-  const address = document.getElementById('deliveryAddress').value.trim();
-  const total = document.getElementById("totalPrice").innerText;
-  const orderSummary = cart.map(item => `${item.name} x${item.qty} - ₹${item.price * item.qty}`).join(", ");
-
-  const payload = {
-    name: localStorage.getItem("username") || "Guest", // fallback if not saved
-    mobile: localStorage.getItem("mobile") || "Unknown",
-    items: orderSummary,
-    total: total.replace("Total: ₹", ""),
-    address: address,
-    paymentMethod: paymentMethod,
-    time: new Date().toLocaleString()
-  };
-
-  fetch('https://script.google.com/macros/s/AKfycbzfkIqJ75kTsSbhvEGm5PfjVVoFW0RW238aVbWMDBlS7pr9X0sC5N21AV2C-q_xTCI/exec', {
-    method: 'POST',
-    body: JSON.stringify(payload),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert("Order placed successfully!");
-    localStorage.removeItem("cart");
-    window.location.href = "thankyou.html";
-  })
-  .catch(err => {
-    console.error("Order submission failed:", err);
-    alert("Something went wrong while placing the order.");
-  });
-}
-
-    
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let removedItems = [];
     function renderOrderItems() {
@@ -344,10 +308,6 @@
     function copyUpiId() {
   const upiId = document.getElementById('upiId').innerText;
   navigator.clipboard.writeText(upiId).then(() => {
-  const message = document.getElementById("copyMessage");
-  message.innerText = "UPI ID copied to clipboard!";
-  setTimeout(() => { message.innerText = ""; }, 2000);
-});
     document.getElementById('copyMessage').innerText = 'UPI ID copied!';
     setTimeout(() => {
       document.getElementById('copyMessage').innerText = '';
