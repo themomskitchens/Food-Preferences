@@ -131,35 +131,28 @@
         </form>
     </div>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("survey-form");
+   <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("survey-form");
 
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-            const formData = new FormData(form);
-            const data = {};
+        const formData = new FormData(form);
 
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-
-            fetch("https://script.google.com/macros/s/AKfycbwcf3Kq3quIT8XBlZ6YkyQAqYUpaxPLkWBqKw2WY83WhoMWkzX-whRnaCfwggPbxLSR/exec", {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            }).then(() => {
-                window.location.href = "thankyou.html";
-            }).catch(error => {
-                console.error("Error!", error.message);
-                alert("Something went wrong!");
-            });
+        fetch("https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec", {
+            method: "POST",
+            body: formData
+        })
+        .then(() => {
+            window.location.href = "thankyou.html";
+        })
+        .catch(error => {
+            console.error("Error!", error.message);
+            alert("Something went wrong!");
         });
     });
+});
 </script>
 </body>
 </html>
