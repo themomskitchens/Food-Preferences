@@ -131,17 +131,7 @@
         </form>
     </div>
 
-   <form id="foodPrefForm">
-  <input name="name" placeholder="Name" required><br>
-  <input name="phone" placeholder="Phone" required><br>
-  <input name="address" placeholder="Address"><br>
-  <input name="breakfast" placeholder="Breakfast"><br>
-  <input name="lunch" placeholder="Lunch"><br>
-  <input name="food-item" placeholder="Food Item"><br>
-  <button type="submit">Submit</button>
-</form>
-
-<script>
+  <script>
 document.getElementById("foodPrefForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const form = new FormData(this);
