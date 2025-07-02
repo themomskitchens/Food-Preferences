@@ -132,26 +132,19 @@
     </div>
 
    <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("survey-form");
-
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-
-        fetch("https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec", {
-            method: "POST",
-            body: formData
-        })
-        .then(() => {
-            window.location.href = "thankyou.html";
-        })
-        .catch(error => {
-            console.error("Error!", error.message);
-            alert("Something went wrong!");
-        });
-    });
+document.getElementById("foodPrefForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const form = new FormData(this);
+  fetch("https://script.google.com/macros/s/PASTE-YOUR-DEPLOYMENT-URL/exec", {
+    method: "POST",
+    body: new URLSearchParams(form)
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Submitted successfully!");
+    this.reset();
+  })
+  .catch(err => alert("Error: " + err));
 });
 </script>
 </body>
