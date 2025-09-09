@@ -140,13 +140,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const formData = new FormData(form);
 
-        fetch("https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec", {
-            method: "POST",
-            body: formData
-        })
-        .then(() => {
-            window.location.href = "thankyou.html";
-        })
+        // send data in background
+        navigator.sendBeacon(
+            "https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec",
+            formData
+        );
+
+        // instant redirect
+        window.location.href = "thankyou.html";
+    });
+});
+</script>
         .catch(error => {
             console.error("Error!", error.message);
             alert("Something went wrong!");
@@ -156,3 +160,4 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
