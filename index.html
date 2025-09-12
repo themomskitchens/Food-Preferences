@@ -44,7 +44,7 @@
             display: block;
             font-weight: 600;
             margin-top: 15px;
-            margin-bottom: 0px;
+            margin-bottom: 5px;
         }
 
         input[type="text"], input[type="tel"], textarea, select {
@@ -99,6 +99,7 @@
         </div>
         <h1>The Mom's Kitchen</h1>
         <form id="survey-form">
+            <!-- Basic Info -->
             <label for="name">Full Name</label>
             <input type="text" id="name" name="name" placeholder="Your name" required>
 
@@ -106,62 +107,94 @@
             <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
 
             <label for="address">Your Building & Floor</label>
-            <input type="text" id="address" name="address" placeholder="E.g., A-53, 2nd Floor,FIEE Complex">
+            <input type="text" id="address" name="address" placeholder="E.g., A-53, 2nd Floor, FIEE Complex">
 
-            <label for="breakfast">Would you be interested in our Breakfast service? <span style="color: red;">*</span></label>
+            <!-- Breakfast habits -->
+            <label for="breakfast">How do you usually start your day?</label>
             <select id="breakfast" name="breakfast" required>
                 <option value="">Select an option</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Maybe">Maybe</option>
+                <option value="Heavy Indian Breakfast">I love a heavy Indian breakfast (Paratha, Idli, Dosa)</option>
+                <option value="Light and Healthy">I prefer light and healthy (Oats, Fruits, Sandwiches)</option>
+                <option value="Tea/Coffee Only">Just Tea / Coffee works for me</option>
+                <option value="Skip Breakfast">I usually skip breakfast</option>
             </select>
 
-            <label for="lunch">Would you be interested in our Lunch service? <span style="color: red;">*</span></label>
+            <!-- Lunch preferences -->
+            <label for="lunch">What kind of lunch excites you the most?</label>
             <select id="lunch" name="lunch" required>
                 <option value="">Select an option</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Maybe">Maybe</option>
+                <option value="Home-style Indian">Home-style Indian (Dal, Sabzi, Roti, Rice)</option>
+                <option value="Quick & Filling">Quick & filling (Wraps, Burgers, Sandwiches)</option>
+                <option value="South Indian Meals">South Indian meals (Idli, Dosa, Sambar Rice)</option>
+                <option value="International">International (Pasta, Noodles, Fried Rice, etc.)</option>
             </select>
 
-            <label for="food-item">Any specific food item you'd love to have?</label>
+            <!-- Spice preference -->
+            <label for="spice">How spicy do you like your food?</label>
+            <select id="spice" name="spice" required>
+                <option value="">Select an option</option>
+                <option value="Mild">Mild & light</option>
+                <option value="Medium">Medium – balanced taste</option>
+                <option value="Spicy">Spicy 🌶</option>
+                <option value="Extra Hot">Extra hot 🔥</option>
+            </select>
+
+            <!-- Veg/Non-veg -->
+            <label for="preference">Do you prefer vegetarian or non-vegetarian meals?</label>
+            <select id="preference" name="preference" required>
+                <option value="">Select an option</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Non-Vegetarian">Non-vegetarian</option>
+                <option value="Both">I enjoy both</option>
+            </select>
+
+            <!-- Subscription interest -->
+            <label for="subscription">If we start a daily subscription (Breakfast/Lunch), which plan would you like?</label>
+            <select id="subscription" name="subscription" required>
+                <option value="">Select an option</option>
+                <option value="Daily Meals">Daily meals</option>
+                <option value="3 Days a Week">3 days a week</option>
+                <option value="Weekly">Weekly subscription</option>
+                <option value="Occasional">I’ll order occasionally</option>
+            </select>
+
+            <!-- Add-ons -->
+            <label for="addons">Would you be interested in add-ons?</label>
+            <select id="addons" name="addons">
+                <option value="">Select an option</option>
+                <option value="Fresh Juices & Shakes">Fresh juices & shakes</option>
+                <option value="Evening Snacks">Evening snacks</option>
+                <option value="Sweets / Desserts">Sweets / desserts</option>
+                <option value="None">None</option>
+            </select>
+
+            <!-- Open text -->
+            <label for="food-item">Any must-have food item you’d love to see on our menu?</label>
             <textarea id="food-item" name="food-item" rows="3" placeholder="Optional"></textarea>
 
             <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
 
-   <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("survey-form");
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("survey-form");
 
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
 
-        const formData = new FormData(form);
+            const formData = new FormData(form);
 
-        // send data in background
-        navigator.sendBeacon(
-            "https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec",
-            formData
-        );
+            // send data in background
+            navigator.sendBeacon(
+                "https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec",
+                formData
+            );
 
-        // instant redirect
-        window.location.href = "thankyou.html";
-    });
-});
-</script>
-        .catch(error => {
-            console.error("Error!", error.message);
-            alert("Something went wrong!");
+            // instant redirect
+            window.location.href = "thankyou.html";
         });
     });
-});
-</script>
+    </script>
 </body>
-</html>
-
-
-
-
-
+    </html>
