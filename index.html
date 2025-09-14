@@ -1,191 +1,192 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Mom's Kitchen - Customer Interest Survey</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;100&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: #fecd50;
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mom's Kitchen - Customer Interest Survey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;100&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #fecd50;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-    .container {
-      max-width: 500px;
-      margin: 50px auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
 
-    .logo {
-      display: block;
-      margin: 0 auto -30px;
-      text-align: center;
-    }
+        .logo {
+            display: block;
+            margin: 0 auto -30px;
+            text-align: center;
+        }
 
-    .logo img {
-      max-width: 80px;
-    }
+        .logo img {
+            max-width: 80px;
+        }
 
-    h1 {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      color: #333;
-    }
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
 
-    label {
-      display: block;
-      font-weight: 600;
-      margin-top: 15px;
-      margin-bottom: 5px;
-    }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
 
-    input[type="text"], input[type="tel"], textarea, select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-sizing: border-box;
-      font-size: 1rem;
-      background: #f9f9f9;
-      transition: border-color 0.3s;
-    }
+        input[type="text"], input[type="tel"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            background: #f9f9f9;
+            transition: border-color 0.3s;
+        }
 
-    input[type="text"]:focus,
-    input[type="tel"]:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #ff6a88;
-      outline: none;
-    }
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #ff6a88;
+            outline: none;
+        }
 
-    .submit-btn {
-      width: 100%;
-      background: #fecd50;
-      color: #fff;
-      border: none;
-      padding: 14px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: background 0.3s;
-    }
+        .submit-btn {
+            width: 100%;
+            background: #fecd50;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
 
-    .submit-btn:hover {
-      background: #ff4f70;
-    }
+        .submit-btn:hover {
+            background: #ff4f70;
+        }
 
-    @media (max-width: 500px) {
-      .container {
-        margin: 20px;
-        padding: 20px;
-      }
-    }
-  </style>
+        @media (max-width: 500px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="logo">
-      <img src="assets/1000059103-removebg-preview.png" alt="The Food Corner Logo">
+    <div class="container">
+        <div class="logo">
+            <img src="assets/1000059103-removebg-preview.png" alt="The Food Corner Logo">
+        </div>
+        <h1>The Mom's Kitchen</h1>
+        <form id="survey-form">
+            <!-- Basic Info -->
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+
+            <label for="address">Your Building & Floor</label>
+            <input type="text" id="address" name="address" placeholder="E.g., A-53, 2nd Floor, FIEE Complex">
+
+            <!-- Breakfast habits -->
+            <label for="breakfast">How do you usually start your day?</label>
+            <select id="breakfast" name="breakfast" required>
+                <option value="">Select an option</option>
+                <option value="Heavy Indian Breakfast">I love a heavy Indian breakfast (Paratha, Idli, Dosa)</option>
+                <option value="Light and Healthy">I prefer light and healthy (Oats, Fruits, Sandwiches)</option>
+                <option value="Tea/Coffee Only">Just Tea / Coffee works for me</option>
+                <option value="Skip Breakfast">I usually skip breakfast</option>
+            </select>
+
+            <!-- Lunch preferences -->
+            <label for="lunch">What kind of lunch excites you the most?</label>
+            <select id="lunch" name="lunch" required>
+                <option value="">Select an option</option>
+                <option value="Home-style Indian">Home-style Indian (Dal, Sabzi, Roti, Rice)</option>
+                <option value="Quick & Filling">Quick & filling (Wraps, Burgers, Sandwiches)</option>
+                <option value="South Indian Meals">South Indian meals (Idli, Dosa, Sambar Rice)</option>
+                <option value="International">International (Pasta, Noodles, Fried Rice, etc.)</option>
+            </select>
+
+            <!-- Spice preference -->
+            <label for="spice">How spicy do you like your food?</label>
+            <select id="spice" name="spice" required>
+                <option value="">Select an option</option>
+                <option value="Mild">Mild & light</option>
+                <option value="Medium">Medium – balanced taste</option>
+                <option value="Spicy">Spicy 🌶</option>
+                <option value="Extra Hot">Extra hot 🔥</option>
+            </select>
+
+            <!-- Subscription interest -->
+            <label for="subscription">If we start a daily subscription (Breakfast/Lunch), which plan would you like?</label>
+            <select id="subscription" name="subscription" required>
+                <option value="">Select an option</option>
+                <option value="Daily Meals">Daily meals</option>
+                <option value="3 Days a Week">3 days a week</option>
+                <option value="Weekly">Weekly subscription</option>
+                <option value="Occasional">I’ll order occasionally</option>
+            </select>
+
+            <!-- Add-ons -->
+            <label for="addons">Would you be interested in add-ons?</label>
+            <select id="addons" name="addons">
+                <option value="">Select an option</option>
+                <option value="Fresh Juices & Shakes">Fresh juices & shakes</option>
+                <option value="Evening Snacks">Evening snacks</option>
+                <option value="Sweets / Desserts">Sweets / desserts</option>
+                <option value="None">None</option>
+            </select>
+
+            <!-- Open text -->
+            <label for="food-item">Any must-have food item you’d love to see on our menu?</label>
+            <textarea id="food-item" name="food-item" rows="3" placeholder="Optional"></textarea>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
     </div>
-    <h1>The Mom's Kitchen</h1>
-    <form id="survey-form">
-      <!-- Basic Info -->
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name" required>
 
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("survey-form");
 
-      <label for="address">Your Building & Floor</label>
-      <input type="text" id="address" name="address" placeholder="E.g., A-53, 2nd Floor, FIEE Complex">
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
 
-      <!-- Breakfast habits -->
-      <label for="breakfast">How do you usually start your day?</label>
-      <select id="breakfast" name="breakfast" required>
-        <option value="">Select an option</option>
-        <option value="Heavy Indian Breakfast">I love a heavy Indian breakfast (Paratha, Idli, Dosa)</option>
-        <option value="Light and Healthy">I prefer light and healthy (Oats, Fruits, Sandwiches)</option>
-        <option value="Tea/Coffee Only">Just Tea / Coffee works for me</option>
-        <option value="Skip Breakfast">I usually skip breakfast</option>
-      </select>
+            const formData = new FormData(form);
 
-      <!-- Lunch preferences -->
-      <label for="lunch">What kind of lunch excites you the most?</label>
-      <select id="lunch" name="lunch" required>
-        <option value="">Select an option</option>
-        <option value="Home-style Indian">Home-style Indian (Dal, Sabzi, Roti, Rice)</option>
-        <option value="Quick & Filling">Quick & filling (Wraps, Burgers, Sandwiches)</option>
-        <option value="South Indian Meals">South Indian meals (Idli, Dosa, Sambar Rice)</option>
-        <option value="International">International (Pasta, Noodles, Fried Rice, etc.)</option>
-      </select>
+            // send data in background
+            navigator.sendBeacon(
+                "https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec",
+                formData
+            );
 
-      <!-- Spice preference -->
-      <label for="spice">How spicy do you like your food?</label>
-      <select id="spice" name="spice" required>
-        <option value="">Select an option</option>
-        <option value="Mild">Mild & light</option>
-        <option value="Medium">Medium – balanced taste</option>
-        <option value="Spicy">Spicy 🌶</option>
-        <option value="Extra Hot">Extra hot 🔥</option>
-      </select>
-
-      <!-- Subscription interest -->
-      <label for="subscription">If we start a daily subscription (Breakfast/Lunch), which plan would you like?</label>
-      <select id="subscription" name="subscription" required>
-        <option value="">Select an option</option>
-        <option value="Daily Meals">Daily meals</option>
-        <option value="3 Days a Week">3 days a week</option>
-        <option value="Weekly">Weekly subscription</option>
-        <option value="Occasional">I’ll order occasionally</option>
-      </select>
-
-      <!-- Add-ons -->
-      <label for="addons">Would you be interested in add-ons?</label>
-      <select id="addons" name="addons">
-        <option value="">Select an option</option>
-        <option value="Fresh Juices & Shakes">Fresh juices & shakes</option>
-        <option value="Evening Snacks">Evening snacks</option>
-        <option value="Sweets / Desserts">Sweets / desserts</option>
-        <option value="None">None</option>
-      </select>
-
-      <!-- Open text -->
-      <label for="food-item">Any must-have food item you’d love to see on our menu?</label>
-      <textarea id="food-item" name="food-item" rows="3" placeholder="Optional"></textarea>
-
-      <button type="submit" class="submit-btn">Submit</button>
-    </form>
-  </div>
-
-  <script>
-    document.getElementById("survey-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-      const data = new URLSearchParams(formData);
-
-      fetch("https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec", {
-        method: "POST",
-        body: data
-      })
-      .then(res => res.text())
-      .then(() => {
-        window.location.href = "thankyou.html";
-      })
-      .catch(err => {
-        alert("Submission failed: " + err);
-      });
+            // instant redirect
+            window.location.href = "thankyou.html";
+        });
     });
-  </script>
+    </script>
 </body>
-</html>
+    </html>
