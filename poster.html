@@ -23,23 +23,25 @@
       border-radius: 16px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
+    /* H1 background */
     h1 {
       display: inline-block;
       background: #fecd50;
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-radius: 12px;
       font-size: 30px;
       font-weight: 700;
-      margin: 16px 0 10px;
+      margin-top: 8px;
+      margin-bottom: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    /* tagline with icons above text */
+    /* tagline with icons */
     .tagline {
-      font-size: 14px;
-      margin-bottom: 20px;
+      font-size: 16px;
+      margin-bottom: 10px;
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 20px;
       flex-wrap: wrap;
     }
     .tagline span {
@@ -49,8 +51,8 @@
       font-weight: 500;
     }
     .tagline img {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       margin-bottom: 4px;
       object-fit: cover;
     }
@@ -65,8 +67,9 @@
       flex: 1;
       background: #fecd50;
       border-radius: 16px;
-      padding: 2px;
+      padding: 10px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      min-width: 250px; /* thoda choda karne ke liye */
     }
     .hours h2, .subscription h2 {
       font-size: 20px;
@@ -75,6 +78,7 @@
     .hours p, .subscription p {
       font-size: 16px;
       margin: 4px 0;
+      white-space: nowrap; /* ek hi line me rakhega */
     }
     /* Bottom buttons fixed */
     .buttons {
@@ -121,7 +125,22 @@
 
     <!-- Business Name -->
     <h1>The Mom's Kitchen</h1>
-    <p class="tagline">Fresh · Homemade · Delicious</p>
+
+    <!-- Tagline with icons -->
+    <div class="tagline">
+      <span>
+        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="fresh">
+        Fresh
+      </span>
+      <span>
+        <img src="https://cdn-icons-png.flaticon.com/512/590/590836.png" alt="homemade">
+        Homemade
+      </span>
+      <span>
+        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075979.png" alt="delicious">
+        Delicious
+      </span>
+    </div>
 
     <!-- Sections Side by Side -->
     <div class="info-sections">
@@ -137,6 +156,7 @@
         <h2>Meal Subscriptions</h2>
         <p>Enjoy fresh, homemade meals daily at affordable prices.</p>
       </div>
+    </div>
       
   <!-- Buttons Fixed Bottom -->
   <div class="buttons">
@@ -144,4 +164,4 @@
     <a href="https://share.google/KdXMt65Vli0JzbREb" target="_blank" class="btn btn-website">Visit Website</a>
   </div>
 </body>
-    </html>
+</html>
