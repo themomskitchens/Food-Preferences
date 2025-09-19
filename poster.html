@@ -23,28 +23,51 @@
       border-radius: 16px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
+    /* Business name box */
+    .business-box {
+      background: white;
+      padding: 12px;
+      border-radius: 16px;
+      margin-top: 16px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
     h1 {
-      margin-top: 8px;
-      margin-bottom: 10px;
+      margin: 0;
       font-size: 30px;
       font-weight: 700;
     }
     .tagline {
       font-size: 16px;
-      margin-bottom: 10px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .tagline span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tagline img {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      object-fit: cover;
     }
     .info-sections {
       display: flex;
       justify-content: space-between;
       gap: 16px;
-      margin: 70px 0;
+      margin: 40px 0;
       flex-wrap: wrap;
     }
     .hours, .subscription {
       flex: 1;
-      background: #fecd50;
+      background: white;
       border-radius: 16px;
-      padding: 2px;
+      padding: 12px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.15);
     }
     .hours h2, .subscription h2 {
@@ -52,7 +75,7 @@
       margin-bottom: 8px;
     }
     .hours p, .subscription p {
-      font-size: 16px;
+      font-size: 15px;
       margin: 4px 0;
     }
     /* Bottom buttons fixed */
@@ -98,9 +121,15 @@
       <img src="assets/1000059103-removebg-preview.png" alt="The Mom's Kitchen Logo">
     </div>
 
-    <!-- Business Name -->
-    <h1>The Mom's Kitchen</h1>
-    <p class="tagline">Fresh · Homemade · Delicious</p>
+    <!-- Business Name Box -->
+    <div class="business-box">
+      <h1>The Mom's Kitchen</h1>
+      <div class="tagline">
+        <span><img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="fresh"> Fresh</span>
+        <span><img src="https://cdn-icons-png.flaticon.com/512/590/590836.png" alt="homemade"> Homemade</span>
+        <span><img src="https://cdn-icons-png.flaticon.com/512/3075/3075979.png" alt="delicious"> Delicious</span>
+      </div>
+    </div>
 
     <!-- Sections Side by Side -->
     <div class="info-sections">
@@ -116,6 +145,7 @@
         <h2>Meal Subscriptions</h2>
         <p>Enjoy fresh, homemade meals daily at affordable prices.</p>
       </div>
+    </div>
       
   <!-- Buttons Fixed Bottom -->
   <div class="buttons">
@@ -123,4 +153,4 @@
     <a href="https://share.google/KdXMt65Vli0JzbREb" target="_blank" class="btn btn-website">Visit Website</a>
   </div>
 </body>
-    </html>
+</html>
