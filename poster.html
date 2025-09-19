@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #fff;
+      background-color: #fecd50;
       color: #2b2b2b;
       padding-bottom: 120px; /* space for bottom buttons */
     }
@@ -23,7 +23,6 @@
       border-radius: 16px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
-    /* H1 with brand background */
     h1 {
       display: inline-block;
       background: #fecd50;
@@ -55,30 +54,27 @@
       margin-bottom: 4px;
       object-fit: cover;
     }
-    /* Info section side by side */
     .info-sections {
       display: flex;
       justify-content: space-between;
-      gap: 20px;
-      margin: 40px 0;
+      gap: 16px;
+      margin: 70px 0;
       flex-wrap: wrap;
     }
     .hours, .subscription {
       flex: 1;
-      background: #fff;
+      background: #fecd50;
       border-radius: 16px;
-      padding: 16px;
+      padding: 2px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-      min-width: 250px;
     }
     .hours h2, .subscription h2 {
       font-size: 20px;
       margin-bottom: 8px;
     }
     .hours p, .subscription p {
-      font-size: 15px;
-      margin: 6px 0;
-      white-space: nowrap; /* line-break ko rokta hai */
+      font-size: 16px;
+      margin: 4px 0;
     }
     /* Bottom buttons fixed */
     .buttons {
@@ -125,22 +121,7 @@
 
     <!-- Business Name -->
     <h1>The Mom's Kitchen</h1>
-
-    <!-- Tagline with images -->
-    <div class="tagline">
-      <span>
-        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="fresh">
-        Fresh
-      </span>
-      <span>
-        <img src="https://cdn-icons-png.flaticon.com/512/590/590836.png" alt="homemade">
-        Homemade
-      </span>
-      <span>
-        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075979.png" alt="delicious">
-        Delicious
-      </span>
-    </div>
+    <p class="tagline">Fresh · Homemade · Delicious</p>
 
     <!-- Sections Side by Side -->
     <div class="info-sections">
@@ -156,7 +137,6 @@
         <h2>Meal Subscriptions</h2>
         <p>Enjoy fresh, homemade meals daily at affordable prices.</p>
       </div>
-    </div>
       
   <!-- Buttons Fixed Bottom -->
   <div class="buttons">
@@ -164,4 +144,4 @@
     <a href="https://share.google/KdXMt65Vli0JzbREb" target="_blank" class="btn btn-website">Visit Website</a>
   </div>
 </body>
-  </html>
+    </html>
