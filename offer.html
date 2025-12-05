@@ -1,106 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome Offer</title>
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: #FECD50;
-    font-family: Arial, sans-serif;
-    color: #000;
-  }
+body {
+  font-family: Arial, sans-serif;
+  background: #FECD50;
+  color: #000;
+  text-align: center;
+  padding: 30px;
+  margin: 0;
+}
 
-  .fixed-center-wrapper {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    box-sizing: border-box;
-  }
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 360px; /* fixed width for mobile */
+  margin: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
 
-  .card {
-    width: 320px;
-    max-width: 90%;
-    background: rgba(255,255,255,0.20);
-    padding: 24px;
-    border-radius: 18px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-  }
+.code {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 10px;
+  letter-spacing: 2px;
+}
 
-  h1 { font-size: 24px; margin-bottom: 10px; }
-  h2 { font-size: 18px; margin-bottom: 12px; }
-
-  .code {
-    font-size: 40px;
-    font-weight: bold;
-    letter-spacing: 3px;
-    margin-bottom: 10px;
-  }
-
-  .btn {
-    width: 100%;
-    margin-top: 12px;
-    padding: 12px;
-    background: #25D366; 
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .btn:active {
-    transform: scale(0.98);
-  }
-
+.share-btn {
+  margin-top: 20px;
+  background: #25D366;
+  color: white;
+  padding: 12px 18px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 18px;
+  display: inline-block;
+  width: 90%;
+}
 </style>
 </head>
 
 <body>
 
-<div class="fixed-center-wrapper">
-  <div class="card">
-    <h1>🎉 Congratulations! 🎉</h1>
-    <h2>Your Welcome Combo Offer Code</h2>
-    <div id="offerCode" class="code">Loading...</div>
-    <p>Show this code at <strong>The Food Corner</strong> to claim your Tea + Aloo Patties combo.</p>
+<h1>🎉 Congratulations! 🎉</h1>
 
-    <!-- WhatsApp Share Button -->
-    <button class="btn" id="shareBtn">Share on WhatsApp</button>
-  </div>
+<div class="card">
+  <h2>Your Welcome Combo Offer Code</h2>
+  <div id="offerCode" class="code">Loading...</div>
+
+  <p>Show this code at The Food Corner to claim your Tea + Aloo Patties combo.</p>
+
+  <!-- WhatsApp Share Button -->
+  <a id="shareBtn" class="share-btn" href="#" target="_blank">
+    📤 Share on WhatsApp
+  </a>
 </div>
 
 <script>
-let globalCode = "";
+// 👇 AAP YAHAN USER KA REAL NAME SET KAROGE
+let userName = "Manish";  // Replace with dynamic name from form
 
 fetch("YOUR_APPS_SCRIPT_URL_HERE")
   .then(res => res.json())
   .then(data => {
+    let offerCodeEl = document.getElementById("offerCode");
+    let shareBtn = document.getElementById("shareBtn");
+
     if (data.status === "success") {
-      globalCode = data.code;
-      document.getElementById("offerCode").innerText = data.code;
+      offerCodeEl.innerText = data.code;
+
+      // 👇 WhatsApp pre-filled message
+      const message =
+`Naam: ${userName}
+Offer Code: ${data.code}
+
+I just claimed my welcome combo offer at The Food Corner! 🍽️`;
+
+      const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+      shareBtn.href = whatsappURL;
+
     } else {
-      document.getElementById("offerCode").innerText = "Offer Closed";
+      offerCodeEl.innerText = "Offer Closed";
+      shareBtn.style.display = "none";
     }
   });
-
-// WhatsApp share button
-document.getElementById("shareBtn").addEventListener("click", function() {
-  if (!globalCode) return;
-
-  let text = `🎉 The Food Corner Welcome Offer 🎉%0A%0AHere is my claim code: *${globalCode}*%0AGet Tea + Aloo Patties combo!%0A%0ATry your luck before offer ends! 🔥`;
-
-  let url = `https://wa.me/?text=${text}`;
-  window.open(url, "_blank");
-});
 </script>
 
 </body>
