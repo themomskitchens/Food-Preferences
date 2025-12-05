@@ -13,7 +13,6 @@
     color: #000;
   }
 
-  /* Full screen centering */
   .fixed-center-wrapper {
     position: fixed;
     inset: 0;
@@ -24,28 +23,20 @@
     box-sizing: border-box;
   }
 
-  /* 🔥 Card width fixed for all mobiles */
   .card {
-    width: 320px;               /* FIXED WIDTH */
-    max-width: 90%;             /* Safety for tiny screens */
+    width: 320px;
+    max-width: 90%;
     background: rgba(255,255,255,0.20);
     padding: 24px;
     border-radius: 18px;
+    text-align: center;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    text-align: center;
   }
 
-  h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-
-  h2 {
-    font-size: 18px;
-    margin-bottom: 12px;
-  }
+  h1 { font-size: 24px; margin-bottom: 10px; }
+  h2 { font-size: 18px; margin-bottom: 12px; }
 
   .code {
     font-size: 40px;
@@ -54,8 +45,20 @@
     margin-bottom: 10px;
   }
 
-  p {
-    font-size: 15px;
+  .btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: #25D366; 
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
   }
 
 </style>
@@ -68,20 +71,36 @@
     <h1>🎉 Congratulations! 🎉</h1>
     <h2>Your Welcome Combo Offer Code</h2>
     <div id="offerCode" class="code">Loading...</div>
-    <p>Show this code at <strong>The Mom's Kitchen Counter</strong> to claim your combo offer.</p>
+    <p>Show this code at <strong>The Food Corner</strong> to claim your Tea + Aloo Patties combo.</p>
+
+    <!-- WhatsApp Share Button -->
+    <button class="btn" id="shareBtn">Share on WhatsApp</button>
   </div>
 </div>
 
 <script>
+let globalCode = "";
+
 fetch("YOUR_APPS_SCRIPT_URL_HERE")
   .then(res => res.json())
   .then(data => {
     if (data.status === "success") {
+      globalCode = data.code;
       document.getElementById("offerCode").innerText = data.code;
     } else {
       document.getElementById("offerCode").innerText = "Offer Closed";
     }
   });
+
+// WhatsApp share button
+document.getElementById("shareBtn").addEventListener("click", function() {
+  if (!globalCode) return;
+
+  let text = `🎉 The Food Corner Welcome Offer 🎉%0A%0AHere is my claim code: *${globalCode}*%0AGet Tea + Aloo Patties combo!%0A%0ATry your luck before offer ends! 🔥`;
+
+  let url = `https://wa.me/?text=${text}`;
+  window.open(url, "_blank");
+});
 </script>
 
 </body>
