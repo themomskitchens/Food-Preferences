@@ -2,14 +2,15 @@
 <html>
 <head>
 <title>Welcome Offer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
   font-family: Arial, sans-serif;
   background: #FECD50;
   color: #000;
   text-align: center;
-  padding: 30px;
   margin: 0;
+  padding: 30px;
 }
 
 .card {
@@ -17,7 +18,7 @@ body {
   padding: 25px;
   border-radius: 15px;
   width: 90%;
-  max-width: 360px; /* fixed width for mobile */
+  max-width: 360px;
   margin: auto;
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
@@ -51,7 +52,7 @@ body {
   <h2>Your Welcome Combo Offer Code</h2>
   <div id="offerCode" class="code">Loading...</div>
 
-  <p>Show this code at The Food Corner to claim your Tea + Aloo Patties combo.</p>
+  <p>Show this code at The Mom's Kitchen counter to claim your Tea + Aloo Patties combo.</p>
 
   <!-- WhatsApp Share Button -->
   <a id="shareBtn" class="share-btn" href="#" target="_blank">
@@ -60,28 +61,28 @@ body {
 </div>
 
 <script>
-// 👇 AAP YAHAN USER KA REAL NAME SET KAROGE
-let userName = "Manish";  // Replace with dynamic name from form
-
 fetch("YOUR_APPS_SCRIPT_URL_HERE")
   .then(res => res.json())
   .then(data => {
-    let offerCodeEl = document.getElementById("offerCode");
-    let shareBtn = document.getElementById("shareBtn");
+    const offerCodeEl = document.getElementById("offerCode");
+    const shareBtn = document.getElementById("shareBtn");
 
     if (data.status === "success") {
       offerCodeEl.innerText = data.code;
 
-      // 👇 WhatsApp pre-filled message
-      const message =
-`Naam: ${userName}
-Offer Code: ${data.code}
+      // WhatsApp pre-filled message
+      const name = data.name;
+      const code = data.code;
 
-I just claimed my welcome combo offer at The Food Corner! 🍽️`;
+      const message = `Naam: ${name}
+Offer Code: ${code}
 
-      const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+I just claimed my welcome combo offer from The Mom's Kitchen! 🍽️`;
 
-      shareBtn.href = whatsappURL;
+      // WhatsApp URL to YOUR number (7557575736)
+      const waLink = `https://wa.me/7557575736?text=${encodeURIComponent(message)}`;
+
+      shareBtn.href = waLink;
 
     } else {
       offerCodeEl.innerText = "Offer Closed";
