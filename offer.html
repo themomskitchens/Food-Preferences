@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Offer</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #FECD50;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+}
+
+.card {
+  background: rgba(255,255,255,0.18);
+  padding: 25px;
+  border-radius: 18px;
+  width: 100%;
+  margin-top: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+h1 {
+  font-size: 26px;
+  margin-top: 10px;
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.code {
+  font-size: 42px;
+  font-weight: bold;
+  margin: 12px 0;
+  letter-spacing: 3px;
+}
+
+p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🎉 Congratulations! 🎉</h1>
+
+  <div class="card">
+    <h2>Your Welcome Combo Offer Code</h2>
+    <div id="offerCode" class="code">Loading...</div>
+    <p>Show this code at The Food Corner to claim your Tea + Aloo Patties combo.</p>
+  </div>
+</div>
+
+<script>
+fetch("YOUR_APPS_SCRIPT_URL_HERE")
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      document.getElementById("offerCode").innerText = data.code;
+    } else {
+      document.getElementById("offerCode").innerText = "Offer Closed";
+    }
+  });
+</script>
+
+</body>
+</html>
