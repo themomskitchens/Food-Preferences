@@ -61,35 +61,33 @@ body {
 </div>
 
 <script>
-fetch("https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec")
-  .then(res => res.json())
-  .then(data => {
-    const offerCodeEl = document.getElementById("offerCode");
-    const shareBtn = document.getElementById("shareBtn");
+fetch("https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec", {
+  method: "POST"
+})
+.then(res => res.json())
+.then(data => {
+  console.log(data); // DEBUG
 
-    if (data.status === "success") {
-      offerCodeEl.innerText = data.code;
+  if (data.status === "success" && data.offerCode) {
+    document.getElementById("offerCode").innerText = data.offerCode;
 
-      // WhatsApp pre-filled message
-      const name = data.name;
-      const code = data.code;
+    // WhatsApp message
+    const msg =
+`Naam: ${data.name || "Customer"}
+Offer Code: ${data.offerCode}
+Tea + Aloo Patties Combo`;
 
-      const message = `Naam: ${name}
-Offer Code: ${code}
-
-I just claimed my welcome combo offer from The Food Corner! 🍽️`;
-
-      // WhatsApp URL to YOUR number (7557575736)
-      const waLink = `https://wa.me/7557575736?text=${encodeURIComponent(message)}`;
-
-      shareBtn.href = waLink;
-
-    } else {
-      offerCodeEl.innerText = "Offer Closed";
-      shareBtn.style.display = "none";
-    }
-  });
+    const waBtn = document.getElementById("waShare");
+    waBtn.href =
+      "https://wa.me/?text=" + encodeURIComponent(msg);
+  } else {
+    document.getElementById("offerCode").innerText = "Offer Closed";
+  }
+})
+.catch(err => {
+  document.getElementById("offerCode").innerText = "Error";
+  console.error(err);
+});
 </script>
-
 </body>
 </html>
