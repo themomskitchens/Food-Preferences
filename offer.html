@@ -1,56 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>The Mom's Kitchen – Welcome Offer</title>
+<title>Welcome Offer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   font-family: Arial, sans-serif;
   background:#FECD50;
-  margin:0;
-  padding:30px;
   text-align:center;
-}
-
-h1{
-  margin-bottom:20px;
+  padding:30px;
 }
 
 .card{
   background:#fff;
-  padding:28px 22px;
-  border-radius:18px;
-  max-width:380px;
+  padding:25px;
+  border-radius:15px;
+  max-width:360px;
   margin:auto;
-  box-shadow:0 6px 15px rgba(0,0,0,0.25);
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
 }
 
-.card h2{
-  margin-top:0;
-}
-
-.offer{
+.code{
   font-size:38px;
   font-weight:bold;
-  margin:18px 0;
-  letter-spacing:2px;
+  margin:15px 0;
 }
 
-.note{
-  font-size:14px;
-  color:#444;
-}
-
-.whatsapp{
-  display:none;
-  margin-top:22px;
+.share-btn{
+  margin-top:20px;
   background:#25D366;
   color:#fff;
   padding:14px;
-  border-radius:12px;
+  border-radius:10px;
   text-decoration:none;
+  display:none;
   font-size:18px;
 }
 </style>
@@ -63,53 +47,39 @@ h1{
 <div class="card">
   <h2>Your Welcome Offer Code</h2>
 
-  <div id="offerBox" class="offer">Loading...</div>
+  <div id="offerCode" class="code">Loading...</div>
 
-  <p class="note">
-    Show this code at <b>The Mom's Kitchen</b><br>
-    to enjoy your special welcome offer.
-  </p>
+  <p>Show this code at <b>The Mom's Kitchen</b></p>
 
-  <a id="waBtn" class="whatsapp" target="_blank">
+  <a id="shareBtn" class="share-btn" target="_blank">
     📤 Share on WhatsApp
   </a>
 </div>
 
 <script>
-/* ================= CONFIG ================= */
-const WEB_APP_URL = "1Bv4IgAE8zB950E115S442psRQOizyXv6cPlFg4heoYI";
+const offerCode = localStorage.getItem("offerCode");
+const name = localStorage.getItem("customerName") || "Customer";
 
-/* ================= FETCH OFFER ================= */
-fetch(https://script.google.com/macros/s/AKfycbziUvgEOdbnzfJLfmlJ9YATV2i2VzGzdp0jfVSui7_vrAKiCZOLAlLN3Xxc1mktjU3H6w/exec)
-.then(res => res.json())
-.then(data => {
+const box = document.getElementById("offerCode");
+const btn = document.getElementById("shareBtn");
 
-  const offerBox = document.getElementById("offerBox");
-  const waBtn = document.getElementById("waBtn");
+if(offerCode && offerCode !== "OFFER_CLOSED"){
+  box.innerText = offerCode;
+  btn.style.display = "inline-block";
 
-  if (data.status === "success" && data.offerCode) {
-
-    offerBox.innerText = data.offerCode;
-    waBtn.style.display = "block";
-
-    const msg =
+  const msg =
 `🎉 Welcome to The Mom's Kitchen 🎉
-Name: ${data.name}
-Offer Code: ${data.offerCode}
+Name: ${name}
+Offer Code: ${offerCode}
 
-Enjoy your special welcome offer!`;
+Enjoy your meal!`;
 
-    waBtn.href =
-      "https://wa.me/?text=" + encodeURIComponent(msg);
+  btn.href = "https://wa.me/?text=" + encodeURIComponent(msg);
 
-  } else {
-    offerBox.innerText = "Offer Closed";
-    waBtn.style.display = "none";
-  }
-})
-.catch(() => {
-  document.getElementById("offerBox").innerText = "Error";
-});
+}else{
+  box.innerText = "Offer Closed";
+}
 </script>
+
 </body>
 </html>
