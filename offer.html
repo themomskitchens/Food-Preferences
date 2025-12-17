@@ -50,44 +50,42 @@ body {
 
 <div class="card">
   <h2>Your Welcome Combo Offer Code</h2>
-  <div id="offerCode" class="code">Loading...</div>
+  <div id="offerCode" class="code">----</div>
 
-  <p>Show this code at The Food Corner to claim your Tea + Aloo Patties combo.</p>
+  <p>Show this code at <b>The Mom's Kitchen</b> to claim your Aloo Patties offer.</p>
 
-  <!-- WhatsApp Share Button -->
   <a id="shareBtn" class="share-btn" href="#" target="_blank">
     📤 Share on WhatsApp
   </a>
 </div>
 
 <script>
-fetch("https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec", {
-  method: "POST"
-})
-.then(res => res.json())
-.then(data => {
-  console.log(data); // DEBUG
+const offerCode = localStorage.getItem("offerCode");
+const customerName = localStorage.getItem("customerName") || "Customer";
 
-  if (data.status === "success" && data.offerCode) {
-    document.getElementById("offerCode").innerText = data.offerCode;
+if (offerCode) {
+  document.getElementById("offerCode").innerText = offerCode;
 
-    // WhatsApp message
-    const msg =
-`Naam: ${data.name || "Customer"}
-Offer Code: ${data.offerCode}
-Tea + Aloo Patties Combo`;
+  const msg =
+`🎉 Welcome to The Mom's Kitchen 🎉
+Name: ${customerName}
+Offer Code: ${offerCode}
+Aloo Patties`;
 
-    const waBtn = document.getElementById("waShare");
-    waBtn.href =
-      "https://wa.me/?text=" + encodeURIComponent(msg);
-  } else {
-    document.getElementById("offerCode").innerText = "Offer Closed";
-  }
-})
-.catch(err => {
-  document.getElementById("offerCode").innerText = "Error";
-  console.error(err);
-});
+  document.getElementById("shareBtn").href =
+    "https://wa.me/?text=" + encodeURIComponent(msg);
+} else {
+  document.getElementById("offerCode").innerText = "Offer Closed";
+  document.getElementById("shareBtn").style.display = "none";
+}
+
+const result = await response.json();
+
+localStorage.setItem("offerCode", result.offerCode);
+localStorage.setItem("customerName", formData.get("name"));
+
+window.location.href = "welcome-offer.html";
+
 </script>
 </body>
 </html>
