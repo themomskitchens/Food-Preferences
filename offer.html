@@ -1,40 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Welcome Offer</title>
+<meta charset="UTF-8">
+<title>The Mom's Kitchen – Welcome Offer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   font-family: Arial, sans-serif;
   background:#FECD50;
+  margin:0;
+  padding:25px;
   text-align:center;
-  padding:30px;
 }
 
 .card{
   background:#fff;
+  border-radius:16px;
   padding:25px;
-  border-radius:15px;
-  max-width:360px;
+  max-width:380px;
   margin:auto;
-  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+  box-shadow:0 6px 15px rgba(0,0,0,0.25);
 }
 
-.code{
-  font-size:38px;
+.offer{
+  font-size:40px;
   font-weight:bold;
   margin:15px 0;
 }
 
-.share-btn{
+.note{
+  font-size:14px;
+  color:#555;
+}
+
+.whatsapp{
+  display:none;
   margin-top:20px;
   background:#25D366;
   color:#fff;
   padding:14px;
-  border-radius:10px;
+  border-radius:12px;
   text-decoration:none;
-  display:none;
   font-size:18px;
 }
 </style>
@@ -45,41 +52,42 @@ body{
 <h1>🎉 Congratulations 🎉</h1>
 
 <div class="card">
-  <h2>Your Welcome Offer Code</h2>
+  <h2>Your Welcome Offer</h2>
 
-  <div id="offerCode" class="code">Loading...</div>
+  <div id="offerBox" class="offer">----</div>
 
-  <p>Show this code at <b>The Mom's Kitchen</b></p>
+  <p class="note">
+    Show this code at <b>The Mom's Kitchen</b><br>
+    to enjoy your welcome offer
+  </p>
 
-  <a id="shareBtn" class="share-btn" target="_blank">
+  <a id="waBtn" class="whatsapp" target="_blank">
     📤 Share on WhatsApp
   </a>
 </div>
 
 <script>
 const offerCode = localStorage.getItem("offerCode");
-const name = localStorage.getItem("customerName") || "Customer";
+const customerName = localStorage.getItem("customerName") || "Customer";
 
-const box = document.getElementById("offerCode");
-const btn = document.getElementById("shareBtn");
+const offerBox = document.getElementById("offerBox");
+const waBtn = document.getElementById("waBtn");
 
-if(offerCode && offerCode !== "OFFER_CLOSED"){
-  box.innerText = offerCode;
-  btn.style.display = "inline-block";
+if (offerCode && offerCode !== "OFFER_CLOSED") {
+  offerBox.innerText = offerCode;
+  waBtn.style.display = "inline-block";
 
-  const msg =
+  const message =
 `🎉 Welcome to The Mom's Kitchen 🎉
-Name: ${name}
+Name: ${customerName}
 Offer Code: ${offerCode}
 
-Enjoy your meal!`;
+Enjoy your fresh food!`;
 
-  btn.href = "https://wa.me/?text=" + encodeURIComponent(msg);
-
-}else{
-  box.innerText = "Offer Closed";
+  waBtn.href = "https://wa.me/?text=" + encodeURIComponent(message);
+} else {
+  offerBox.innerText = "Offer Closed";
 }
 </script>
-
 </body>
 </html>
