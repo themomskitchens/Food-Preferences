@@ -1,67 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>The Mom's Kitchen – Welcome Offer</title>
+<title>Welcome Offer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{
+body {
   font-family: Arial, sans-serif;
-  background:#FECD50;
-  margin:0;
-  padding:25px;
-  text-align:center;
+  background: #FECD50;
+  text-align: center;
+  padding: 30px;
 }
 
-.card{
-  background:#fff;
-  border-radius:16px;
-  padding:25px;
-  max-width:380px;
-  margin:auto;
-  box-shadow:0 6px 15px rgba(0,0,0,0.25);
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  max-width: 360px;
+  margin: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-.offer{
-  font-size:40px;
-  font-weight:bold;
-  margin:15px 0;
+.code {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 15px 0;
+  letter-spacing: 2px;
 }
 
-.note{
-  font-size:14px;
-  color:#555;
-}
-
-.whatsapp{
-  display:none;
-  margin-top:20px;
-  background:#25D366;
-  color:#fff;
-  padding:14px;
-  border-radius:12px;
-  text-decoration:none;
-  font-size:18px;
+.share-btn {
+  margin-top: 20px;
+  background: #25D366;
+  color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  width: 90%;
+  font-size: 18px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎉 Congratulations 🎉</h1>
+<h1>🎉 Congratulations! 🎉</h1>
 
 <div class="card">
-  <h2>Your Welcome Offer</h2>
+  <h2>Your Welcome Offer Code</h2>
+  <div id="offerCode" class="code">----</div>
 
-  <div id="offerBox" class="offer">----</div>
+  <p>Show this code at <b>The Mom's Kitchen</b> to claim your Aloo Patties offer.</p>
 
-  <p class="note">
-    Show this code at <b>The Mom's Kitchen</b><br>
-    to enjoy your welcome offer
-  </p>
-
-  <a id="waBtn" class="whatsapp" target="_blank">
+  <a id="shareBtn" class="share-btn" target="_blank">
     📤 Share on WhatsApp
   </a>
 </div>
@@ -70,23 +60,20 @@ body{
 const offerCode = localStorage.getItem("offerCode");
 const customerName = localStorage.getItem("customerName") || "Customer";
 
-const offerBox = document.getElementById("offerBox");
-const waBtn = document.getElementById("waBtn");
-
 if (offerCode && offerCode !== "OFFER_CLOSED") {
-  offerBox.innerText = offerCode;
-  waBtn.style.display = "inline-block";
+  document.getElementById("offerCode").innerText = offerCode;
 
   const message =
 `🎉 Welcome to The Mom's Kitchen 🎉
 Name: ${customerName}
 Offer Code: ${offerCode}
+Enjoy your Aloo Patties!`;
 
-Enjoy your fresh food!`;
-
-  waBtn.href = "https://wa.me/?text=" + encodeURIComponent(message);
+  document.getElementById("shareBtn").href =
+    "https://wa.me/?text=" + encodeURIComponent(message);
 } else {
-  offerBox.innerText = "Offer Closed";
+  document.getElementById("offerCode").innerText = "Offer Closed";
+  document.getElementById("shareBtn").style.display = "none";
 }
 </script>
 </body>
