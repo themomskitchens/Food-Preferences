@@ -1,98 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Welcome Offer</title>
+<meta charset="UTF-8">
+<title>The Mom's Kitchen – Welcome Offer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body {
+body{
   font-family: Arial, sans-serif;
-  background: #FECD50;
-  text-align: center;
-  padding: 30px;
-  margin: 0;
+  background:#FECD50;
+  margin:0;
+  padding:25px;
+  text-align:center;
 }
 
-.card {
-  background: #fff;
-  padding: 25px;
-  border-radius: 15px;
-  max-width: 360px;
-  margin: auto;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:25px;
+  max-width:380px;
+  margin:auto;
+  box-shadow:0 6px 15px rgba(0,0,0,0.25);
 }
 
-.code {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 15px 0;
-  letter-spacing: 2px;
+h1{
+  margin-bottom:10px;
 }
 
-.note {
-  font-size: 14px;
-  color: #555;
+.offer{
+  font-size:40px;
+  font-weight:bold;
+  margin:15px 0;
+  color:#000;
 }
 
-.share-btn {
-  margin-top: 20px;
-  background: #25D366;
-  color: #fff;
-  padding: 12px;
-  border-radius: 10px;
-  text-decoration: none;
-  display: none; /* 🔒 hidden by default */
-  width: 90%;
-  font-size: 18px;
+.note{
+  font-size:14px;
+  color:#555;
+}
+
+.whatsapp{
+  display:none;
+  margin-top:20px;
+  background:#25D366;
+  color:#fff;
+  padding:14px;
+  border-radius:12px;
+  text-decoration:none;
+  font-size:18px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎉 Congratulations! 🎉</h1>
+<h1>🎉 Congratulations 🎉</h1>
 
 <div class="card">
-  <h2>Your Welcome Offer Code</h2>
+  <h2>Your Welcome Offer</h2>
 
-  <div id="offerCode" class="code">----</div>
+  <div id="offerBox" class="offer">----</div>
 
   <p class="note">
-    Show this code at <b>The Mom's Kitchen</b> to claim your offer.
+    Show this code at <b>The Mom's Kitchen</b><br>
+    to enjoy your special welcome offer.
   </p>
 
-  <a id="shareBtn" class="share-btn" target="_blank">
+  <a id="waBtn" class="whatsapp" target="_blank">
     📤 Share on WhatsApp
   </a>
 </div>
 
 <script>
+/* ================== OFFER LOGIC ================== */
+
 const offerCode = localStorage.getItem("offerCode");
 const customerName = localStorage.getItem("customerName") || "Customer";
 
-const offerDiv = document.getElementById("offerCode");
-const shareBtn = document.getElementById("shareBtn");
+const offerBox = document.getElementById("offerBox");
+const waBtn = document.getElementById("waBtn");
 
-if (offerCode && offerCode !== "OFFER_CLOSED") {
-  // ✅ OFFER AVAILABLE
-  offerDiv.innerText = offerCode;
-  shareBtn.style.display = "inline-block";
+if(offerCode && offerCode !== "OFFER_CLOSED"){
+  offerBox.innerText = offerCode;
+  waBtn.style.display = "inline-block";
 
   const message =
 `🎉 Welcome to The Mom's Kitchen 🎉
 Name: ${customerName}
 Offer Code: ${offerCode}
 
-Enjoy your Aloo Patties!`;
+Enjoy your fresh & tasty food!`;
 
-  shareBtn.href =
+  waBtn.href =
     "https://wa.me/?text=" + encodeURIComponent(message);
 
-} else {
-  // ❌ OFFER CLOSED
-  offerDiv.innerText = "Offer Closed";
-  shareBtn.style.display = "none";
+}else{
+  offerBox.innerText = "Offer Closed";
 }
 </script>
-
 </body>
 </html>
