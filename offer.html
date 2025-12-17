@@ -10,28 +10,42 @@ body{
   font-family: Arial, sans-serif;
   background:#FECD50;
   margin:0;
-  padding:25px;
+  padding:30px;
   text-align:center;
+}
+
+h1{
+  margin-bottom:20px;
 }
 
 .card{
   background:#fff;
-  border-radius:16px;
-  padding:25px;
+  padding:28px 22px;
+  border-radius:18px;
   max-width:380px;
   margin:auto;
   box-shadow:0 6px 15px rgba(0,0,0,0.25);
 }
 
+.card h2{
+  margin-top:0;
+}
+
 .offer{
-  font-size:40px;
+  font-size:38px;
   font-weight:bold;
-  margin:15px 0;
+  margin:18px 0;
+  letter-spacing:2px;
+}
+
+.note{
+  font-size:14px;
+  color:#444;
 }
 
 .whatsapp{
   display:none;
-  margin-top:20px;
+  margin-top:22px;
   background:#25D366;
   color:#fff;
   padding:14px;
@@ -47,10 +61,11 @@ body{
 <h1>🎉 Congratulations 🎉</h1>
 
 <div class="card">
-  <h2>Your Welcome Offer</h2>
+  <h2>Your Welcome Offer Code</h2>
+
   <div id="offerBox" class="offer">Loading...</div>
 
-  <p>
+  <p class="note">
     Show this code at <b>The Mom's Kitchen</b><br>
     to enjoy your special welcome offer.
   </p>
@@ -61,39 +76,39 @@ body{
 </div>
 
 <script>
-/* ===== CONFIG ===== */
-const API_URL = "https://script.google.com/macros/s/1Bv4IgAE8zB950E115S442psRQOizyXv6cPlFg4heoYI/exec";
+/* ================= CONFIG ================= */
+const WEB_APP_URL = "PASTE_YOUR_DEPLOYED_SCRIPT_URL_HERE";
 
-/* ===== ELEMENTS ===== */
-const offerBox = document.getElementById("offerBox");
-const waBtn = document.getElementById("waBtn");
-
-/* ===== FETCH OFFER ===== */
-fetch(https://script.google.com/macros/s/AKfycbziUvgEOdbnzfJLfmlJ9YATV2i2VzGzdp0jfVSui7_vrAKiCZOLAlLN3Xxc1mktjU3H6w/exec)
+/* ================= FETCH OFFER ================= */
+fetch(WEB_APP_URL)
 .then(res => res.json())
 .then(data => {
-  console.log(data);
 
-  if(data.status === "success" && data.offerCode){
+  const offerBox = document.getElementById("offerBox");
+  const waBtn = document.getElementById("waBtn");
+
+  if (data.status === "success" && data.offerCode) {
+
     offerBox.innerText = data.offerCode;
-    waBtn.style.display = "inline-block";
+    waBtn.style.display = "block";
 
     const msg =
 `🎉 Welcome to The Mom's Kitchen 🎉
-Name: ${data.name || "Customer"}
+Name: ${data.name}
 Offer Code: ${data.offerCode}
 
-Enjoy your fresh & tasty food!`;
+Enjoy your special welcome offer!`;
 
-    waBtn.href = "https://wa.me/?text=" + encodeURIComponent(msg);
+    waBtn.href =
+      "https://wa.me/?text=" + encodeURIComponent(msg);
 
-  }else{
+  } else {
     offerBox.innerText = "Offer Closed";
+    waBtn.style.display = "none";
   }
 })
-.catch(err => {
-  offerBox.innerText = "Error";
-  console.error(err);
+.catch(() => {
+  document.getElementById("offerBox").innerText = "Error";
 });
 </script>
 </body>
