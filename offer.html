@@ -64,24 +64,23 @@ const offerDiv = document.getElementById("offerCode");
 const shareBtn = document.getElementById("shareBtn");
 
 if (offerCode && offerCode !== "OFFER_CLOSED") {
-  // ✅ OFFER GENERATED
+
   offerDiv.innerText = offerCode;
   shareBtn.style.display = "inline-block";
 
-  const message =
+  const msg =
 `🎉 Welcome to The Mom's Kitchen 🎉
 Name: ${customerName}
 Offer Code: ${offerCode}
-Enjoy your Aloo Patties!`;
+Enjoy your Aloo Patties 🥟`;
 
   shareBtn.href =
-    "https://wa.me/?text=" + encodeURIComponent(message);
+    "https://wa.me/?text=" + encodeURIComponent(msg);
 
 } else {
-  // ❌ OFFER CLOSED
   offerDiv.innerText = "Offer Closed";
   shareBtn.style.display = "none";
 }
-</script
+</script>
 </body>
 </html>
