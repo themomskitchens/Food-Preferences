@@ -7,9 +7,7 @@
 body {
   font-family: Arial, sans-serif;
   background: #FECD50;
-  color: #000;
   text-align: center;
-  margin: 0;
   padding: 30px;
 }
 
@@ -17,7 +15,6 @@ body {
   background: #fff;
   padding: 25px;
   border-radius: 15px;
-  width: 90%;
   max-width: 360px;
   margin: auto;
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
@@ -26,20 +23,20 @@ body {
 .code {
   font-size: 36px;
   font-weight: bold;
-  margin-top: 10px;
+  margin: 15px 0;
   letter-spacing: 2px;
 }
 
 .share-btn {
   margin-top: 20px;
   background: #25D366;
-  color: white;
-  padding: 12px 18px;
-  text-decoration: none;
+  color: #fff;
+  padding: 12px;
   border-radius: 10px;
-  font-size: 18px;
+  text-decoration: none;
   display: inline-block;
   width: 90%;
+  font-size: 18px;
 }
 </style>
 </head>
@@ -49,12 +46,12 @@ body {
 <h1>🎉 Congratulations! 🎉</h1>
 
 <div class="card">
-  <h2>Your Welcome Combo Offer Code</h2>
+  <h2>Your Welcome Offer Code</h2>
   <div id="offerCode" class="code">----</div>
 
   <p>Show this code at <b>The Mom's Kitchen</b> to claim your Aloo Patties offer.</p>
 
-  <a id="shareBtn" class="share-btn" href="#" target="_blank">
+  <a id="shareBtn" class="share-btn" target="_blank">
     📤 Share on WhatsApp
   </a>
 </div>
@@ -63,29 +60,22 @@ body {
 const offerCode = localStorage.getItem("offerCode");
 const customerName = localStorage.getItem("customerName") || "Customer";
 
-if (offerCode) {
+if (offerCode && offerCode !== "OFFER_CLOSED") {
   document.getElementById("offerCode").innerText = offerCode;
 
-  const msg =
+  const message =
 `🎉 Welcome to The Mom's Kitchen 🎉
 Name: ${customerName}
 Offer Code: ${offerCode}
-Aloo Patties`;
+Enjoy your Aloo Patties!`;
 
   document.getElementById("shareBtn").href =
-    "https://wa.me/?text=" + encodeURIComponent(msg);
+    "https://wa.me/?text=" + encodeURIComponent(message);
 } else {
   document.getElementById("offerCode").innerText = "Offer Closed";
   document.getElementById("shareBtn").style.display = "none";
 }
-
-const result = await response.json();
-
-localStorage.setItem("offerCode", result.offerCode);
-localStorage.setItem("customerName", formData.get("name"));
-
-window.location.href = "welcome-offer.html";
-
 </script>
+
 </body>
 </html>
