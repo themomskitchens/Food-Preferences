@@ -23,20 +23,10 @@ body{
   box-shadow:0 6px 15px rgba(0,0,0,0.25);
 }
 
-h1{
-  margin-bottom:10px;
-}
-
 .offer{
   font-size:40px;
   font-weight:bold;
   margin:15px 0;
-  color:#000;
-}
-
-.note{
-  font-size:14px;
-  color:#555;
 }
 
 .whatsapp{
@@ -58,10 +48,9 @@ h1{
 
 <div class="card">
   <h2>Your Welcome Offer</h2>
+  <div id="offerBox" class="offer">Loading...</div>
 
-  <div id="offerBox" class="offer">----</div>
-
-  <p class="note">
+  <p>
     Show this code at <b>The Mom's Kitchen</b><br>
     to enjoy your special welcome offer.
   </p>
@@ -72,31 +61,40 @@ h1{
 </div>
 
 <script>
-/* ================== OFFER LOGIC ================== */
+/* ===== CONFIG ===== */
+const API_URL = "https://script.google.com/macros/s/1Bv4IgAE8zB950E115S442psRQOizyXv6cPlFg4heoYI/exec";
 
-const offerCode = localStorage.getItem("offerCode");
-const customerName = localStorage.getItem("customerName") || "Customer";
-
+/* ===== ELEMENTS ===== */
 const offerBox = document.getElementById("offerBox");
 const waBtn = document.getElementById("waBtn");
 
-if(offerCode && offerCode !== "OFFER_CLOSED"){
-  offerBox.innerText = offerCode;
-  waBtn.style.display = "inline-block";
+/* ===== FETCH OFFER ===== */
+fetch(API_URL)
+.then(res => res.json())
+.then(data => {
+  console.log(data);
 
-  const message =
+  if(data.status === "success" && data.offerCode){
+    offerBox.innerText = data.offerCode;
+    waBtn.style.display = "inline-block";
+
+    const msg =
 `🎉 Welcome to The Mom's Kitchen 🎉
-Name: ${customerName}
-Offer Code: ${offerCode}
+Name: ${data.name || "Customer"}
+Offer Code: ${data.offerCode}
 
 Enjoy your fresh & tasty food!`;
 
-  waBtn.href =
-    "https://wa.me/?text=" + encodeURIComponent(message);
+    waBtn.href = "https://wa.me/?text=" + encodeURIComponent(msg);
 
-}else{
-  offerBox.innerText = "Offer Closed";
-}
+  }else{
+    offerBox.innerText = "Offer Closed";
+  }
+})
+.catch(err => {
+  offerBox.innerText = "Error";
+  console.error(err);
+});
 </script>
 </body>
 </html>
