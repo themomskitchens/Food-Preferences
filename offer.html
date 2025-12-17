@@ -9,6 +9,7 @@ body {
   background: #FECD50;
   text-align: center;
   padding: 30px;
+  margin: 0;
 }
 
 .card {
@@ -27,6 +28,11 @@ body {
   letter-spacing: 2px;
 }
 
+.note {
+  font-size: 14px;
+  color: #555;
+}
+
 .share-btn {
   margin-top: 20px;
   background: #25D366;
@@ -34,7 +40,7 @@ body {
   padding: 12px;
   border-radius: 10px;
   text-decoration: none;
-  display: inline-block;
+  display: none; /* 🔒 hidden by default */
   width: 90%;
   font-size: 18px;
 }
@@ -47,9 +53,12 @@ body {
 
 <div class="card">
   <h2>Your Welcome Offer Code</h2>
+
   <div id="offerCode" class="code">----</div>
 
-  <p>Show this code at <b>The Mom's Kitchen</b> to claim your offer.</p>
+  <p class="note">
+    Show this code at <b>The Mom's Kitchen</b> to claim your offer.
+  </p>
 
   <a id="shareBtn" class="share-btn" target="_blank">
     📤 Share on WhatsApp
@@ -60,21 +69,30 @@ body {
 const offerCode = localStorage.getItem("offerCode");
 const customerName = localStorage.getItem("customerName") || "Customer";
 
+const offerDiv = document.getElementById("offerCode");
+const shareBtn = document.getElementById("shareBtn");
+
 if (offerCode && offerCode !== "OFFER_CLOSED") {
-  document.getElementById("offerCode").innerText = offerCode;
+  // ✅ OFFER AVAILABLE
+  offerDiv.innerText = offerCode;
+  shareBtn.style.display = "inline-block";
 
   const message =
 `🎉 Welcome to The Mom's Kitchen 🎉
 Name: ${customerName}
 Offer Code: ${offerCode}
+
 Enjoy your Aloo Patties!`;
 
-  document.getElementById("shareBtn").href =
+  shareBtn.href =
     "https://wa.me/?text=" + encodeURIComponent(message);
+
 } else {
-  document.getElementById("offerCode").innerText = "Offer Closed";
-  document.getElementById("shareBtn").style.display = "none";
+  // ❌ OFFER CLOSED
+  offerDiv.innerText = "Offer Closed";
+  shareBtn.style.display = "none";
 }
 </script>
+
 </body>
 </html>
