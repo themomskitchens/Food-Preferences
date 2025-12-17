@@ -57,30 +57,38 @@ body {
 </div>
 
 <script>
-const offerCode = localStorage.getItem("offerCode");
-const customerName = localStorage.getItem("customerName") || "Customer";
+const form = document.getElementById("survey-form");
 
-const offerDiv = document.getElementById("offerCode");
-const shareBtn = document.getElementById("shareBtn");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-if (offerCode && offerCode !== "OFFER_CLOSED") {
+  const formData = new FormData(form);
 
-  offerDiv.innerText = offerCode;
-  shareBtn.style.display = "inline-block";
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbzifv2eTmwBgI60brPSUncQ1W4KdW3VnDUSb6pny5WDvTF7lkfwRXNiJRFwk4w5ntxblA/exec",
+      {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"   // 🔥 VERY IMPORTANT
+      }
+    );
 
-  const msg =
-`🎉 Welcome to The Mom's Kitchen 🎉
-Name: ${customerName}
-Offer Code: ${offerCode}
-Enjoy your Aloo Patties 🥟`;
+    // ⚠️ no-cors में response.json() possible नहीं होता
+    // इसलिए offerCode backend में generate होगा
+    // frontend offer.html sheet से show करेगा
 
-  shareBtn.href =
-    "https://wa.me/?text=" + encodeURIComponent(msg);
+    localStorage.setItem("customerName", formData.get("name"));
 
-} else {
-  offerDiv.innerText = "Offer Closed";
-  shareBtn.style.display = "none";
-}
+    setTimeout(() => {
+      window.location.href = "offer.html";
+    }, 500); // give time to backend
+
+  } catch (err) {
+    console.error("Submit failed", err);
+    alert("Submission failed. Please try again.");
+  }
+});
 </script>
 </body>
 </html>
