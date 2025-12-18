@@ -213,6 +213,25 @@ form {
 .question::-webkit-scrollbar {
   width: 0;
       }
+    /* 🔧 FIX: KEEP BUTTONS ALWAYS VISIBLE (ADDITION ONLY) */
+
+.btn-group {
+  margin-top: auto;        /* push buttons to bottom */
+  padding-top: 10px;
+}
+
+/* Ensure questions don't eat button space */
+.question {
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+}
+
+/* Extra safety for small mobiles */
+@media (max-height: 700px) {
+  .question {
+    max-height: calc(100vh - 300px);
+  }
+      }
   </style>
 </head>
 <!-- LOADING OVERLAY -->
@@ -432,3 +451,4 @@ allQuestions.forEach(q => {
 </script>
 </body>
 </html>
+
