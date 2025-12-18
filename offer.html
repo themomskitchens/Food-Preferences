@@ -3,6 +3,7 @@
 <head>
 <title>Welcome Offer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -46,10 +47,10 @@ body {
 <h1>🎉 Congratulations! 🎉</h1>
 
 <div class="card">
-  <h2>Your Welcome Offer Code</h2>
+  <h2>Welcome Offer Code</h2>
   <div id="offerCode" class="code">----</div>
 
-  <p>Show this code at <b>The Mom's Kitchen</b> to claim your Aloo Patties offer.</p>
+  <p>Show this code at <b>The Mom's Kitchen</b> to claim your welcome offer.</p>
 
   <a id="shareBtn" class="share-btn" target="_blank">
     📤 Share on WhatsApp
@@ -57,38 +58,25 @@ body {
 </div>
 
 <script>
-const form = document.getElementById("survey-form");
+const offerCode = localStorage.getItem("offerCode");
+const customerName = localStorage.getItem("customerName") || "Customer";
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+if (offerCode) {
+  document.getElementById("offerCode").innerText = offerCode;
 
-  const formData = new FormData(form);
+  const msg =
+`🎉 Welcome to The Mom's Kitchen 🎉
+Name: ${customerName}
+Offer Code: ${offerCode}
+Aloo Patties Offer`;
 
-  try {
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbziUvgEOdbnzfJLfmlJ9YATV2i2VzGzdp0jfVSui7_vrAKiCZOLAlLN3Xxc1mktjU3H6w/exec",
-      {
-        method: "POST",
-        body: formData,
-        mode: "no-cors"   // 🔥 VERY IMPORTANT
-      }
-    );
-
-    // ⚠️ no-cors में response.json() possible नहीं होता
-    // इसलिए offerCode backend में generate होगा
-    // frontend offer.html sheet से show करेगा
-
-    localStorage.setItem("customerName", formData.get("name"));
-
-    setTimeout(() => {
-      window.location.href = "offer.html";
-    }, 500); // give time to backend
-
-  } catch (err) {
-    console.error("Submit failed", err);
-    alert("Submission failed. Please try again.");
-  }
-});
+  document.getElementById("shareBtn").href =
+    "https://wa.me/?text=" + encodeURIComponent(msg);
+} else {
+  document.getElementById("offerCode").innerText = "Offer Closed";
+  document.getElementById("shareBtn").style.display = "none";
+}
 </script>
+
 </body>
 </html>
