@@ -184,6 +184,35 @@ body, .container {
 @keyframes spin {
   100% { transform: rotate(360deg); }
 }
+/* 🔒 MOBILE FIX – PREVENT PAGE SCROLL (ADDITION ONLY) */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.container {
+  height: calc(100vh - 80px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.question {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+/* Hide scrollbar but allow scroll inside question if needed */
+.question::-webkit-scrollbar {
+  width: 0;
+      }
   </style>
 </head>
 <!-- LOADING OVERLAY -->
@@ -388,10 +417,18 @@ form.addEventListener("submit", async (e) => {
     console.error(err);
   }
 });
+  
+/* 🔒 FORCE TOP ON QUESTION CHANGE (ADDITION ONLY) */
+const allQuestions = document.querySelectorAll(".question");
+
+allQuestions.forEach(q => {
+  const observer = new MutationObserver(() => {
+    if (q.classList.contains("active")) {
+      q.scrollTop = 0;
+    }
+  });
+  observer.observe(q, { attributes: true });
+});
 </script>
 </body>
 </html>
-
-
-
-
