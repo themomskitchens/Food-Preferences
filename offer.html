@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Welcome Offer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Offer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #FECD50;
+      text-align: center;
+      padding: 30px;
+    }
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #FECD50;
-  text-align: center;
-  padding: 30px;
-}
+    .card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 360px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
 
-.card {
-  background: #fff;
-  padding: 25px;
-  border-radius: 15px;
-  max-width: 360px;
-  margin: auto;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-}
+    .code {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 15px 0;
+      letter-spacing: 2px;
+      color: #000;
+    }
 
-.code {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 15px 0;
-  letter-spacing: 2px;
-}
-
-.share-btn {
-  margin-top: 20px;
-  background: #25D366;
-  color: #fff;
-  padding: 12px;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  width: 90%;
-  font-size: 18px;
-}
-</style>
+    .share-btn {
+      margin-top: 20px;
+      background: #25D366;
+      color: #fff;
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
@@ -47,35 +48,47 @@ body {
 <h1>🎉 Congratulations! 🎉</h1>
 
 <div class="card">
-  <h2>Welcome Offer Code</h2>
+  <h2>Your Welcome Offer Code</h2>
+
   <div id="offerCode" class="code">----</div>
 
-  <p>Show this code at <b>The Mom's Kitchen</b> to claim your welcome offer.</p>
+  <p>
+    Show this code at <b>The Mom's Kitchen</b><br>
+    to claim your Aloo Patties offer.
+  </p>
 
   <a id="shareBtn" class="share-btn" target="_blank">
-    📤 Share on WhatsApp
+    📲 Chat on WhatsApp
   </a>
 </div>
 
 <script>
-const offerCode = localStorage.getItem("offerCode");
-const customerName = localStorage.getItem("customerName") || "Customer";
+  // 1️⃣ Get offer code from localStorage (set by backend / previous page)
+  const offerCode =
+    localStorage.getItem("offerCode") || "OFFER-GENERATED";
 
-if (offerCode) {
   document.getElementById("offerCode").innerText = offerCode;
 
-  const msg =
-`🎉 Welcome to The Mom's Kitchen 🎉
-Name: ${customerName}
-Offer Code: ${offerCode}
-Aloo Patties Offer`;
+  // 2️⃣ WhatsApp message (auto typed)
+  const phoneNumber = "7557575736";
 
-  document.getElementById("shareBtn").href =
-    "https://wa.me/?text=" + encodeURIComponent(msg);
-} else {
-  document.getElementById("offerCode").innerText = "Offer Closed";
-  document.getElementById("shareBtn").style.display = "none";
-}
+  const message = `
+Hello Team Mom’s Kitchen 👋
+
+I have just submitted my response and received my Welcome Offer Code.
+
+🎁 Offer Code: ${offerCode}
+
+Please guide me on how to redeem this offer.
+Thank you 😊
+`;
+
+  // 3️⃣ Encode & attach to WhatsApp link
+  const whatsappURL =
+    `https://wa.me/91${phoneNumber}?text=` +
+    encodeURIComponent(message);
+
+  document.getElementById("shareBtn").href = whatsappURL;
 </script>
 
 </body>
