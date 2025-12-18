@@ -295,19 +295,21 @@ prevBtn.disabled = currentStep === 0;
 
 /* ---------- VALIDATION ---------- */
 function validateStep() {
-const current = questions[currentStep];
-const requiredInputs = current.querySelectorAll("[required]");
-let valid = false;
+  const current = questions[currentStep];
+  const requiredInputs = current.querySelectorAll("[required]");
+  let valid = true;
 
-requiredInputs.forEach(input => {
-if (
-(input.type === "radio" &&
-current.querySelector(input[name="${input.name}"]:checked)) ||
-(input.type !== "radio" && input.value.trim() !== "")
-) {
-valid = true;
-}
-});
+  requiredInputs.forEach(input => {
+    if (input.type === "radio") {
+      if (!current.querySelector(`input[name="${input.name}"]:checked`)) {
+        valid = false;
+      }
+    } else {
+      if (input.value.trim() === "") {
+        valid = false;
+      }
+    }
+  });
 
 nextBtn.disabled = !valid;
 }
@@ -386,3 +388,4 @@ console.error(err);
 
 </body>    
 </html>  
+
