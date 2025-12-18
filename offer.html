@@ -3,42 +3,54 @@
 <head>
   <title>Welcome Offer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #FECD50;
       text-align: center;
       padding: 30px;
+      margin: 0;
     }
 
     .card {
       background: #fff;
-      padding: 25px;
-      border-radius: 15px;
+      padding: 28px;
+      border-radius: 18px;
       max-width: 360px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     }
 
     .code {
-      font-size: 36px;
-      font-weight: bold;
-      margin: 15px 0;
-      letter-spacing: 2px;
-      color: #000;
+      font-size: 40px;
+      font-weight: 800;
+      margin: 18px 0;
+      letter-spacing: 3px;
+      color: #25D366;
+      text-shadow: 0 0 10px rgba(37,211,102,0.6);
     }
 
-    .share-btn {
-      margin-top: 20px;
-      background: #25D366;
-      color: #fff;
-      padding: 14px;
-      border-radius: 10px;
-      text-decoration: none;
-      display: inline-block;
+    .share-btn{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      margin-top: 22px;
+      background:#25D366;
+      color:#fff;
+      padding:14px;
+      border-radius:14px;
+      text-decoration:none;
+      font-size:17px;
+      font-weight:700;
+
       width: 100%;
-      font-size: 18px;
-      font-weight: bold;
+    }
+
+    .hidden{
+      display:none;
     }
   </style>
 </head>
@@ -54,41 +66,48 @@
 
   <p>
     Show this code at <b>The Mom's Kitchen</b><br>
-    to claim your Aloo Patties offer.
+    to claim your <b>Aloo Patties</b> offer.
   </p>
 
-  <a id="shareBtn" class="share-btn" target="_blank">
+  <a id="shareBtn" class="share-btn hidden" target="_blank">
     📲 Chat on WhatsApp
   </a>
 </div>
 
 <script>
-  // 1️⃣ Get offer code from localStorage (set by backend / previous page)
-  const offerCode =
-    localStorage.getItem("offerCode") || "OFFER-GENERATED";
+  // ✅ Get data from localStorage
+  const offerCode = localStorage.getItem("offerCode");
+  const customerName = localStorage.getItem("customerName") || "Customer";
 
-  document.getElementById("offerCode").innerText = offerCode;
+  const offerBox = document.getElementById("offerCode");
+  const shareBtn = document.getElementById("shareBtn");
 
-  // 2️⃣ WhatsApp message (auto typed)
+  // ✅ Shop WhatsApp Number
   const phoneNumber = "7557575736";
 
-  const message = `
-Hello Team Mom’s Kitchen 👋
+  if (offerCode && offerCode !== "OFFER_CLOSED") {
+    offerBox.innerText = offerCode;
+    shareBtn.classList.remove("hidden");
 
-I have just submitted my response and received my Welcome Offer Code.
+    const message =
+`Hello Team Mom’s Kitchen 👋
 
+Name: ${customerName}
 🎁 Offer Code: ${offerCode}
 
 Please guide me on how to redeem this offer.
-Thank you 😊
-`;
+Thank you 😊`;
 
-  // 3️⃣ Encode & attach to WhatsApp link
-  const whatsappURL =
-    `https://wa.me/91${7557575736}?text=` +
-    encodeURIComponent(message);
+    const whatsappURL =
+      `https://wa.me/91$7557575736}?text=` +
+      encodeURIComponent(message);
 
-  document.getElementById("shareBtn").href = whatsappURL;
+    shareBtn.href = whatsappURL;
+
+  } else {
+    offerBox.innerText = "OFFER CLOSED";
+    shareBtn.classList.add("hidden");
+  }
 </script>
 
 </body>
