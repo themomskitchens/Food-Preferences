@@ -286,24 +286,29 @@ const progressText = document.getElementById("progress-text");
 const progressBar = document.getElementById("progress-bar");
 const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
+const form = document.getElementById("survey-form");
+
 let currentStep = 0;
 
+/* ---------- PROGRESS ---------- */
 function updateProgress() {
-  const progressPercent = ((currentStep + 1) / questions.length) * 100;
-  progressBar.style.width = `${progressPercent}%`;
-  progressText.textContent = `Question ${currentStep + 1} of ${questions.length}`;
-  nextBtn.textContent = currentStep === questions.length - 1 ? "Submit" : "Next";
+  const percent = ((currentStep + 1) / questions.length) * 100;
+  progressBar.style.width = percent + "%";
+  progressText.innerText = `Question ${currentStep + 1} of ${questions.length}`;
+  nextBtn.innerText = currentStep === questions.length - 1 ? "Submit" : "Next";
   prevBtn.disabled = currentStep === 0;
 }
 
+/* ---------- VALIDATION ---------- */
 function validateStep() {
-  const currentQuestion = questions[currentStep];
-  const inputs = currentQuestion.querySelectorAll("[required]");
+  const current = questions[currentStep];
+  const requiredInputs = current.querySelectorAll("[required]");
   let valid = false;
 
-  inputs.forEach(input => {
+  requiredInputs.forEach(input => {
     if (
-      (input.type === "radio" && document.querySelector(`input[name='${input.name}']:checked`)) ||
+      (input.type === "radio" &&
+        current.querySelector(`input[name="${input.name}"]:checked`)) ||
       (input.type !== "radio" && input.value.trim() !== "")
     ) {
       valid = true;
@@ -313,11 +318,12 @@ function validateStep() {
   nextBtn.disabled = !valid;
 }
 
+/* ---------- INIT ---------- */
 updateProgress();
 validateStep();
+form.addEventListener("input", validateStep);
 
-document.getElementById("survey-form").addEventListener("input", validateStep);
-
+/* ---------- NEXT ---------- */
 nextBtn.addEventListener("click", () => {
   if (currentStep < questions.length - 1) {
     questions[currentStep].classList.remove("active");
@@ -326,10 +332,11 @@ nextBtn.addEventListener("click", () => {
     updateProgress();
     validateStep();
   } else {
-    document.getElementById("survey-form").requestSubmit();
+    form.dispatchEvent(new Event("submit", { cancelable: true }));
   }
 });
 
+/* ---------- PREV ---------- */
 prevBtn.addEventListener("click", () => {
   if (currentStep > 0) {
     questions[currentStep].classList.remove("active");
@@ -340,19 +347,17 @@ prevBtn.addEventListener("click", () => {
   }
 });
 
-/* ---------- FINAL SUBMIT ---------- */
-<script>
-document.getElementById("survey-form").addEventListener("submit", async (e) => {
+/* ---------- SUBMIT ---------- */
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // 🔥 SHOW LOADER
+  // SHOW LOADER
   document.getElementById("loadingOverlay").style.display = "flex";
 
-  // ⛔ Disable buttons
+  // DISABLE BUTTONS
   nextBtn.disabled = true;
   prevBtn.disabled = true;
 
-  const form = e.target;
   const formData = new FormData(form);
 
   try {
@@ -373,16 +378,16 @@ document.getElementById("survey-form").addEventListener("submit", async (e) => {
       localStorage.removeItem("offerCode");
     }
 
-    // ➜ Redirect to offer page
     window.location.href = "offer.html";
 
   } catch (err) {
     alert("Submission failed. Please try again.");
     document.getElementById("loadingOverlay").style.display = "none";
+    nextBtn.disabled = false;
+    prevBtn.disabled = false;
     console.error(err);
   }
 });
 </script>
 </body>
 </html>
-
