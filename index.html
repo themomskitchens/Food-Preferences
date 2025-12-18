@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Mom's Kitchen – Food Preferences</title>
+<title>The Mom's Kitchen - Food Preferences</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
@@ -13,142 +13,125 @@ body {
   background: #FECD50;
   margin: 0;
   padding: 0;
-  color: #333;
 }
 
+/* -------- CONTAINER -------- */
 .container {
   max-width: 500px;
   margin: 40px auto;
-  background: #FECD50;
+  background: #fff;
   border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
   padding: 30px 25px 40px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
-.logo { text-align: center; margin-bottom: 10px; }
-.logo img { width: 85px; }
-
-h2 {
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 1.4rem;
-}
-
-/* Progress bar */
-.progress-container {
-  width: 100%;
-  height: 3px;
-  background: #fff;
-  border-radius: 50px;
-  margin: 15px 0 25px;
-  overflow: hidden;
-}
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: #000;
-  transition: width 0.4s ease;
-}
-.progress-text {
-  text-align: center;
-  font-size: 0.85rem;
-  margin-bottom: 10px;
-}
-
-.question { display: none; }
-.question.active { display: block; }
-
-label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  display: block;
-}
-
-input[type="text"], input[type="tel"], textarea {
-  width: 92%;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  margin-bottom: 18px;
-}
-
-input:focus, textarea:focus {
-  outline: none;
-  border-color: #000;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 15px 0 30px;
-}
-
-.options label {
-  display: flex;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  background: #fff;
-  cursor: pointer;
-}
-
-.options input { accent-color: #000; }
-
-.btn-group {
-  display: flex;
-  gap: 25px;
-  margin-top: 45px;
-}
-
-button {
-  flex: 1;
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 13px 0;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-button:disabled {
-  background: #aaa;
-  cursor: not-allowed;
-}
-
-/* LOADER */
+/* -------- LOADER -------- */
 #loadingOverlay {
   position: fixed;
   inset: 0;
   background: #FECD50;
   display: none;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 9999;
-  font-weight: 600;
 }
 
 .loader {
-  width: 45px;
-  height: 45px;
-  border: 5px solid #fff;
-  border-top: 5px solid #000;
+  width: 50px;
+  height: 50px;
+  border: 4px solid #fff;
+  border-top: 4px solid #000;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  100% { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* -------- FORM -------- */
+.logo { text-align:center; }
+.logo img { width: 85px; }
+
+h2 { text-align:center; margin: 10px 0; }
+
+.progress-container {
+  height: 3px;
+  background: #eee;
+  border-radius: 50px;
+  margin: 15px 0;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #FECD50;
+  transition: 0.4s;
+}
+
+.question { display:none; }
+.question.active { display:block; }
+
+label {
+  font-weight:600;
+  margin-top:12px;
+  display:block;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 6px;
+}
+
+.options label {
+  display:flex;
+  gap:10px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin-top:10px;
+}
+
+.options input { accent-color:#FECD50; }
+
+.btn-group {
+  display:flex;
+  gap:20px;
+  margin-top:40px;
+}
+
+button {
+  flex:1;
+  background:#FECD50;
+  border:none;
+  padding:14px;
+  font-weight:600;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:disabled {
+  background:#ccc;
 }
 </style>
 </head>
 
 <body>
+
+<!-- 🔥 LOADER -->
+<div id="loadingOverlay">
+  <div class="loader"></div>
+  <div class="loading-text">Generating your offer…</div>
+</div>
 
 <div class="container">
   <div class="logo">
@@ -160,46 +143,42 @@ button:disabled {
   <div class="progress-container">
     <div class="progress-bar" id="progress-bar"></div>
   </div>
-  <div class="progress-text" id="progress-text"></div>
 
   <form id="survey-form">
 
     <!-- STEP 1 -->
     <div class="question active">
       <label>Full Name</label>
-      <input type="text" name="name" required>
-      <label>Phone Number</label>
-      <input type="tel" name="phone" required>
+      <input name="name" required>
+      <label>Phone</label>
+      <input name="phone" required>
       <label>Building & Floor</label>
-      <input type="text" name="address" required>
+      <input name="address" required>
     </div>
 
     <!-- STEP 2 -->
     <div class="question">
-      <label>Interested in Breakfast?</label>
+      <label>Breakfast Service?</label>
       <div class="options">
         <label><input type="radio" name="breakfast" value="Yes" required> Yes</label>
-        <label><input type="radio" name="breakfast" value="Maybe"> Maybe</label>
         <label><input type="radio" name="breakfast" value="No"> No</label>
       </div>
     </div>
 
     <!-- STEP 3 -->
     <div class="question">
-      <label>Interested in Lunch?</label>
+      <label>Lunch Service?</label>
       <div class="options">
         <label><input type="radio" name="lunch" value="Yes" required> Yes</label>
-        <label><input type="radio" name="lunch" value="Maybe"> Maybe</label>
         <label><input type="radio" name="lunch" value="No"> No</label>
       </div>
     </div>
 
     <!-- STEP 4 -->
     <div class="question">
-      <label>Spice Preference</label>
+      <label>Spice Level</label>
       <div class="options">
         <label><input type="radio" name="spice" value="Mild" required> Mild</label>
-        <label><input type="radio" name="spice" value="Medium"> Medium</label>
         <label><input type="radio" name="spice" value="Spicy"> Spicy</label>
       </div>
     </div>
@@ -210,16 +189,14 @@ button:disabled {
       <div class="options">
         <label><input type="radio" name="subscription" value="Daily" required> Daily</label>
         <label><input type="radio" name="subscription" value="Weekly"> Weekly</label>
-        <label><input type="radio" name="subscription" value="Occasional"> Occasional</label>
       </div>
     </div>
 
     <!-- STEP 6 -->
     <div class="question">
-      <label>Add-ons?</label>
+      <label>Add-ons</label>
       <div class="options">
-        <label><input type="radio" name="addons" value="Juices" required> Juices</label>
-        <label><input type="radio" name="addons" value="Snacks"> Snacks</label>
+        <label><input type="radio" name="addons" value="Snacks" required> Snacks</label>
         <label><input type="radio" name="addons" value="None"> None</label>
       </div>
     </div>
@@ -227,7 +204,7 @@ button:disabled {
     <!-- STEP 7 -->
     <div class="question">
       <label>Menu Suggestion</label>
-      <textarea name="food-item" rows="3" required></textarea>
+      <textarea name="food-item" required></textarea>
     </div>
 
     <div class="btn-group">
@@ -238,79 +215,54 @@ button:disabled {
   </form>
 </div>
 
-<!-- LOADER -->
-<div id="loadingOverlay">
-  <div class="loader"></div>
-  <p>Submitting details<br>Generating your offer…</p>
-</div>
-
 <script>
 const questions = document.querySelectorAll(".question");
-const progressBar = document.getElementById("progress-bar");
-const progressText = document.getElementById("progress-text");
+const bar = document.getElementById("progress-bar");
 const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
 let step = 0;
 
-function updateUI() {
-  progressBar.style.width = ((step+1)/questions.length)*100 + "%";
-  progressText.innerText = `Question ${step+1} of ${questions.length}`;
+function update() {
+  bar.style.width = ((step+1)/questions.length)*100+"%";
   prevBtn.disabled = step === 0;
-  nextBtn.innerText = step === questions.length-1 ? "Submit" : "Next";
-  validate();
+  nextBtn.textContent = step === questions.length-1 ? "Submit" : "Next";
 }
-
 function validate() {
-  const required = questions[step].querySelectorAll("[required]");
-  let ok = false;
-  required.forEach(el=>{
-    if((el.type==="radio" && document.querySelector(`input[name='${el.name}']:checked`)) ||
-       (el.type!=="radio" && el.value.trim())) ok=true;
-  });
-  nextBtn.disabled = !ok;
+  const req = questions[step].querySelector("[required]");
+  nextBtn.disabled = !req || (req.type==="radio" && !document.querySelector(`input[name='${req.name}']:checked`)) || (req.type!=="radio" && !req.value);
 }
-
+update(); validate();
 document.getElementById("survey-form").addEventListener("input", validate);
 
-nextBtn.onclick = ()=>{
+nextBtn.onclick = () => {
   if(step < questions.length-1){
     questions[step].classList.remove("active");
-    step++;
-    questions[step].classList.add("active");
-    updateUI();
-  } else {
-    document.getElementById("survey-form").requestSubmit();
-  }
+    step++; questions[step].classList.add("active");
+    update(); validate();
+  } else document.getElementById("survey-form").requestSubmit();
+};
+prevBtn.onclick = () => {
+  questions[step].classList.remove("active");
+  step--; questions[step].classList.add("active");
+  update(); validate();
 };
 
-prevBtn.onclick = ()=>{
-  if(step>0){
-    questions[step].classList.remove("active");
-    step--;
-    questions[step].classList.add("active");
-    updateUI();
-  }
-};
-
-updateUI();
-
-/* SUBMIT */
-document.getElementById("survey-form").addEventListener("submit", async e=>{
+/* 🔥 FINAL SUBMIT WITH LOADER */
+document.getElementById("survey-form").addEventListener("submit", async e => {
   e.preventDefault();
   document.getElementById("loadingOverlay").style.display="flex";
+  await new Promise(r=>setTimeout(r,300)); // FORCE PAINT
 
-  const formData = new FormData(e.target);
-  const res = await fetch("PASTE_YOUR_SCRIPT_URL_HERE",{method:"POST",body:formData});
-  const result = await res.json();
+  const fd = new FormData(e.target);
+  const res = await fetch("YOUR_SCRIPT_URL", { method:"POST", body:fd });
+  const data = await res.json();
 
-  if(result.offerCode){
-    localStorage.setItem("offerCode",result.offerCode);
-    localStorage.setItem("customerName",formData.get("name"));
+  if(data.offerCode){
+    localStorage.setItem("offerCode", data.offerCode);
+    localStorage.setItem("customerName", fd.get("name"));
   }
-
-  window.location.href="offer.html";
+  setTimeout(()=>location.href="offer.html",500);
 });
 </script>
-
 </body>
 </html>
