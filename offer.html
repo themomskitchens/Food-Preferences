@@ -28,11 +28,32 @@
       margin: 18px 0;
       letter-spacing: 3px;
       color: #25D366;
-      text-shadow: 0 0 10px rgba(37,211,102,0.6);
+      display: none;
+    }
+
+    /* 🔄 Loader */
+    .loader {
+      width: 45px;
+      height: 45px;
+      border: 5px solid #eee;
+      border-top: 5px solid #25D366;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #555;
     }
 
     .share-btn{
-      display: flex;
+      display: none;
       justify-content: center;
       align-items: center;
       gap: 10px;
@@ -45,12 +66,7 @@
       text-decoration:none;
       font-size:17px;
       font-weight:700;
-
       width: 100%;
-    }
-
-    .hidden{
-      display:none;
     }
   </style>
 </head>
@@ -60,55 +76,79 @@
 <h1>🎉 Congratulations! 🎉</h1>
 
 <div class="card">
-  <h2>Your Welcome Offer Code</h2>
 
+  <h2> Welcome Offer Code</h2>
+
+  <!-- ⏳ WAITING STATE -->
+  <div id="loaderBox">
+    <div class="loader"></div>
+    <div class="loading-text">Generating your offer, please wait...</div>
+  </div>
+
+  <!-- ✅ OFFER CODE -->
   <div id="offerCode" class="code">----</div>
 
-  <p>
+  <p id="desc" style="display:none;">
     Show this code at <b>The Mom's Kitchen</b><br>
-    to claim your <b>Aloo Patties</b> offer.
+    to claim your </b> offer.
   </p>
 
-  <a id="shareBtn" class="share-btn hidden" target="_blank">
-    📲 Chat on WhatsApp
+  <a id="shareBtn" class="share-btn" target="_blank">
+    📲 Share Offer
   </a>
+
 </div>
 
 <script>
-  // ✅ Get data from localStorage
   const offerCode = localStorage.getItem("offerCode");
   const customerName = localStorage.getItem("customerName") || "Customer";
 
+  const loaderBox = document.getElementById("loaderBox");
   const offerBox = document.getElementById("offerCode");
+  const desc = document.getElementById("desc");
   const shareBtn = document.getElementById("shareBtn");
 
-  // ✅ Shop WhatsApp Number
   const phoneNumber = "7557575736";
 
-  if (offerCode && offerCode !== "OFFER_CLOSED") {
-    offerBox.innerText = offerCode;
-    shareBtn.classList.remove("hidden");
+  // ⏳ WAIT until code is available
+  const waitForOffer = setInterval(() => {
 
-    const message =
+    const code = localStorage.getItem("offerCode");
+
+    if (code) {
+      clearInterval(waitForOffer);
+
+      loaderBox.style.display = "none";
+
+      if (code === "OFFER_CLOSED") {
+        offerBox.style.display = "block";
+        offerBox.style.color = "red";
+        offerBox.innerText = "OFFER CLOSED";
+        return;
+      }
+
+      // ✅ SUCCESS
+      offerBox.style.display = "block";
+      offerBox.innerText = code;
+      desc.style.display = "block";
+      shareBtn.style.display = "flex";
+
+      const message =
 `Hello Team Mom’s Kitchen 👋
 
 Name: ${customerName}
-🎁 Offer Code: ${offerCode}
+🎁 Offer Code: ${code}
 
 Please guide me on how to redeem this offer.
 Thank you 😊`;
 
-    const whatsappURL =
-      `https://wa.me/91${phoneNumber}?text=` +
-      encodeURIComponent(message);
+      shareBtn.href =
+        `https://wa.me/91${phoneNumber}?text=` +
+        encodeURIComponent(message);
+    }
 
-    shareBtn.href = whatsappURL;
-
-  } else {
-    offerBox.innerText = "OFFER CLOSED";
-    shareBtn.classList.add("hidden");
-  }
+  }, 500); // check every 0.5 sec
 </script>
 
 </body>
-</html>
+    </html>
