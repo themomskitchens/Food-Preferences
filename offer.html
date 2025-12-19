@@ -53,25 +53,35 @@
     }
 
     /* FORCE CENTER SHARE BUTTON */
+/* SHARE BUTTON FINAL FIX */
 .share-btn {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
 
-  width: 100% !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  text-align: center !important;
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+
+  background: #25D366;
+  color: #ffffff !important;
+
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none !important;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
 }
 
-/* PARENT FIX (VERY IMPORTANT) */
-.offer-card,
-.offer-container,
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-    }
+/* REMOVE DEFAULT LINK STYLE */
+.share-btn:link,
+.share-btn:visited,
+.share-btn:hover,
+.share-btn:active {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
   </style>
 </head>
 
@@ -97,9 +107,7 @@
     to claim your </b> offer.
   </p>
 
-  <a id="shareBtn" class="share-btn" target="_blank">
-    📲 Share Offer
-  </a>
+  <a id="shareBtn" class="share-btn">📱 Share Offer</a>
 
 </div>
 
