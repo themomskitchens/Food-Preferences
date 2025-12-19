@@ -52,24 +52,26 @@
       color: #555;
     }
 
-    .share-btn{
-  display: flex;
-  justify-content: center;   /* horizontal center */
-  align-items: center;       /* vertical center */
-  gap: 10px;
+    /* FORCE CENTER SHARE BUTTON */
+.share-btn {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 
-  background:#25D366;
-  color:#fff;
-  padding:14px;
-  border-radius:12px;
-  text-decoration:none;
-  font-size:16px;
-  font-weight:600;
-
-  width: 100%;
-  margin: 20px auto 0 auto;  /* 🔥 center fix */
-  text-align: center;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
 }
+
+/* PARENT FIX (VERY IMPORTANT) */
+.offer-card,
+.offer-container,
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    }
   </style>
 </head>
 
