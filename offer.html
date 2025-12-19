@@ -82,6 +82,16 @@
   color: #ffffff !important;
   text-decoration: none !important;
 }
+/* CENTER SHARE BUTTON */
+.share-wrap {
+  display: flex;
+  justify-content: center;
+}
+/* Button width control */
+.share-btn {
+  max-width: 280px;   /* 👈 THIS is key */
+  width: 100%;
+    }
   </style>
 </head>
 
@@ -107,8 +117,8 @@
     to claim your </b> offer.
   </p>
 
+  <div class="share-wrap">
   <a id="shareBtn" class="share-btn">📱 Share Offer</a>
-
 </div>
 
 <script>
