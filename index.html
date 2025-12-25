@@ -8,31 +8,35 @@
 
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #FFFFF0;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
+  font-family: 'Poppins', sans-serif;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.6s ease-in-out;
+}
 
     .container {
-      max-width: 500px;
-      margin: 40px auto;
-      background: #FFFFF0;
-      border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-      padding: 30px 25px 40px;
-    }
+  max-width: 500px;
+  margin: 20px auto; /* pehle 40px tha */
+  background: transparent; /* CHANGE 3 */
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  padding: 20px 25px 35px;
+}
 
-    .logo { text-align: center; margin-bottom: 10px; }
-    .logo img { width: 100px; }
+.logo {
+  text-align: center;
+  margin-bottom: 5px; /* pehle 10px tha */
+}
+
 
     h2 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #222;
-      font-size: 1.4rem;
-    }
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 6px; /* pehle 10px tha */
+  color: #222;
+  font-size: 1.4rem;
+}
 
     .progress-container {
       width: 100%;
@@ -187,7 +191,7 @@
 <body>
 <div class="container">
   <div class="logo">
-    <img src="assets/1000059103-removebg-preview.png">
+     <img src="assets/1000059103-removebg-preview.png">
   </div>
 
   <h2>Food Preferences Survey</h2>
@@ -272,6 +276,17 @@
 </div>
 
 <script>
+
+const backgrounds = [
+  "assets/bg1.jpg",
+  "assets/bg2.jpg",
+  "assets/bg3.jpg",
+  "assets/bg4.jpg",
+  "assets/bg5.jpg",
+  "assets/bg6.jpg",
+  "assets/bg7.jpg"
+];
+
 const questions = document.querySelectorAll(".question");
 const progressText = document.getElementById("progress-text");
 const progressBar = document.getElementById("progress-bar");
@@ -288,7 +303,11 @@ function updateProgress() {
   progressText.innerText = `Question ${currentStep + 1} of ${questions.length}`;
   nextBtn.innerText = currentStep === questions.length - 1 ? "Submit" : "Next";
   prevBtn.disabled = currentStep === 0;
+
+  // 🔥 BACKGROUND CHANGE
+  document.body.style.backgroundImage = `url('${backgrounds[currentStep]}')`;
 }
+
 
 /* ✅ FIXED VALIDATION */
 function validateStep() {
