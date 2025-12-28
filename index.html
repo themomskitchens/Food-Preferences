@@ -13,24 +13,35 @@
   font-family:'Poppins',sans-serif;
 }
 
+/* BACKGROUND */
 body{
   margin:0;
   min-height:100vh;
+  background-size:cover;
+  background-position:center;
+  transition:background-image .7s ease;
+  position:relative;
+}
+
+/* DARK OVERLAY */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
   background:linear-gradient(135deg,#667eea,#764ba2);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
+  z-index:0;
 }
 
 /* CONTAINER */
 .container{
+  position:relative;
+  z-index:2;
   max-width:500px;
-  width:100%;
-  background:#ffffffee;
-  border-radius:18px;
+  margin:40px auto;
+  background:rgba(255,255,255,.95);
+  border-radius:20px;
   padding:25px;
-  box-shadow:0 30px 60px rgba(0,0,0,.25);
+  box-shadow:0 30px 70px rgba(0,0,0,.35);
   animation:fade .6s ease;
 }
 
@@ -62,28 +73,24 @@ h2{
   background:#eee;
   border-radius:50px;
   overflow:hidden;
-  margin-bottom:8px;
+  margin-bottom:6px;
 }
 .progress-bar{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,#667eea,#764ba2);
+  background:linear-gradient(135deg,#667eea,#764ba2);
   transition:.4s;
 }
 .progress-text{
   text-align:center;
   font-size:14px;
-  color:#666;
+  color:#555;
   margin-bottom:15px;
 }
 
 /* QUESTIONS */
-.question{
-  display:none;
-}
-.question.active{
-  display:block;
-}
+.question{display:none;}
+.question.active{display:block;}
 
 label{
   font-weight:600;
@@ -107,7 +114,7 @@ textarea{resize:none;}
 
 input:focus,textarea:focus{
   outline:none;
-  border-color:#667eea;
+  border-color:#ff9800;
 }
 
 /* OPTIONS */
@@ -118,48 +125,24 @@ input:focus,textarea:focus{
 }
 
 .options label{
-  background:#f3f4f9;
+  background:#f6f6f6;
   padding:12px;
   border-radius:12px;
   cursor:pointer;
-  border:2px solid transparent;
   transition:.25s;
+  border:2px solid transparent;
 }
 
-.options input{
-  display:none;
-}
-
-.options input:checked + span{
-  font-weight:600;
-}
+.options input{display:none;}
 
 .options label:hover{
   transform:translateY(-2px);
 }
 
-.options input:checked + span{
-  color:#fff;
-}
-
-.options input:checked + span::parent{}
-
-.options input:checked + span{
-  display:block;
-}
-
-.options input:checked + span{
-  background:none;
-}
-
-.options label input:checked + span{
-  color:#fff;
-}
-
 .options label:has(input:checked){
   background:linear-gradient(135deg,#667eea,#764ba2);
   color:#fff;
-  box-shadow:0 10px 25px rgba(102,126,234,.45);
+  box-shadow:0 10px 25px rgba(255,87,34,.45);
 }
 
 /* BUTTONS */
@@ -188,7 +171,7 @@ button:hover:not(:disabled){
 }
 
 button:disabled{
-  opacity:.4;
+  opacity:.45;
   cursor:not-allowed;
 }
 
@@ -196,7 +179,7 @@ button:disabled{
 #loadingOverlay{
   position:fixed;
   inset:0;
-  background:#667eea;
+  background:#ff9800;
   display:none;
   align-items:center;
   justify-content:center;
@@ -239,7 +222,8 @@ button:disabled{
 
 <form id="survey-form">
 
-<!-- Q1 -->
+<!-- SAME QUESTIONS AS BEFORE -->
+
 <div class="question active">
   <label>Full Name</label>
   <input type="text" name="name" required>
@@ -251,60 +235,54 @@ button:disabled{
   <input type="text" name="address" required>
 </div>
 
-<!-- Q2 -->
 <div class="question">
   <label>Would you be interested in our Breakfast service?</label>
   <div class="options">
-    <label><input type="radio" name="breakfast" value="Yes" required><span>Yes</span></label>
-    <label><input type="radio" name="breakfast" value="Maybe"><span>Maybe</span></label>
-    <label><input type="radio" name="breakfast" value="No"><span>No</span></label>
+    <label><input type="radio" name="breakfast" value="Yes" required> Yes</label>
+    <label><input type="radio" name="breakfast" value="Maybe"> Maybe</label>
+    <label><input type="radio" name="breakfast" value="No"> No</label>
   </div>
 </div>
 
-<!-- Q3 -->
 <div class="question">
   <label>Would you be interested in our Lunch service?</label>
   <div class="options">
-    <label><input type="radio" name="lunch" value="Yes" required><span>Yes</span></label>
-    <label><input type="radio" name="lunch" value="Maybe"><span>Maybe</span></label>
-    <label><input type="radio" name="lunch" value="No"><span>No</span></label>
+    <label><input type="radio" name="lunch" value="Yes" required> Yes</label>
+    <label><input type="radio" name="lunch" value="Maybe"> Maybe</label>
+    <label><input type="radio" name="lunch" value="No"> No</label>
   </div>
 </div>
 
-<!-- Q4 -->
 <div class="question">
   <label>How spicy do you like your food?</label>
   <div class="options">
-    <label><input type="radio" name="spice" value="Mild & Light" required><span>Mild & Light</span></label>
-    <label><input type="radio" name="spice" value="Medium"><span>Medium</span></label>
-    <label><input type="radio" name="spice" value="Spicy"><span>Spicy 🌶</span></label>
-    <label><input type="radio" name="spice" value="Extra Hot"><span>Extra Hot 🔥</span></label>
+    <label><input type="radio" name="spice" value="Mild" required> Mild & Light</label>
+    <label><input type="radio" name="spice" value="Medium"> Medium</label>
+    <label><input type="radio" name="spice" value="Spicy"> Spicy 🌶</label>
+    <label><input type="radio" name="spice" value="Extra Hot"> Extra Hot 🔥</label>
   </div>
 </div>
 
-<!-- Q5 -->
 <div class="question">
   <label>If we start a daily subscription, which plan would you like?</label>
   <div class="options">
-    <label><input type="radio" name="subscription" value="Daily Meals" required><span>Daily Meals</span></label>
-    <label><input type="radio" name="subscription" value="3 Days a Week"><span>3 Days a Week</span></label>
-    <label><input type="radio" name="subscription" value="Weekly"><span>Weekly</span></label>
-    <label><input type="radio" name="subscription" value="Occasional"><span>Occasional</span></label>
+    <label><input type="radio" name="subscription" value="Daily Meals" required> Daily Meals</label>
+    <label><input type="radio" name="subscription" value="3 Days a Week"> 3 Days a Week</label>
+    <label><input type="radio" name="subscription" value="Weekly"> Weekly</label>
+    <label><input type="radio" name="subscription" value="Occasional"> Occasional</label>
   </div>
 </div>
 
-<!-- Q6 -->
 <div class="question">
   <label>Would you like to add anything?</label>
   <div class="options">
-    <label><input type="radio" name="addons" value="Fresh Juices & Shakes" required><span>Fresh Juices & Shakes</span></label>
-    <label><input type="radio" name="addons" value="Evening Snacks"><span>Evening Snacks</span></label>
-    <label><input type="radio" name="addons" value="Sweets / Desserts"><span>Sweets / Desserts</span></label>
-    <label><input type="radio" name="addons" value="None"><span>None</span></label>
+    <label><input type="radio" name="addons" value="Fresh Juices & Shakes" required> Fresh Juices & Shakes</label>
+    <label><input type="radio" name="addons" value="Evening Snacks"> Evening Snacks</label>
+    <label><input type="radio" name="addons" value="Sweets"> Sweets / Desserts</label>
+    <label><input type="radio" name="addons" value="None"> None</label>
   </div>
 </div>
 
-<!-- Q7 -->
 <div class="question">
   <label>Any food item you’d love to have on our menu?</label>
   <textarea rows="3" name="food-item" required></textarea>
@@ -319,6 +297,17 @@ button:disabled{
 </div>
 
 <script>
+/* FOOD BACKGROUNDS */
+const backgrounds=[
+  "assets/bg1.jpg",
+  "assets/bg2.jpg",
+  "assets/bg3.jpg",
+  "assets/bg4.jpg",
+  "assets/bg5.jpg",
+  "assets/bg6.jpg",
+  "assets/bg7.jpg"
+];
+
 const questions=document.querySelectorAll(".question");
 const progressBar=document.getElementById("progress-bar");
 const progressText=document.getElementById("progress-text");
@@ -334,6 +323,8 @@ function update(){
 
   progressBar.style.width=((step+1)/questions.length)*100+"%";
   progressText.textContent=`Question ${step+1} of ${questions.length}`;
+
+  document.body.style.backgroundImage=`url('${backgrounds[step]}')`;
 
   prevBtn.disabled=step===0;
   nextBtn.textContent=step===questions.length-1?"Submit":"Next";
@@ -381,5 +372,4 @@ update();
 </script>
 
 </body>
-  
 </html>
