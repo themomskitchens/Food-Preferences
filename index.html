@@ -273,9 +273,10 @@ form.addEventListener("submit", async e=>{
   const formData = new FormData(form);
   try{
     const response = await fetch(
-      "https://script.google.com/macros/library/d/1Gu2Kme3yCVFtKcUh1q3Uatemo3fTibPrHiVECeauQS8z8zxpAizg6G9I/15",
+      "https://script.google.com/macros/s/AKfycbysj4yiENQrdDGycfqtXe1r0X_kI3Xqi5860GDk_du_JsY1HiyQm5tdRYH4lHhmjgu9Jg/exec",
       {method:"POST", body: formData}
     );
+         
     const result = await response.json();
     if(result.success && result.offerCode && result.offerCode!=="OFFER_CLOSED"){
       localStorage.setItem("offerCode", result.offerCode);
@@ -292,6 +293,7 @@ form.addEventListener("submit", async e=>{
 </script>
 </body>
 </html>
+
 
 
 
