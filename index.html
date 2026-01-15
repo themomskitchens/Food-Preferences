@@ -11,7 +11,7 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  color: #333;
+  background: #FECD50;
   background-size: cover;
   background-position: center;
   transition: background-image 0.7s ease-in-out;
@@ -21,7 +21,8 @@ body {
   position: relative;
   z-index: 2;
   max-width: 500px;
-  margin: 40px auto;
+  margin: 5px auto;
+  height: 550px;
   background: rgba(255,255,255,.95);
   border-radius: 16px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.08);
@@ -32,7 +33,7 @@ body {
   from {opacity:0; transform: translateY(20px);}
   to {opacity:1; transform: translateY(0);}
 }
-.logo { text-align:center; height: 5px; margin-bottom:10px; }
+.logo { text-align:center; margin-bottom:-40px; }
 .logo img { width:100px; }
   
 h2 { text-align:center; margin-bottom:10px; color:#222; font-size:1.4rem; }
@@ -299,5 +300,3 @@ form.addEventListener("submit", async e=>{
 </script>
 </body>
 </html>
-
-
